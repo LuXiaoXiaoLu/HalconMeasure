@@ -33,9 +33,9 @@
             this.hWindowControl1 = new HalconDotNet.HWindowControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.list_Info = new System.Windows.Forms.ListView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tb_Gain = new System.Windows.Forms.TrackBar();
             this.btn_OneShot = new System.Windows.Forms.Button();
@@ -101,7 +101,7 @@
             this.hWindowControl1.BorderColor = System.Drawing.Color.Black;
             this.hWindowControl1.ImagePart = new System.Drawing.Rectangle(0, 0, 640, 480);
             this.hWindowControl1.Location = new System.Drawing.Point(27, 28);
-            this.hWindowControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.hWindowControl1.Margin = new System.Windows.Forms.Padding(4);
             this.hWindowControl1.Name = "hWindowControl1";
             this.hWindowControl1.Size = new System.Drawing.Size(477, 380);
             this.hWindowControl1.TabIndex = 0;
@@ -134,6 +134,11 @@
             this.list_Info.UseCompatibleStateImageBehavior = false;
             this.list_Info.View = System.Windows.Forms.View.Details;
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "日期时间";
+            this.columnHeader1.Width = 150;
+            // 
             // imageList1
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -141,11 +146,6 @@
             this.imageList1.Images.SetKeyName(0, "info.ico");
             this.imageList1.Images.SetKeyName(1, "warning.ico");
             this.imageList1.Images.SetKeyName(2, "error.ico");
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "日期时间";
-            this.columnHeader1.Width = 150;
             // 
             // groupBox2
             // 
@@ -272,6 +272,7 @@
             this.btn_OpenImage.TabIndex = 5;
             this.btn_OpenImage.Text = "打开图像";
             this.btn_OpenImage.UseVisualStyleBackColor = true;
+            this.btn_OpenImage.Click += new System.EventHandler(this.btn_OpenImage_Click);
             // 
             // label13
             // 
@@ -670,7 +671,7 @@
             this.Controls.Add(this.hWindowControl1);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.Text = "零件测量";
             this.groupBox1.ResumeLayout(false);

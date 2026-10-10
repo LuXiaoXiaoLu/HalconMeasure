@@ -39,10 +39,34 @@ namespace Measure.Halcon.Demo
                 openFileDialog.Multiselect = false;
                 if (openFileDialog.ShowDialog() == DialogResult.OK) { 
                     string imagePath=openFileDialog.FileName;
-                    image.ReadImage(imagePath,ref HwindowHandle, ref HImage);
+                   var result= image.ReadImage(imagePath,ref HwindowHandle, ref HImage);
+                if (result.IsSuccess == false)
+                    {
+                        MessageBox.Show("打开图像失败："+result.ErrorMsg);
+                    }
                 
                 
-                
+                }
+            }
+        }
+
+        private void btn_SaveImage_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog saveFileDialog=new SaveFileDialog())
+            {
+                saveFileDialog.Filter= ".bmp|*.bmp|.png|*.png|.jpg|*.jpg|.jpeg|*.jpeg";
+                saveFileDialog.DefaultExt = ".bmp";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var result = image.SaveImage(saveFileDialog.FileName,saveFileDialog.FileName.Substring(saveFileDialog.FileName.IndexOf('.')+1), HImage);
+                    if(result.IsSuccess )
+                    {
+                        MessageBox.Show("保存图像成功");
+                    }
+                    else
+                    {
+                        MessageBox.Show("保存图像失败:" + result.ErrorMsg);
+                    }
                 }
             }
         }

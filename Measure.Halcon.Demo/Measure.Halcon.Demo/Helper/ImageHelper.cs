@@ -28,8 +28,26 @@ namespace Measure.Halcon.Demo
                     ErrorMsg = ex.Message,
                 };
                 
-            }
+            } 
+        }
 
+        public OperationResult SaveImage( string path,string format ,HObject hImage)
+        {
+            try
+            {
+                HOperatorSet.WriteImage(hImage, format, 0, path);
+                return OperationResult.CreateSuccessResult();
+
+            }
+            catch (Exception ex )
+            {
+                return new OperationResult()
+                {
+                    IsSuccess=false,
+                    ErrorMsg=ex.Message,
+                };
+                
+            }
             
         }
     }

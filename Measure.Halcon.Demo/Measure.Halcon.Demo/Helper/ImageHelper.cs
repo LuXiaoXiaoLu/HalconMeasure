@@ -1,6 +1,7 @@
 ﻿using HalconDotNet;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,22 @@ namespace Measure.Halcon.Demo
 {
     public class ImageHelper
     {
+
+        /// <summary>
+        /// 后缀名 -> HALCON 支持的格式名
+        /// </summary>
+        private static readonly Dictionary<string, string> SaveFormats =
+            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                { ".bmp",  "bmp"  },
+                { ".png",  "png"  },
+                { ".jpg",  "jpeg" },
+                { ".jpeg", "jpeg" },
+                { ".tif",  "tiff" },
+                { ".tiff", "tiff" },
+            };
+
+
         //读取本地图像
         public OperationResult ReadImage(string imagePath, ref HTuple WindowHandle, ref HObject hImage)
         {
@@ -31,24 +48,48 @@ namespace Measure.Halcon.Demo
             } 
         }
 
-        public OperationResult SaveImage( string path,string format ,HObject hImage)
+      
+
+        /// <summary>
+        /// </summary>
+        /// <param name="path">完整的文件路径，如 D:\img\1.bmp</param>
+        /// <param name="hImage">要保存的图像</param>
+        public OperationResult SaveImage(string path, HObject hImage)
         {
             try
             {
+                // 从路径里取后缀，例如 ".bmp"（含点）
+                string ext = Path.GetExtension(path);
+                string format;
+                if (!SaveFormats.TryGetValue(ext, out format))
+                {
+                    return new OperationResult()
+                    {
+                        IsSuccess = false,
+                        ErrorMsg = string.IsNullOrEmpty(ext)
+                            ? "文件路径没有扩展名，无法判断保存格式"
+                            : "不支持保存为 \"" + ext + "\" 格式，请使用 bmp / png / jpg / jpeg / tif / tiff",
+                    };
+                }
+
+                // 目录不存在就建，避免 HALCON 直接抛异常
+                string dir = Path.GetDirectoryName(path);
+                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
                 HOperatorSet.WriteImage(hImage, format, 0, path);
                 return OperationResult.CreateSuccessResult();
-
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 return new OperationResult()
                 {
-                    IsSuccess=false,
-                    ErrorMsg=ex.Message,
+                    IsSuccess = false,
+                    ErrorMsg = ex.Message,
                 };
-                
             }
-            
         }
     }
 

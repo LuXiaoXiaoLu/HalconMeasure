@@ -35,7 +35,7 @@ namespace Measure.Halcon.Demo
         {
             using (OpenFileDialog  openFileDialog=new   OpenFileDialog())
             {
-                openFileDialog.Filter = ".bmp|*.bmp|.png|*.png|.jpg|*.jpg|.tif|*.tif|.jpeg|*.jpeg";
+                openFileDialog.Filter = "BMP 图片(*.bmp)|*.bmp|PNG 图片(*.png)|*.png|JPEG 图片(*.jpg;*.jpeg)|*.jpg;*.jpeg|TIFF 图片(*.tif;*.tiff)|*.tif;*.tiff";
                 openFileDialog.Multiselect = false;
                 if (openFileDialog.ShowDialog() == DialogResult.OK) { 
                     string imagePath=openFileDialog.FileName;
@@ -54,11 +54,13 @@ namespace Measure.Halcon.Demo
         {
             using (SaveFileDialog saveFileDialog=new SaveFileDialog())
             {
-                saveFileDialog.Filter= ".bmp|*.bmp|.png|*.png|.jpg|*.jpg|.jpeg|*.jpeg";
-                saveFileDialog.DefaultExt = ".bmp";
+                saveFileDialog.Filter = "BMP 图片(*.bmp)|*.bmp|PNG 图片(*.png)|*.png|JPEG 图片(*.jpg;*.jpeg)|*.jpg;*.jpeg|TIFF 图片(*.tif;*.tiff)|*.tif;*.tiff";
+                saveFileDialog.DefaultExt = "bmp";
+                saveFileDialog.AddExtension = true;
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    var result = image.SaveImage(saveFileDialog.FileName,saveFileDialog.FileName.Substring(saveFileDialog.FileName.IndexOf('.')+1), HImage);
+                    // 格式不用再传了，SaveImage 内部从 FileName 的后缀名取
+                    var result = image.SaveImage(saveFileDialog.FileName, HImage);
                     if(result.IsSuccess )
                     {
                         MessageBox.Show("保存图像成功");

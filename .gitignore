@@ -1,0 +1,13 @@
+# Visual Studio 私有缓存
+.vs/
+
+# 编译产物
+bin/
+obj/
+
+# 用户个人配置
+*.user
+*.suo
+
+# WorkBuddy 本地工作数据（记忆、缓存等，不随仓库走）
+.workbuddy/

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,8 @@ namespace Measure.Halcon.Demo
 {
     public class ImageHelper
     {
-
+        //相机对象句柄
+        private HTuple acqHandle;
         /// <summary>
         /// 后缀名 -> HALCON 支持的格式名
         /// </summary>
@@ -24,7 +26,91 @@ namespace Measure.Halcon.Demo
                 { ".tif",  "tiff" },
                 { ".tiff", "tiff" },
             };
+        //打开相机
+        public OperationResult OpenCam(string Drvname,string CamName)
+        {
+            try
+            {
+                try
+                {
+                    if (acqHandle != null && acqHandle.Length > 0)
+                    {
+                        HTuple isValid;
+                        HOperatorSet.TupleIsValidHandle(acqHandle, out isValid);
+                        if (isValid.I == 1)
+                        {
+                            HOperatorSet.CloseFramegrabber(acqHandle);
+                        }
+                    }
+                }
+                catch (HalconException) { }
 
+                HOperatorSet.OpenFramegrabber(Drvname, 0, 0, 0, 0, 0, 0, "progressive", -1, "default", -1, "false", "default",
+                CamName, 0, -1, out acqHandle);
+                return  OperationResult.CreateSuccessResult();
+            }
+            catch (Exception ex)
+            {
+
+                return new OperationResult()
+                {
+                    IsSuccess = false,
+                    ErrorMsg = ex.Message,
+                }
+                ;
+            }
+            
+        }
+        //关闭相机
+        public OperationResult CloseCam(HTuple camHandle)
+        {
+            if(camHandle != null && acqHandle.Length > 0)
+            {
+                HTuple isValid;
+                HOperatorSet.TupleIsValidHandle(camHandle, out isValid);
+                if (isValid.I == 1) {
+                    try
+                    {
+                        HOperatorSet.CloseFramegrabber(camHandle);
+                        return OperationResult.CreateSuccessResult();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        return new OperationResult()
+                        {
+                            IsSuccess = false,
+                            ErrorMsg = ex.Message,
+                        };    
+                    }
+                
+                }
+            }
+
+            return OperationResult.CreateSuccessResult();
+        }
+
+        //相机读取图像
+        public OperationResult GrabImage( ref HObject hImage, ref HTuple WindowHandle)
+        {
+            try
+            {
+                HOperatorSet.GrabImage(out hImage, acqHandle);
+                HOperatorSet.GetImageSize(hImage, out HTuple width, out HTuple height);
+                HOperatorSet.SetPart(WindowHandle, 0, 0, height - 1, width - 1);
+                HOperatorSet.DispObj(hImage, WindowHandle);
+                return OperationResult.CreateSuccessResult();
+            }
+            catch (Exception ex)
+            {
+                return new OperationResult()
+                {
+                    IsSuccess = false,
+                    ErrorMsg = ex.Message,
+                };
+
+            }
+        }
 
         //读取本地图像
         public OperationResult ReadImage(string imagePath, ref HTuple WindowHandle, ref HObject hImage)

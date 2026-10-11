@@ -188,6 +188,7 @@
             this.btn_OneShot.TabIndex = 7;
             this.btn_OneShot.Text = "单帧采图";
             this.btn_OneShot.UseVisualStyleBackColor = true;
+            this.btn_OneShot.Click += new System.EventHandler(this.btn_OneShot_Click);
             // 
             // txt_ExposureTime
             // 

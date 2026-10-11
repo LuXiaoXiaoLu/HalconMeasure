@@ -17,6 +17,14 @@ namespace Measure.Halcon.Demo
         {
             InitializeComponent();
             this.HwindowHandle = this.hWindowControl1.HalconWindow;
+            var result = image.OpenCam("ssss", "GigEVision2");
+            if (result.IsSuccess) {
+                MessageBox.Show("相机打开成功");
+            }
+            else
+            {
+                MessageBox.Show("相机打开失败");
+            }
         }
 
         private ImageHelper image=new ImageHelper();
@@ -71,6 +79,11 @@ namespace Measure.Halcon.Demo
                     }
                 }
             }
+        }
+
+        private void btn_OneShot_Click(object sender, EventArgs e)
+        {
+            image.GrabImage(ref HImage,ref HwindowHandle);
         }
     }
 }

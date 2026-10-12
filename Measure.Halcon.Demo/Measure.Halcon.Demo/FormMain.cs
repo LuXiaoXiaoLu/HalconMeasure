@@ -1,4 +1,5 @@
 ﻿using HalconDotNet;
+using Measure.Halcon.Demo.Helper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,9 +17,17 @@ namespace Measure.Halcon.Demo
         public FormMain()
         {
             InitializeComponent();
-            this.HwindowHandle = this.hWindowControl1.HalconWindow;
-            var result = image.OpenCam("GigEVision2", "ssss");
-            if (result.IsSuccess) {
+           var halconInitialresult = HalconHelper.HalconInitial(hWindowControl1,out HwindowHandle);
+            if (halconInitialresult.IsSuccess)
+            {
+                MessageBox.Show("Halcon初始化成功");
+            }
+            else
+            {
+                MessageBox.Show("Halcon初始化失败");
+            }
+            var openCamresult = image.OpenCam("GigEVision2", "ssss");
+            if (openCamresult.IsSuccess) {
                 MessageBox.Show("相机打开成功");
             }
             else
@@ -32,6 +41,8 @@ namespace Measure.Halcon.Demo
         private HTuple HwindowHandle=new HTuple();
 
         private HObject HImage=new HObject();
+
+        private HalconHelper HalconHelper=new HalconHelper();
 
 
         private void btn_CreatShapeModel_Click(object sender, EventArgs e)

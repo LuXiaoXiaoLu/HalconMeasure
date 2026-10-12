@@ -49,7 +49,7 @@ namespace Measure.Halcon.Demo
             
         }
 
-        private bool IsCameraOpen(HTuple camHandle)
+        private bool IsCameraOpen()
         {
             if (acqHandle != null && acqHandle.Length > 0)
             {
@@ -70,7 +70,7 @@ namespace Measure.Halcon.Demo
         //关闭相机
         public OperationResult CloseCam( )
         {
-            if(IsCameraOpen(acqHandle))
+            if(IsCameraOpen())
             {
                     try
                     {

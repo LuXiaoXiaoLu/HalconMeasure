@@ -61,6 +61,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\HalconHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Program.cs" />

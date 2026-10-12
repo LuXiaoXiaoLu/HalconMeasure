@@ -31,20 +31,7 @@ namespace Measure.Halcon.Demo
         {
             try
             {
-                try
-                {
-                    if (acqHandle != null && acqHandle.Length > 0)
-                    {
-                        HTuple isValid;
-                        HOperatorSet.TupleIsValidHandle(acqHandle, out isValid);
-                        if (isValid.I == 1)
-                        {
-                            HOperatorSet.CloseFramegrabber(acqHandle);
-                        }
-                    }
-                }
-                catch (HalconException) { }
-
+                CloseCam(acqHandle);
                 HOperatorSet.OpenFramegrabber(Drvname, 0, 0, 0, 0, 0, 0, "progressive", -1, "default", -1, "false", "default",
                 CamName, 0, -1, out acqHandle);
                 return  OperationResult.CreateSuccessResult();
@@ -61,17 +48,33 @@ namespace Measure.Halcon.Demo
             }
             
         }
-        //关闭相机
-        public OperationResult CloseCam(HTuple camHandle)
+
+        private bool IsCameraOpen(HTuple camHandle)
         {
-            if(camHandle != null && acqHandle.Length > 0)
+            if (acqHandle != null && acqHandle.Length > 0)
             {
                 HTuple isValid;
-                HOperatorSet.TupleIsValidHandle(camHandle, out isValid);
-                if (isValid.I == 1) {
+                HOperatorSet.TupleIsValidHandle(acqHandle, out isValid);
+                if (isValid.I == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //关闭相机
+        public OperationResult CloseCam( )
+        {
+            if(IsCameraOpen(acqHandle))
+            {
                     try
                     {
-                        HOperatorSet.CloseFramegrabber(camHandle);
+                        HOperatorSet.CloseFramegrabber(acqHandle);
                         return OperationResult.CreateSuccessResult();
                     }
                     catch (Exception ex)
@@ -83,8 +86,6 @@ namespace Measure.Halcon.Demo
                             ErrorMsg = ex.Message,
                         };    
                     }
-                
-                }
             }
 
             return OperationResult.CreateSuccessResult();

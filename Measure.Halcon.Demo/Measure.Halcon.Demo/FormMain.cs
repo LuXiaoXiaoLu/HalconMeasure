@@ -17,7 +17,7 @@ namespace Measure.Halcon.Demo
         {
             InitializeComponent();
             this.HwindowHandle = this.hWindowControl1.HalconWindow;
-            var result = image.OpenCam("ssss", "GigEVision2");
+            var result = image.OpenCam("GigEVision2", "ssss");
             if (result.IsSuccess) {
                 MessageBox.Show("相机打开成功");
             }

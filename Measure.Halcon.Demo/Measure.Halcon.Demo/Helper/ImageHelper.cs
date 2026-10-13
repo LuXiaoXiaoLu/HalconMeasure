@@ -31,7 +31,7 @@ namespace Measure.Halcon.Demo
         {
             try
             {
-                CloseCam(acqHandle);
+                CloseCam();
                 HOperatorSet.OpenFramegrabber(Drvname, 0, 0, 0, 0, 0, 0, "progressive", -1, "default", -1, "false", "default",
                 CamName, 0, -1, out acqHandle);
                 return  OperationResult.CreateSuccessResult();

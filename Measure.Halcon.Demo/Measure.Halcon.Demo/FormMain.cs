@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,14 +18,15 @@ namespace Measure.Halcon.Demo
         public FormMain()
         {
             InitializeComponent();
-           var halconInitialresult = HalconHelper.HalconInitial(hWindowControl1,out HwindowHandle);
+            this.list_Info.Columns[1].Width = list_Info.Width - this.list_Info.Columns[0].Width - 20;
+            var halconInitialresult = halconHelper.HalconInitial(hWindowControl1, out HwindowHandle);
             if (halconInitialresult.IsSuccess)
             {
-                MessageBox.Show("Halcon初始化成功");
+                AddLog(0, "Halcon初始化成功");
             }
             else
             {
-                MessageBox.Show("Halcon初始化失败");
+                AddLog(1, "Halcon初始化失败");
             }
             var openCamresult = image.OpenCam("GigEVision2", "ssss");
             if (openCamresult.IsSuccess) {
@@ -36,13 +38,13 @@ namespace Measure.Halcon.Demo
             }
         }
 
-        private ImageHelper image=new ImageHelper();
+        private ImageHelper image = new ImageHelper();
 
-        private HTuple HwindowHandle=new HTuple();
+        private HTuple HwindowHandle = new HTuple();
 
-        private HObject HImage=new HObject();
+        private HObject HImage = new HObject();
 
-        private HalconHelper HalconHelper=new HalconHelper();
+        private HalconHelper halconHelper = new HalconHelper();
 
 
         private void btn_CreatShapeModel_Click(object sender, EventArgs e)
@@ -52,26 +54,26 @@ namespace Measure.Halcon.Demo
 
         private void btn_OpenImage_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog  openFileDialog=new   OpenFileDialog())
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "BMP 图片(*.bmp)|*.bmp|PNG 图片(*.png)|*.png|JPEG 图片(*.jpg;*.jpeg)|*.jpg;*.jpeg|TIFF 图片(*.tif;*.tiff)|*.tif;*.tiff";
                 openFileDialog.Multiselect = false;
-                if (openFileDialog.ShowDialog() == DialogResult.OK) { 
-                    string imagePath=openFileDialog.FileName;
-                   var result= image.ReadImage(imagePath,ref HwindowHandle, ref HImage);
-                if (result.IsSuccess == false)
+                if (openFileDialog.ShowDialog() == DialogResult.OK) {
+                    string imagePath = openFileDialog.FileName;
+                    var result = image.ReadImage(imagePath, ref HwindowHandle, ref HImage);
+                    if (result.IsSuccess == false)
                     {
-                        MessageBox.Show("打开图像失败："+result.ErrorMsg);
+                        MessageBox.Show("打开图像失败：" + result.ErrorMsg);
                     }
-                
-                
+
+
                 }
             }
         }
 
         private void btn_SaveImage_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog saveFileDialog=new SaveFileDialog())
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.Filter = "BMP 图片(*.bmp)|*.bmp|PNG 图片(*.png)|*.png|JPEG 图片(*.jpg;*.jpeg)|*.jpg;*.jpeg|TIFF 图片(*.tif;*.tiff)|*.tif;*.tiff";
                 saveFileDialog.DefaultExt = "bmp";
@@ -80,7 +82,7 @@ namespace Measure.Halcon.Demo
                 {
                     // 格式不用再传了，SaveImage 内部从 FileName 的后缀名取
                     var result = image.SaveImage(saveFileDialog.FileName, HImage);
-                    if(result.IsSuccess )
+                    if (result.IsSuccess)
                     {
                         MessageBox.Show("保存图像成功");
                     }
@@ -94,7 +96,35 @@ namespace Measure.Halcon.Demo
 
         private void btn_OneShot_Click(object sender, EventArgs e)
         {
-            image.GrabImage(ref HImage,ref HwindowHandle);
+            image.GrabImage(ref HImage, ref HwindowHandle);
         }
+
+        private string CurrentTime
+        {
+            get { return DateTime.Now.ToString("g"); }
+        }
+        private void AddLog(int index, string log)
+        {
+            if (list_Info.InvokeRequired)
+            {
+                this.list_Info.Invoke(new Action(()=>{
+                    ListViewItem listViewItem = new ListViewItem("   " + CurrentTime, index);
+                    listViewItem.SubItems.Add(log);
+                    this.list_Info.Items.Insert(0, listViewItem);
+
+                }));
+
+            }
+            else
+            {
+                ListViewItem listViewItem = new ListViewItem("   " + CurrentTime, index);
+                listViewItem.SubItems.Add(log);
+                this.list_Info.Items.Insert(0, listViewItem);
+
+            }
+
+        }
+
+
     }
 }

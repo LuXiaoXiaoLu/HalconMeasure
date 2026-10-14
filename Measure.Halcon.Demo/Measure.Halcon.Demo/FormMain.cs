@@ -26,16 +26,27 @@ namespace Measure.Halcon.Demo
             }
             else
             {
-                AddLog(1, "Halcon初始化失败");
+                AddLog(2, "Halcon初始化失败"+halconInitialresult.ErrorMsg);
+                return;
             }
-            var openCamresult = image.OpenCam("GigEVision2", "ssss");
-            if (openCamresult.IsSuccess) {
-                MessageBox.Show("相机打开成功");
-            }
-            else
+            if (!image.IsCameraOpen())
             {
-                MessageBox.Show("相机打开失败");
+                var openCamresult = image.OpenCam("GigEVision2", "ssss");
+                if (openCamresult.IsSuccess)
+                {
+
+                    AddLog(0, "相机打开成功");
+                    this.tb_ExposureTime.Value=image.GetExposureTime();
+                    this.txt_ExposureTime.Text=image.GetExposureTime().ToString();
+                }
+                else
+                {
+                    AddLog(2, "相机打开失败" + openCamresult.ErrorMsg);
+                    return;
+
+                }
             }
+            
         }
 
         private ImageHelper image = new ImageHelper();
@@ -61,9 +72,13 @@ namespace Measure.Halcon.Demo
                 if (openFileDialog.ShowDialog() == DialogResult.OK) {
                     string imagePath = openFileDialog.FileName;
                     var result = image.ReadImage(imagePath, ref HwindowHandle, ref HImage);
-                    if (result.IsSuccess == false)
+                    if (result.IsSuccess)
                     {
-                        MessageBox.Show("打开图像失败：" + result.ErrorMsg);
+                        AddLog(0, "打开图像成功");
+                    }
+                    else
+                    {
+                        AddLog(2, "打开图像失败" + result.ErrorMsg);
                     }
 
 
@@ -84,11 +99,11 @@ namespace Measure.Halcon.Demo
                     var result = image.SaveImage(saveFileDialog.FileName, HImage);
                     if (result.IsSuccess)
                     {
-                        MessageBox.Show("保存图像成功");
+                        AddLog(0, "保存图像成功");
                     }
                     else
                     {
-                        MessageBox.Show("保存图像失败:" + result.ErrorMsg);
+                        AddLog(2, "保存图像失败"+result.ErrorMsg);
                     }
                 }
             }
@@ -96,12 +111,21 @@ namespace Measure.Halcon.Demo
 
         private void btn_OneShot_Click(object sender, EventArgs e)
         {
-            image.GrabImage(ref HImage, ref HwindowHandle);
+            var result= image.GrabImage(ref HImage, ref HwindowHandle);
+            if (result.IsSuccess)
+            {
+                AddLog(0, "单帧采图成功");
+            } 
+            else 
+                {
+                    AddLog(2, "单帧采图失败" + result.ErrorMsg);
+                }
+
         }
 
         private string CurrentTime
         {
-            get { return DateTime.Now.ToString("g"); }
+            get { return DateTime.Now.ToString("T"); }
         }
         private void AddLog(int index, string log)
         {
@@ -125,6 +149,9 @@ namespace Measure.Halcon.Demo
 
         }
 
+        private void list_Info_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }

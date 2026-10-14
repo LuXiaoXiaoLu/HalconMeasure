@@ -126,7 +126,6 @@
             this.columnHeader2});
             this.list_Info.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.list_Info.HideSelection = false;
-            this.list_Info.LargeImageList = this.imageList1;
             this.list_Info.Location = new System.Drawing.Point(21, 24);
             this.list_Info.Name = "list_Info";
             this.list_Info.Size = new System.Drawing.Size(439, 166);
@@ -134,6 +133,7 @@
             this.list_Info.TabIndex = 0;
             this.list_Info.UseCompatibleStateImageBehavior = false;
             this.list_Info.View = System.Windows.Forms.View.Details;
+            this.list_Info.SelectedIndexChanged += new System.EventHandler(this.list_Info_SelectedIndexChanged);
             // 
             // columnHeader1
             // 

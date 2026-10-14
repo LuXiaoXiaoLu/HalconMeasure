@@ -34,7 +34,7 @@ namespace Measure.Halcon.Demo.Helper
             }
         }
         //判断HObject对象是否有效
-        public bool IsObjectValid(HObject Hobject) {
+        public static bool  IsObjectValid(HObject Hobject) {
             if (Hobject == null) return false;
             if(!Hobject.IsInitialized()) return false;
             if(Hobject.CountObj()==0) return false;

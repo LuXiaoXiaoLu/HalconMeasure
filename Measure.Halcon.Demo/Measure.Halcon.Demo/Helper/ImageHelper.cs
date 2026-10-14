@@ -49,7 +49,7 @@ namespace Measure.Halcon.Demo
             
         }
 
-        private bool IsCameraOpen()
+        public bool IsCameraOpen()
         {
             if (acqHandle != null && acqHandle.Length > 0)
             {
@@ -135,7 +135,32 @@ namespace Measure.Halcon.Demo
             } 
         }
 
-      
+        public int GetExposureTime()
+        {
+            try
+            {
+                if (acqHandle != null)
+                {
+                    HOperatorSet.GetFramegrabberParam(acqHandle, "ExposureTime", out HTuple value);
+
+                    if (value != null && value.Length > 0)
+                    {
+                        {
+                            return value.TupleInt();
+                        }
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+            return 0;
+
+            
+        }
 
         /// <summary>
         /// </summary>
@@ -179,5 +204,7 @@ namespace Measure.Halcon.Demo
             }
         }
     }
+
+   
 
 }

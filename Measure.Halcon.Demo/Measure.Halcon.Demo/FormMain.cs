@@ -36,11 +36,20 @@ namespace Measure.Halcon.Demo
                 {
 
                     AddLog(0, "相机打开成功");
-                    this.tb_ExposureTime.Value=image.GetExposureTime();
-                    this.txt_ExposureTime.Text=image.GetExposureTime().ToString();
-                    this.tb_Gain.Value=image.GetGain();
-                    this.txt_Gain.Text=image.GetGain().ToString();
-                    this.chk_Trigger.Checked= image.GetTriggerMode();
+
+                    // 每个参数只读一次，别对相机重复提问
+                    double exposure = image.GetExposureTime();
+                    double gain = image.GetGain();
+
+                    // 文本框显示真实值（保留小数），它才是"准"的那个
+                    txt_ExposureTime.Text = exposure.ToString("F1");
+                    txt_Gain.Text = gain.ToString("F1");
+
+                    // TrackBar 天生只能表示整数，这里只做近似定位，不改动真实值
+                    tb_ExposureTime.Value = ToTrackBarValue(exposure, tb_ExposureTime);
+                    tb_Gain.Value = ToTrackBarValue(gain, tb_Gain);
+
+                    chk_Trigger.Checked = image.GetTriggerMode();
                 }
                 else
                 {
@@ -59,6 +68,19 @@ namespace Measure.Halcon.Demo
         private HObject HImage = new HObject();
 
         private HalconHelper halconHelper = new HalconHelper();
+
+        /// <summary>
+        /// 把相机返回的真实数值换算成 TrackBar 能接受的整数。
+        /// TrackBar 只能表示整数，且 Value 必须在 Minimum~Maximum 之间（越界会抛异常），
+        /// 所以超出量程时夹到边界上。这里只解决"能显示"，不追求精确。
+        /// </summary>
+        private static int ToTrackBarValue(double value, TrackBar bar)
+        {
+            int v = (int)Math.Round(value);
+            if (v < bar.Minimum) return bar.Minimum;
+            if (v > bar.Maximum) return bar.Maximum;
+            return v;
+        }
 
 
         private void btn_CreatShapeModel_Click(object sender, EventArgs e)

@@ -75,6 +75,7 @@ namespace Measure.Halcon.Demo
                     try
                     {
                         HOperatorSet.CloseFramegrabber(acqHandle);
+                        acqHandle=null;
                         return OperationResult.CreateSuccessResult();
                     }
                     catch (Exception ex)
@@ -135,83 +136,127 @@ namespace Measure.Halcon.Demo
             } 
         }
 
-        public int GetExposureTime()
+        /// <summary>读取曝光时间（微秒）。读不到返回 0。</summary>
+        public double GetExposureTime()
         {
-            try
-            {
-                if (acqHandle != null)
-                {
-                    HOperatorSet.GetFramegrabberParam(acqHandle, "ExposureTime", out HTuple value);
-
-                    if (value != null && value.Length > 0)
-                    {
-                        {
-                            return value.TupleInt();
-                        }
-
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-                return 0;
-            }
-            return 0;
+            return GetCamParamDouble("ExposureTime");
         }
 
-        public int GetGain()
+        /// <summary>设置曝光时间（微秒）。</summary>
+        public OperationResult SetExposureTime(double exposureTime)
         {
-            try
-            {
-                if (acqHandle != null)
-                {
-                    HOperatorSet.GetFramegrabberParam(acqHandle, "Gain", out HTuple value);
-
-                    if (value != null && value.Length > 0)
-                    {
-                        {
-                            return value.TupleInt();
-                        }
-
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-                return 0;
-            }
-            return 0;
-
-
+            return SetCamParam("ExposureTime", exposureTime);
         }
 
+        /// <summary>读取增益。读不到返回 0。</summary>
+        public double GetGain()
+        {
+            return GetCamParamDouble("Gain");
+        }
+
+        /// <summary>设置增益。</summary>
+        public OperationResult SetGain(double gain)
+        {
+            return SetCamParam("Gain", gain);
+        }
+
+
+
+        /// <summary>读取触发模式：TriggerMode 为 On 时返回 true。</summary>
         public bool GetTriggerMode()
         {
             try
             {
-                if (acqHandle != null)
+                if (IsCameraOpen())
                 {
                     HOperatorSet.GetFramegrabberParam(acqHandle, "TriggerMode", out HTuple value);
 
                     if (value != null && value.Length > 0)
                     {
-                        {
-                            return value.S == "on";
-                        }
-
+                        // 不区分大小写，兼容相机返回 "On" 或 "on"
+                        return string.Equals(value.S, "On", StringComparison.OrdinalIgnoreCase);
                     }
                 }
             }
-            catch (Exception)
+            catch (HalconException ex)
             {
-
-                return false;
+                // 参数不存在/相机没打开等：记下来，别静默吞掉
+                System.Diagnostics.Debug.WriteLine("读取 TriggerMode 失败：" + ex.Message);
             }
             return false;
+        }
 
+        /// <summary>设置触发模式：true = On（触发采集），false = Off（连续采集）。</summary>
+        public OperationResult SetTriggerMode(bool triggerOn)
+        {
+            // TriggerMode 在 SFNC/GenICam 里是【枚举】，取值是字符串 "On" / "Off"（首字母大写）。
+            // HTuple 内部只有 int/double/string/handle 四种类型，没有布尔，
+            // 所以 new HTuple(true) 只会变成整数 1，不能当枚举值下发。
+            return SetCamParam("TriggerMode", triggerOn ? "On" : "Off");
+        }
 
+        /// <summary>读取数值型相机参数的公共实现。读不到返回 0。</summary>
+        private double GetCamParamDouble(string param)
+        {
+            try
+            {
+                if (IsCameraOpen())
+                {
+                    HOperatorSet.GetFramegrabberParam(acqHandle, param, out HTuple value);
+
+                    if (value != null && value.Length > 0)
+                    {
+                        // 用 .D 保留小数；对浮点元组用 .I 会抛 HTupleAccessException
+                        return value.D;
+                    }
+                }
+            }
+            catch (HalconException ex)
+            {
+                System.Diagnostics.Debug.WriteLine("读取 " + param + " 失败：" + ex.Message);
+            }
+            return 0;
+        }
+
+        /// <summary>设置数值型相机参数（如 ExposureTime / Gain）。</summary>
+        private OperationResult SetCamParam(string param, double value)
+        {
+            return SendCamParam(param, new HTuple(value));
+        }
+
+        /// <summary>设置字符串 / 枚举型相机参数（如 TriggerMode）。</summary>
+        private OperationResult SetCamParam(string param, string value)
+        {
+            return SendCamParam(param, new HTuple(value));
+        }
+
+        /// <summary>下发相机参数的公共实现。HTuple 只在这一处出现，不对外暴露。</summary>
+        private OperationResult SendCamParam(string param, HTuple value)
+        {
+            if (!IsCameraOpen())
+            {
+                return new OperationResult()
+                {
+                    IsSuccess = false,
+                    ErrorMsg = "相机未打开，无法设置 " + param,
+                };
+            }
+
+            try
+            {
+                HOperatorSet.SetFramegrabberParam(acqHandle, param, value);
+                return OperationResult.CreateSuccessResult();
+            }
+            catch (HalconException ex)
+            {
+                System.Diagnostics.Debug.WriteLine("设置 " + param + " 失败：" + ex.Message);
+                return new OperationResult()
+                {
+                    IsSuccess = false,
+                    // 带上真实原因，别一律说"相机未打开"（可能是值非法/相机不支持）
+                    ErrorMsg = ex.Message,
+                };
+            }
         }
 
         /// <summary>

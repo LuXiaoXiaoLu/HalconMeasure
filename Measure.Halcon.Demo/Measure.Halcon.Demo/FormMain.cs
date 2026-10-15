@@ -38,6 +38,9 @@ namespace Measure.Halcon.Demo
                     AddLog(0, "相机打开成功");
                     this.tb_ExposureTime.Value=image.GetExposureTime();
                     this.txt_ExposureTime.Text=image.GetExposureTime().ToString();
+                    this.tb_Gain.Value=image.GetGain();
+                    this.txt_Gain.Text=image.GetGain().ToString();
+                    this.chk_Trigger.Checked= image.GetTriggerMode();
                 }
                 else
                 {

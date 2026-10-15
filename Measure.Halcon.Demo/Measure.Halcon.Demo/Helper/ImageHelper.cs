@@ -158,8 +158,60 @@ namespace Measure.Halcon.Demo
                 return 0;
             }
             return 0;
+        }
 
-            
+        public int GetGain()
+        {
+            try
+            {
+                if (acqHandle != null)
+                {
+                    HOperatorSet.GetFramegrabberParam(acqHandle, "Gain", out HTuple value);
+
+                    if (value != null && value.Length > 0)
+                    {
+                        {
+                            return value.TupleInt();
+                        }
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+            return 0;
+
+
+        }
+
+        public bool GetTriggerMode()
+        {
+            try
+            {
+                if (acqHandle != null)
+                {
+                    HOperatorSet.GetFramegrabberParam(acqHandle, "TriggerMode", out HTuple value);
+
+                    if (value != null && value.Length > 0)
+                    {
+                        {
+                            return value.S == "on";
+                        }
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return false;
+
+
         }
 
         /// <summary>

@@ -265,14 +265,14 @@ namespace Measure.Halcon.Demo
 
         private void GrabImageThread()
         {
-            while (cts.IsCancellationRequested)
+            while (!cts.IsCancellationRequested)
             {
                 var result = image.GrabImage(ref HImage, ref HwindowHandle);
 
                 if (image.IsCameraOpen()) {
                     if (result.IsSuccess)
                     {
-                        AddLog(0, "单帧采图成功");
+                       
                     }
                     else
                     {

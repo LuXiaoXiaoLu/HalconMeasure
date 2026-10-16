@@ -180,6 +180,7 @@
             this.tb_Gain.Size = new System.Drawing.Size(146, 56);
             this.tb_Gain.TabIndex = 14;
             this.tb_Gain.TickFrequency = 2;
+            this.tb_Gain.Scroll += new System.EventHandler(this.tb_Gain_Scroll);
             // 
             // btn_OneShot
             // 
@@ -220,6 +221,7 @@
             this.tb_ExposureTime.TabIndex = 15;
             this.tb_ExposureTime.TickFrequency = 1000;
             this.tb_ExposureTime.Value = 34;
+            this.tb_ExposureTime.Scroll += new System.EventHandler(this.tb_ExposureTime_Scroll);
             // 
             // btn_Grab
             // 
@@ -229,6 +231,7 @@
             this.btn_Grab.TabIndex = 6;
             this.btn_Grab.Text = "连续采图";
             this.btn_Grab.UseVisualStyleBackColor = true;
+            this.btn_Grab.Click += new System.EventHandler(this.btn_Grab_Click);
             // 
             // label14
             // 
@@ -247,6 +250,7 @@
             this.btn_StopGrab.TabIndex = 6;
             this.btn_StopGrab.Text = "停止采图";
             this.btn_StopGrab.UseVisualStyleBackColor = true;
+            this.btn_StopGrab.Click += new System.EventHandler(this.btn_StopGrab_Click);
             // 
             // label2
             // 
@@ -314,6 +318,7 @@
             this.chk_Trigger.TabIndex = 9;
             this.chk_Trigger.Text = "触发";
             this.chk_Trigger.UseVisualStyleBackColor = true;
+            this.chk_Trigger.CheckedChanged += new System.EventHandler(this.chk_Trigger_CheckedChanged);
             // 
             // gb1
             // 

@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,7 +32,7 @@ namespace Measure.Halcon.Demo
             }
             if (!image.IsCameraOpen())
             {
-                var openCamresult = image.OpenCam("GigEVision2", "ssss");
+                var openCamresult = image.OpenCam(CamName, "ssss");
                 if (openCamresult.IsSuccess)
                 {
 
@@ -63,11 +64,17 @@ namespace Measure.Halcon.Demo
 
         private ImageHelper image = new ImageHelper();
 
+        private const string CamName = "GigEVision2";
+
         private HTuple HwindowHandle = new HTuple();
 
         private HObject HImage = new HObject();
 
         private HalconHelper halconHelper = new HalconHelper();
+
+        //连续采图标志位
+        private CancellationTokenSource cts;
+
 
         /// <summary>
         /// 把相机返回的真实数值换算成 TrackBar 能接受的整数。
@@ -177,6 +184,115 @@ namespace Measure.Halcon.Demo
         private void list_Info_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void chk_Trigger_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!image.SetTriggerMode(chk_Trigger.Checked).IsSuccess){
+                AddLog(1, "触发设置失败");
+            }
+            ;
+        }
+
+        private void tb_ExposureTime_Scroll(object sender, EventArgs e)
+        {
+            this.tb_ExposureTime.Focus();
+            if (image.SetExposureTime(tb_ExposureTime.Value).IsSuccess)
+            {
+                this.txt_ExposureTime.Text= tb_ExposureTime.Value.ToString  ();
+            }
+            else
+            {
+                AddLog(1, "曝光时间设置失败");
+            }
+        }
+
+        private void tb_Gain_Scroll(object sender, EventArgs e)
+        {
+            this.tb_Gain.Focus();
+            if (image.SetGain(tb_Gain.Value).IsSuccess)
+            {
+                this.txt_Gain.Text = tb_Gain.Value.ToString();
+            }
+            else
+            {
+                AddLog(1, "增益设置失败");
+            }
+        }
+
+        private void btn_Grab_Click(object sender, EventArgs e)
+        {
+            if (!image.IsCameraOpen())
+            {
+                var openCamresult = image.OpenCam(CamName, "ssss");
+                if (openCamresult.IsSuccess)
+                {
+
+                    AddLog(0, "相机打开成功");
+
+                    // 每个参数只读一次，别对相机重复提问
+                    double exposure = image.GetExposureTime();
+                    double gain = image.GetGain();
+
+                    // 文本框显示真实值（保留小数），它才是"准"的那个
+                    txt_ExposureTime.Text = exposure.ToString("F1");
+                    txt_Gain.Text = gain.ToString("F1");
+
+                    // TrackBar 天生只能表示整数，这里只做近似定位，不改动真实值
+                    tb_ExposureTime.Value = ToTrackBarValue(exposure, tb_ExposureTime);
+                    tb_Gain.Value = ToTrackBarValue(gain, tb_Gain);
+
+                    chk_Trigger.Checked = image.GetTriggerMode();
+                }
+                else
+                {
+                    AddLog(2, "相机打开失败" + openCamresult.ErrorMsg);
+                    return;
+
+                }
+            }
+
+            cts= new CancellationTokenSource();
+
+            Task.Run(() =>
+            {
+                GrabImageThread();
+
+            },cts.Token);
+            AddLog(0, "开始连续采图");
+
+        }
+
+        private void GrabImageThread()
+        {
+            while (cts.IsCancellationRequested)
+            {
+                var result = image.GrabImage(ref HImage, ref HwindowHandle);
+
+                if (image.IsCameraOpen()) {
+                    if (result.IsSuccess)
+                    {
+                        AddLog(0, "单帧采图成功");
+                    }
+                    else
+                    {
+                        AddLog(2, "采图失败" + result.ErrorMsg);
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+                 
+
+
+            }
+        }
+
+        private void btn_StopGrab_Click(object sender, EventArgs e)
+        {
+            AddLog(0, "停连续采图");
+            cts?.Cancel();  
         }
     }
 }

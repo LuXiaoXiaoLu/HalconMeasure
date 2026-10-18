@@ -63,6 +63,8 @@
     </Compile>
     <Compile Include="Helper\HalconHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
+    <Compile Include="MathParams.cs" />
+    <Compile Include="Helper\ShapeModelHelper.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

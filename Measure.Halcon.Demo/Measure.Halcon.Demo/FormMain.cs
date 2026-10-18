@@ -76,6 +76,9 @@ namespace Measure.Halcon.Demo
         //连续采图标志位
         private CancellationTokenSource cts;
 
+        //模板匹配对象
+        private ShapeModelHelper shapeModelHelper = new ShapeModelHelper();
+
 
         /// <summary>
         /// 把相机返回的真实数值换算成 TrackBar 能接受的整数。
@@ -93,8 +96,16 @@ namespace Measure.Halcon.Demo
 
         private void btn_CreatShapeModel_Click(object sender, EventArgs e)
         {
-
+          var result=shapeModelHelper.CreateShapeModel( ref HwindowHandle,ref  HImage, new MathParams());
+            if (result.IsSuccess) {
+                AddLog(0, "创建模板成功");
+            }
+            else
+            {
+                AddLog(2, "创建模板失败");
+            }
         }
+        
 
         private void btn_OpenImage_Click(object sender, EventArgs e)
         {

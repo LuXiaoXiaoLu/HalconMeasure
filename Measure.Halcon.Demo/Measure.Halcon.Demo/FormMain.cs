@@ -19,6 +19,7 @@ namespace Measure.Halcon.Demo
         public FormMain()
         {
             InitializeComponent();
+            this.FormClosed += FormMain_FormClosed;
             this.list_Info.Columns[1].Width = list_Info.Width - this.list_Info.Columns[0].Width - 20;
             var halconInitialresult = halconHelper.HalconInitial(hWindowControl1, out HwindowHandle);
             if (halconInitialresult.IsSuccess)
@@ -161,6 +162,10 @@ namespace Measure.Halcon.Demo
         }
         private void AddLog(int index, string log)
         {
+            // 窗体正在关闭/已销毁时，Invoke 会抛 ObjectDisposedException；
+            // 采集线程在关窗过程中还在报错，这条日志直接丢掉即可。
+            if (IsDisposed || list_Info.IsDisposed) return;
+
             if (list_Info.InvokeRequired)
             {
                 this.list_Info.Invoke(new Action(()=>{
@@ -222,6 +227,11 @@ namespace Measure.Halcon.Demo
 
         private void btn_Grab_Click(object sender, EventArgs e)
         {
+            if (cts != null)                       
+            {
+                AddLog(1, "已经在连续采图，勿重复启动");
+                return;
+            }
             if (!image.IsCameraOpen())
             {
                 var openCamresult = image.OpenCam(CamName, "ssss");
@@ -230,7 +240,7 @@ namespace Measure.Halcon.Demo
 
                     AddLog(0, "相机打开成功");
 
-                    // 每个参数只读一次，别对相机重复提问
+                 
                     double exposure = image.GetExposureTime();
                     double gain = image.GetGain();
 
@@ -252,47 +262,66 @@ namespace Measure.Halcon.Demo
                 }
             }
 
-            cts= new CancellationTokenSource();
+            var source = new CancellationTokenSource();
+            cts = source;                          // 先挂上，防重入守卫才有效
+            CancellationToken token = source.Token;
 
-            Task.Run(() =>
-            {
-                GrabImageThread();
+            Task.Factory.StartNew(
+                () => GrabImageThread(token, source),
+                token,
+                TaskCreationOptions.LongRunning,   // 常驻采集循环：开专用线程，不占线程池
+                TaskScheduler.Default);            // 必须显式 Default，否则 LongRunning 会被忽略
 
-            },cts.Token);
             AddLog(0, "开始连续采图");
 
         }
 
-        private void GrabImageThread()
-        {
-            while (!cts.IsCancellationRequested)
-            {
-                var result = image.GrabImage(ref HImage, ref HwindowHandle);
 
-                if (image.IsCameraOpen()) {
-                    if (result.IsSuccess)
+
+        private void GrabImageThread(CancellationToken token, CancellationTokenSource source)
+        {
+            try
+            {
+                while (!token.IsCancellationRequested)   // 用传进来的 token，不读字段 cts
+                {
+                    var result = image.GrabImage(ref HImage, ref HwindowHandle);
+
+                    if (!result.IsSuccess)
                     {
-                       
-                    }
-                    else
-                    {
-                        AddLog(2, "采图失败" + result.ErrorMsg);
+                        AddLog(2, "采图失败：" + result.ErrorMsg);
                         break;
                     }
                 }
-                else {
-                    break;
+            }
+            catch (Exception ex)
+            {
+                // Task 的异常没人 await 会被静默吞掉，这里必须落地
+                AddLog(2, "采集线程异常：" + ex.Message);
+            }
+            finally
+            {
+                // 不管怎么退出（取消 / 采图失败 / 异常），都把"正在采图"这个状态清掉，
+                // 否则下一次点【开始】会被防重入守卫永久挡住。
+                if (ReferenceEquals(cts, source))
+                {
+                    cts = null;
                 }
-                 
-
-
             }
         }
 
         private void btn_StopGrab_Click(object sender, EventArgs e)
         {
-            AddLog(0, "停连续采图");
-            cts?.Cancel();  
+            AddLog(0, "停止连续采图");
+
+            // 只举旗：真正的状态清理由采集线程的 finally 完成，
+            // 因为"请求停止"不等于"线程已停"（可能还卡在 GrabImage 里）
+            cts?.Cancel();
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            cts?.Cancel();       // 让采集循环退出
+            image.CloseCam();    // 关相机，别把句柄留给进程退出兜底
         }
     }
 }

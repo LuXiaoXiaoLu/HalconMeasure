@@ -359,6 +359,7 @@
             this.btn_FindShapeModel.TabIndex = 3;
             this.btn_FindShapeModel.Text = "查找模板";
             this.btn_FindShapeModel.UseVisualStyleBackColor = true;
+            this.btn_FindShapeModel.Click += new System.EventHandler(this.btn_FindShapeModel_Click);
             // 
             // btn_CreatShapeModel
             // 
@@ -396,6 +397,7 @@
             this.txt_Overlap.TabIndex = 2;
             this.txt_Overlap.Text = "0.1";
             this.txt_Overlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txt_Overlap.TextChanged += new System.EventHandler(this.txt_Overlap_TextChanged);
             // 
             // label4
             // 
@@ -426,7 +428,7 @@
             // 
             // txt_Range
             // 
-            this.txt_Range.Location = new System.Drawing.Point(181, 41);
+            this.txt_Range.Location = new System.Drawing.Point(191, 41);
             this.txt_Range.Name = "txt_Range";
             this.txt_Range.Size = new System.Drawing.Size(40, 29);
             this.txt_Range.TabIndex = 2;

@@ -160,7 +160,13 @@ namespace Measure.Halcon.Demo
             return SetCamParam("Gain", gain);
         }
 
-
+        public static bool IsObjectValid(HObject Hobject)
+        {
+            if (Hobject == null) return false;
+            if (!Hobject.IsInitialized()) return false;
+            if (Hobject.CountObj() == 0) return false;
+            return true;
+        }
 
         /// <summary>读取触发模式：TriggerMode 为 On 时返回 true。</summary>
         public bool GetTriggerMode()

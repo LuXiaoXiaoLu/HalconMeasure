@@ -68,7 +68,7 @@ namespace Measure.Halcon.Demo.Helper
         ~MathParams()
         {
             if (modelID != null) { 
-                HOperatorSet.ClearSampleIdentifier(modelID);
+                HOperatorSet.ClearShapeModel(modelID);
             }
 
         }

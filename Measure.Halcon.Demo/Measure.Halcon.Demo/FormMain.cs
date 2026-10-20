@@ -79,6 +79,8 @@ namespace Measure.Halcon.Demo
         //模板匹配对象
         private ShapeModelHelper shapeModelHelper = new ShapeModelHelper();
 
+        private MathParams mathParams = new MathParams();
+
 
         /// <summary>
         /// 把相机返回的真实数值换算成 TrackBar 能接受的整数。
@@ -96,7 +98,8 @@ namespace Measure.Halcon.Demo
 
         private void btn_CreatShapeModel_Click(object sender, EventArgs e)
         {
-          var result=shapeModelHelper.CreateShapeModel( ref HwindowHandle,ref  HImage, new MathParams());
+          this.hWindowControl1.Focus();
+            var result=shapeModelHelper.CreateShapeModel( ref HwindowHandle,ref  HImage,  mathParams);
             if (result.IsSuccess) {
                 AddLog(0, "创建模板成功");
             }
@@ -333,6 +336,41 @@ namespace Measure.Halcon.Demo
         {
             cts?.Cancel();       // 让采集循环退出
             image.CloseCam();    // 关相机，别把句柄留给进程退出兜底
+        }
+
+        private void btn_FindShapeModel_Click(object sender, EventArgs e)
+        {
+            if (!HalconHelper.IsObjectValid(HImage))
+            {
+                AddLog(1, "查找模板失败：图像不存在");
+                return;
+            }
+            if(mathParams.modelID == null)
+            {
+                AddLog(1, "查找模板失败：模板为空");
+                return;
+            }
+           
+            mathParams.startAngle=   Convert.ToDouble( this.txt_Angle.Text.Trim());
+            mathParams.rangAngle = Convert.ToDouble(this.txt_Range.Text.Trim());
+            mathParams.overlap = Convert.ToDouble(this.txt_Overlap.Text.Trim());
+            mathParams.score = Convert.ToDouble(this.txt_Score.Text.Trim());
+            mathParams.numMatchs = Convert.ToInt32(this.txt_NumMatchs.Text.Trim());
+
+            var result = shapeModelHelper.FindShapeMode(ref HwindowHandle,ref HImage, mathParams);
+            if (result.IsSuccess)
+            {
+                AddLog(0, "查找模板成功");
+            }
+            else
+            {
+                AddLog(1, "查找模板失败");
+            }
+        }
+
+        private void txt_Overlap_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

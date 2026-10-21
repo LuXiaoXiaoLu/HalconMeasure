@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
@@ -99,6 +100,7 @@ namespace Measure.Halcon.Demo
         private void btn_CreatShapeModel_Click(object sender, EventArgs e)
         {
           this.hWindowControl1.Focus();
+            LoadParamsFromUi();
             var result=shapeModelHelper.CreateShapeModel( ref HwindowHandle,ref  HImage,  mathParams);
             if (result.IsSuccess) {
                 AddLog(0, "创建模板成功");
@@ -350,14 +352,10 @@ namespace Measure.Halcon.Demo
                 AddLog(1, "查找模板失败：模板为空");
                 return;
             }
-           
-            mathParams.startAngle=   Convert.ToDouble( this.txt_Angle.Text.Trim());
-            mathParams.rangAngle = Convert.ToDouble(this.txt_Range.Text.Trim());
-            mathParams.overlap = Convert.ToDouble(this.txt_Overlap.Text.Trim());
-            mathParams.score = Convert.ToDouble(this.txt_Score.Text.Trim());
-            mathParams.numMatchs = Convert.ToInt32(this.txt_NumMatchs.Text.Trim());
 
-            var result = shapeModelHelper.FindShapeMode(ref HwindowHandle,ref HImage, mathParams);
+            LoadParamsFromUi();
+
+             var result = shapeModelHelper.FindShapeMode(ref HwindowHandle,ref HImage, mathParams);
             if (result.IsSuccess)
             {
                 AddLog(0, "查找模板成功");
@@ -371,6 +369,55 @@ namespace Measure.Halcon.Demo
         private void txt_Overlap_TextChanged(object sender, EventArgs e)
         {
 
+        }
+        private void LoadParamsFromUi()
+        {
+            mathParams.startAngle = Convert.ToDouble(txt_Angle.Text.Trim());
+            mathParams.rangAngle = Convert.ToDouble(txt_Range.Text.Trim());
+            mathParams.overlap = Convert.ToDouble(txt_Overlap.Text.Trim());
+            mathParams.score = Convert.ToDouble(txt_Score.Text.Trim());
+            mathParams.numMatchs = Convert.ToInt32(txt_NumMatchs.Text.Trim());
+        }
+
+        private void btn_ContinueFind_Click(object sender, EventArgs e)
+        {
+           
+            if (mathParams.modelID == null)
+            {
+                AddLog(1, "查找模板失败：模板为空");
+                return;
+            }
+            mathParams.startAngle = Convert.ToDouble(this.txt_Angle.Text.Trim());
+            mathParams.rangAngle = Convert.ToDouble(this.txt_Range.Text.Trim());
+            mathParams.overlap = Convert.ToDouble(this.txt_Overlap.Text.Trim());
+            mathParams.score = Convert.ToDouble(this.txt_Score.Text.Trim());
+            mathParams.numMatchs = Convert.ToInt32(this.txt_NumMatchs.Text.Trim());
+            using (FolderBrowserDialog folderBrowserDialog =new FolderBrowserDialog())
+            {
+                if(folderBrowserDialog.ShowDialog()== DialogResult.OK)
+                {
+                    string path = folderBrowserDialog.SelectedPath;
+                    FileInfo[] files = new DirectoryInfo(path).GetFiles();
+                    Task.Run(() => {
+                        foreach (FileInfo file in files)
+                        {
+
+                            if (image.ReadImage(file.FullName, ref HwindowHandle, ref HImage).IsSuccess)
+                            {
+                                var result = shapeModelHelper.FindShapeMode(ref HwindowHandle, ref HImage, mathParams);
+                                if (!result.IsSuccess)
+                                {
+                                    AddLog(1, "查找模板失败");
+                                }
+
+                            }
+                            Thread.Sleep(3000);
+                        }
+                    });
+                }
+                
+
+            }
         }
     }
 }

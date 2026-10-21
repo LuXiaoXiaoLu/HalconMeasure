@@ -15,7 +15,7 @@ namespace Measure.Halcon.Demo.Helper
 
         public MathParams ()
         {
-            startAngle = 45;
+            startAngle = -45;
             rangAngle = 90;
             score = 0.5;
             numMatchs = 1;
@@ -27,10 +27,19 @@ namespace Measure.Halcon.Demo.Helper
             scaleCMax = 1.2;
             HOperatorSet.GenEmptyObj(out modelRegion);
         }
-
+        //起始弧度
+        public double StartAngleRad
+        {
+            get { return startAngle * Math.PI / 180.0; }
+        }
         //起始角度
         public double startAngle;
 
+        /// 角度范围(弧度)
+        public double RangeAngleRad
+        {
+            get { return rangAngle * Math.PI / 180.0; }
+        }
         //角度范围
         public double rangAngle;
 

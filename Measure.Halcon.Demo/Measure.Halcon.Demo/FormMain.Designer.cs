@@ -350,6 +350,7 @@
             this.btn_ContinueFind.TabIndex = 3;
             this.btn_ContinueFind.Text = "连续查找";
             this.btn_ContinueFind.UseVisualStyleBackColor = true;
+            this.btn_ContinueFind.Click += new System.EventHandler(this.btn_ContinueFind_Click);
             // 
             // btn_FindShapeModel
             // 

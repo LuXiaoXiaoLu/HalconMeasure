@@ -28,7 +28,7 @@ namespace Measure.Halcon.Demo.Helper
 
                 ClearShapeModel(ref mathParams.modelID);
                 // create
-                HOperatorSet.CreateShapeModel(imageReduced, "auto", mathParams.startAngle, mathParams.rangAngle, "auto", "auto", "use_polarity", "auto", "auto", out mathParams.modelID);
+                HOperatorSet.CreateShapeModel(imageReduced, "auto", mathParams.StartAngleRad, mathParams.RangeAngleRad, "auto", "auto", "use_polarity", "auto", "auto", out mathParams.modelID);
 
                 HOperatorSet.DispObj(image, HwindowHandle);
 
@@ -70,7 +70,7 @@ namespace Measure.Halcon.Demo.Helper
 
             try
             {
-                HOperatorSet.FindShapeModel(image, mathParams.modelID, mathParams.startAngle, mathParams.rangAngle, mathParams.score, mathParams.numMatchs,
+                HOperatorSet.FindShapeModel(image, mathParams.modelID, mathParams.StartAngleRad, mathParams.RangeAngleRad, mathParams.score, mathParams.numMatchs,
             mathParams.overlap, "least_squares", 0, mathParams.greediness, out HTuple row, out HTuple column, out HTuple angle, out HTuple score);
 
                 //判断结果

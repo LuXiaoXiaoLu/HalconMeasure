@@ -54,12 +54,9 @@ namespace Measure.Halcon.Demo.Helper
             catch (Exception ex)
             {
 
-                
-                    halconHelper.disp_message(HwindowHandle, "创建模板失败"+ex.Message, "window", 20, 20, "red", "false");
-                    return new OperationResult { 
-                        IsSuccess=false,
-                        ErrorMsg=ex.Message
-                    };
+                HOperatorSet.DispObj(image, HwindowHandle);
+                halconHelper.disp_message(HwindowHandle, "创建模板失败", "window", 20, 20, "red", "false");
+                    return OperationResult.CreateFailResult("创建模板失败",ex);
                 
             }
                
@@ -109,11 +106,7 @@ namespace Measure.Halcon.Demo.Helper
             catch (Exception ex)
             {
                 halconHelper.disp_message(HwindowHandle, "查找模板失败" + ex.Message, "window", 20, 20, "red", "false");
-                return new OperationResult
-                {
-                    IsSuccess = false,
-                    ErrorMsg = ex.Message
-                };
+                return OperationResult.CreateFailResult("查找模板失败", ex);
             }
 
 

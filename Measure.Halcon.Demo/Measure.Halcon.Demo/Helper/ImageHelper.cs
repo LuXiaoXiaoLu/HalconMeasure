@@ -38,13 +38,7 @@ namespace Measure.Halcon.Demo
             }
             catch (Exception ex)
             {
-
-                return new OperationResult()
-                {
-                    IsSuccess = false,
-                    ErrorMsg = ex.Message,
-                }
-                ;
+                return OperationResult.CreateFailResult("打开相机失败", ex);
             }
             
         }
@@ -80,12 +74,7 @@ namespace Measure.Halcon.Demo
                     }
                     catch (Exception ex)
                     {
-
-                        return new OperationResult()
-                        {
-                            IsSuccess = false,
-                            ErrorMsg = ex.Message,
-                        };    
+                        return OperationResult.CreateFailResult("关闭相机失败", ex);
                     }
             }
 
@@ -105,12 +94,7 @@ namespace Measure.Halcon.Demo
             }
             catch (Exception ex)
             {
-                return new OperationResult()
-                {
-                    IsSuccess = false,
-                    ErrorMsg = ex.Message,
-                };
-
+                return OperationResult.CreateFailResult("采图失败", ex);
             }
         }
 
@@ -127,13 +111,8 @@ namespace Measure.Halcon.Demo
             }
             catch (Exception ex)
             {
-                return new OperationResult()
-                {
-                    IsSuccess = false,
-                    ErrorMsg = ex.Message,
-                };
-                
-            } 
+                return OperationResult.CreateFailResult("读取图像失败", ex);
+            }
         }
 
         /// <summary>读取曝光时间（微秒）。读不到返回 0。</summary>
@@ -187,7 +166,7 @@ namespace Measure.Halcon.Demo
             catch (HalconException ex)
             {
                 // 参数不存在/相机没打开等：记下来，别静默吞掉
-                System.Diagnostics.Debug.WriteLine("读取 TriggerMode 失败：" + ex.Message);
+                System.Diagnostics.Debug.WriteLine("读取 TriggerMode 失败：" + ex);
             }
             return false;
         }
@@ -219,7 +198,7 @@ namespace Measure.Halcon.Demo
             }
             catch (HalconException ex)
             {
-                System.Diagnostics.Debug.WriteLine("读取 " + param + " 失败：" + ex.Message);
+                System.Diagnostics.Debug.WriteLine("读取 " + param + " 失败：" + ex);
             }
             return 0;
         }
@@ -255,13 +234,8 @@ namespace Measure.Halcon.Demo
             }
             catch (HalconException ex)
             {
-                System.Diagnostics.Debug.WriteLine("设置 " + param + " 失败：" + ex.Message);
-                return new OperationResult()
-                {
-                    IsSuccess = false,
-                    // 带上真实原因，别一律说"相机未打开"（可能是值非法/相机不支持）
-                    ErrorMsg = ex.Message,
-                };
+                System.Diagnostics.Debug.WriteLine("设置 " + param + " 失败：" + ex);
+                return OperationResult.CreateFailResult("设置 " + param + " 失败", ex);
             }
         }
 
@@ -299,11 +273,7 @@ namespace Measure.Halcon.Demo
             }
             catch (Exception ex)
             {
-                return new OperationResult()
-                {
-                    IsSuccess = false,
-                    ErrorMsg = ex.Message,
-                };
+                return OperationResult.CreateFailResult("保存图像失败", ex);
             }
         }
     }

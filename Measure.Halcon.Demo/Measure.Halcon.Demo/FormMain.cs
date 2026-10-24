@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace Measure.Halcon.Demo
 {
@@ -20,29 +21,30 @@ namespace Measure.Halcon.Demo
         public FormMain()
         {
             InitializeComponent();
+            log = new LogHelper(list_Info);
             this.FormClosed += FormMain_FormClosed;
             this.list_Info.Columns[1].Width = list_Info.Width - this.list_Info.Columns[0].Width - 20;
             var halconInitialresult = halconHelper.HalconInitial(hWindowControl1, out HwindowHandle);
             if (halconInitialresult.IsSuccess)
             {
-                AddLog(0, "Halcon初始化成功");
+                log.Info("Halcon初始化成功");
             }
             else
             {
-                AddLog(2, "Halcon初始化失败"+halconInitialresult.ErrorMsg);
+                log.Error(halconInitialresult);
                 return;
             }
-            if (!image.IsCameraOpen())
+            if (!imageHelper.IsCameraOpen())
             {
-                var openCamresult = image.OpenCam(CamName, "ssss");
+                var openCamresult = imageHelper.OpenCam(CamName, "ssss");
                 if (openCamresult.IsSuccess)
                 {
 
-                    AddLog(0, "相机打开成功");
+                    log.Info("相机打开成功");
 
                     // 每个参数只读一次，别对相机重复提问
-                    double exposure = image.GetExposureTime();
-                    double gain = image.GetGain();
+                    double exposure = imageHelper.GetExposureTime();
+                    double gain = imageHelper.GetGain();
 
                     // 文本框显示真实值（保留小数），它才是"准"的那个
                     txt_ExposureTime.Text = exposure.ToString("F1");
@@ -52,35 +54,45 @@ namespace Measure.Halcon.Demo
                     tb_ExposureTime.Value = ToTrackBarValue(exposure, tb_ExposureTime);
                     tb_Gain.Value = ToTrackBarValue(gain, tb_Gain);
 
-                    chk_Trigger.Checked = image.GetTriggerMode();
+                    chk_Trigger.Checked = imageHelper.GetTriggerMode();
                 }
                 else
                 {
-                    AddLog(2, "相机打开失败" + openCamresult.ErrorMsg);
+                    log.Error(openCamresult);
                     return;
 
                 }
             }
             
         }
-
-        private ImageHelper image = new ImageHelper();
-
+        
+        private ImageHelper imageHelper = new ImageHelper();
+        //相机名称
         private const string CamName = "GigEVision2";
-
+        //图片显示句柄
         private HTuple HwindowHandle = new HTuple();
-
+        //图片
         private HObject HImage = new HObject();
 
         private HalconHelper halconHelper = new HalconHelper();
 
         //连续采图标志位
-        private CancellationTokenSource cts;
+        private CancellationTokenSource grabCts;
+
+        //连续查找标志位
+        private CancellationTokenSource findcts;
+        //连续查找模板线程
+        private Task findTask = Task.CompletedTask;
+        //连续采图线程
+        private Task grabTask = Task.CompletedTask;
+        //上一次打开连续查找模板图片文件夹地址
+        string lastFindPath =string.Empty;
 
         //模板匹配对象
         private ShapeModelHelper shapeModelHelper = new ShapeModelHelper();
-
+        //匹配模板数据
         private MathParams mathParams = new MathParams();
+        private LogHelper log;
 
 
         /// <summary>
@@ -99,15 +111,21 @@ namespace Measure.Halcon.Demo
 
         private void btn_CreatShapeModel_Click(object sender, EventArgs e)
         {
-          this.hWindowControl1.Focus();
+            if (!HalconHelper.IsObjectValid(HImage))
+            {
+                log.Warn("创建模板失败：图像未打开");
+                return;
+            }
+
+            this.hWindowControl1.Focus();
             LoadParamsFromUi();
             var result=shapeModelHelper.CreateShapeModel( ref HwindowHandle,ref  HImage,  mathParams);
             if (result.IsSuccess) {
-                AddLog(0, "创建模板成功");
+                log.Info("创建模板成功");
             }
             else
             {
-                AddLog(2, "创建模板失败");
+                log.Error(result);
             }
         }
         
@@ -120,14 +138,14 @@ namespace Measure.Halcon.Demo
                 openFileDialog.Multiselect = false;
                 if (openFileDialog.ShowDialog() == DialogResult.OK) {
                     string imagePath = openFileDialog.FileName;
-                    var result = image.ReadImage(imagePath, ref HwindowHandle, ref HImage);
+                    var result = imageHelper.ReadImage(imagePath, ref HwindowHandle, ref HImage);
                     if (result.IsSuccess)
                     {
-                        AddLog(0, "打开图像成功");
+                        log.Info("打开图像成功");
                     }
                     else
                     {
-                        AddLog(2, "打开图像失败" + result.ErrorMsg);
+                        log.Error(result);
                     }
 
 
@@ -145,14 +163,14 @@ namespace Measure.Halcon.Demo
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     // 格式不用再传了，SaveImage 内部从 FileName 的后缀名取
-                    var result = image.SaveImage(saveFileDialog.FileName, HImage);
+                    var result = imageHelper.SaveImage(saveFileDialog.FileName, HImage);
                     if (result.IsSuccess)
                     {
-                        AddLog(0, "保存图像成功");
+                        log.Info("保存图像成功");
                     }
                     else
                     {
-                        AddLog(2, "保存图像失败"+result.ErrorMsg);
+                        log.Error(result);
                     }
                 }
             }
@@ -160,45 +178,15 @@ namespace Measure.Halcon.Demo
 
         private void btn_OneShot_Click(object sender, EventArgs e)
         {
-            var result= image.GrabImage(ref HImage, ref HwindowHandle);
+            var result= imageHelper.GrabImage(ref HImage, ref HwindowHandle);
             if (result.IsSuccess)
             {
-                AddLog(0, "单帧采图成功");
+                log.Info("单帧采图成功");
             } 
             else 
                 {
-                    AddLog(2, "单帧采图失败" + result.ErrorMsg);
+                    log.Error(result);
                 }
-
-        }
-
-        private string CurrentTime
-        {
-            get { return DateTime.Now.ToString("T"); }
-        }
-        private void AddLog(int index, string log)
-        {
-            // 窗体正在关闭/已销毁时，Invoke 会抛 ObjectDisposedException；
-            // 采集线程在关窗过程中还在报错，这条日志直接丢掉即可。
-            if (IsDisposed || list_Info.IsDisposed) return;
-
-            if (list_Info.InvokeRequired)
-            {
-                this.list_Info.Invoke(new Action(()=>{
-                    ListViewItem listViewItem = new ListViewItem("   " + CurrentTime, index);
-                    listViewItem.SubItems.Add(log);
-                    this.list_Info.Items.Insert(0, listViewItem);
-
-                }));
-
-            }
-            else
-            {
-                ListViewItem listViewItem = new ListViewItem("   " + CurrentTime, index);
-                listViewItem.SubItems.Add(log);
-                this.list_Info.Items.Insert(0, listViewItem);
-
-            }
 
         }
 
@@ -209,56 +197,59 @@ namespace Measure.Halcon.Demo
 
         private void chk_Trigger_CheckedChanged(object sender, EventArgs e)
         {
-            if (!image.SetTriggerMode(chk_Trigger.Checked).IsSuccess){
-                AddLog(1, "触发设置失败");
+            var result = imageHelper.SetTriggerMode(chk_Trigger.Checked);
+            if (!result.IsSuccess)
+            {
+                log.Warn(result);
             }
-            ;
         }
 
         private void tb_ExposureTime_Scroll(object sender, EventArgs e)
         {
             this.tb_ExposureTime.Focus();
-            if (image.SetExposureTime(tb_ExposureTime.Value).IsSuccess)
+            var result = imageHelper.SetExposureTime(tb_ExposureTime.Value);
+            if (result.IsSuccess)
             {
-                this.txt_ExposureTime.Text= tb_ExposureTime.Value.ToString  ();
+                this.txt_ExposureTime.Text = tb_ExposureTime.Value.ToString();
             }
             else
             {
-                AddLog(1, "曝光时间设置失败");
+                log.Warn(result);
             }
         }
 
         private void tb_Gain_Scroll(object sender, EventArgs e)
         {
             this.tb_Gain.Focus();
-            if (image.SetGain(tb_Gain.Value).IsSuccess)
+            var result = imageHelper.SetGain(tb_Gain.Value);
+            if (result.IsSuccess)
             {
                 this.txt_Gain.Text = tb_Gain.Value.ToString();
             }
             else
             {
-                AddLog(1, "增益设置失败");
+                log.Warn(result);
             }
         }
 
         private void btn_Grab_Click(object sender, EventArgs e)
         {
-            if (cts != null)                       
+            if (!grabTask.IsCompleted)                       
             {
-                AddLog(1, "已经在连续采图，勿重复启动");
+                log.Warn("已经在连续采图，勿重复启动");
                 return;
             }
-            if (!image.IsCameraOpen())
+            if (!imageHelper.IsCameraOpen())
             {
-                var openCamresult = image.OpenCam(CamName, "ssss");
+                var openCamresult = imageHelper.OpenCam(CamName, "ssss");
                 if (openCamresult.IsSuccess)
                 {
 
-                    AddLog(0, "相机打开成功");
+                    log.Info("相机打开成功");
 
                  
-                    double exposure = image.GetExposureTime();
-                    double gain = image.GetGain();
+                    double exposure = imageHelper.GetExposureTime();
+                    double gain = imageHelper.GetGain();
 
                     // 文本框显示真实值（保留小数），它才是"准"的那个
                     txt_ExposureTime.Text = exposure.ToString("F1");
@@ -268,43 +259,43 @@ namespace Measure.Halcon.Demo
                     tb_ExposureTime.Value = ToTrackBarValue(exposure, tb_ExposureTime);
                     tb_Gain.Value = ToTrackBarValue(gain, tb_Gain);
 
-                    chk_Trigger.Checked = image.GetTriggerMode();
+                    chk_Trigger.Checked = imageHelper.GetTriggerMode();
                 }
                 else
                 {
-                    AddLog(2, "相机打开失败" + openCamresult.ErrorMsg);
+                    log.Error(openCamresult);
                     return;
 
                 }
             }
 
             var source = new CancellationTokenSource();
-            cts = source;                          // 先挂上，防重入守卫才有效
+            grabCts = source;                         
             CancellationToken token = source.Token;
 
-            Task.Factory.StartNew(
-                () => GrabImageThread(token, source),
+            grabTask= Task.Factory.StartNew(
+                () => GrabImageThread(token),
                 token,
                 TaskCreationOptions.LongRunning,   // 常驻采集循环：开专用线程，不占线程池
                 TaskScheduler.Default);            // 必须显式 Default，否则 LongRunning 会被忽略
 
-            AddLog(0, "开始连续采图");
+            log.Info("开始连续采图");
 
         }
 
 
 
-        private void GrabImageThread(CancellationToken token, CancellationTokenSource source)
+        private void GrabImageThread(CancellationToken token)
         {
             try
             {
-                while (!token.IsCancellationRequested)   // 用传进来的 token，不读字段 cts
+                while (!token.IsCancellationRequested)   
                 {
-                    var result = image.GrabImage(ref HImage, ref HwindowHandle);
+                    var result = imageHelper.GrabImage(ref HImage, ref HwindowHandle);
 
                     if (!result.IsSuccess)
                     {
-                        AddLog(2, "采图失败：" + result.ErrorMsg);
+                        log.Error(result);
                         break;
                     }
                 }
@@ -312,44 +303,28 @@ namespace Measure.Halcon.Demo
             catch (Exception ex)
             {
                 // Task 的异常没人 await 会被静默吞掉，这里必须落地
-                AddLog(2, "采集线程异常：" + ex.Message);
-            }
-            finally
-            {
-                // 不管怎么退出（取消 / 采图失败 / 异常），都把"正在采图"这个状态清掉，
-                // 否则下一次点【开始】会被防重入守卫永久挡住。
-                if (ReferenceEquals(cts, source))
-                {
-                    cts = null;
-                }
+                log.Error(OperationResult.CreateFailResult("采集线程异常", ex));
             }
         }
 
         private void btn_StopGrab_Click(object sender, EventArgs e)
         {
-            AddLog(0, "停止连续采图");
-
-            // 只举旗：真正的状态清理由采集线程的 finally 完成，
-            // 因为"请求停止"不等于"线程已停"（可能还卡在 GrabImage 里）
-            cts?.Cancel();
+            grabCts?.Cancel();
+            log.Info("停止连续采图");
         }
 
-        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            cts?.Cancel();       // 让采集循环退出
-            image.CloseCam();    // 关相机，别把句柄留给进程退出兜底
-        }
+      
 
         private void btn_FindShapeModel_Click(object sender, EventArgs e)
         {
             if (!HalconHelper.IsObjectValid(HImage))
             {
-                AddLog(1, "查找模板失败：图像不存在");
+                log.Warn("查找模板失败：图像不存在");
                 return;
             }
             if(mathParams.modelID == null)
             {
-                AddLog(1, "查找模板失败：模板为空");
+                log.Warn("查找模板失败：模板为空");
                 return;
             }
 
@@ -358,11 +333,11 @@ namespace Measure.Halcon.Demo
              var result = shapeModelHelper.FindShapeMode(ref HwindowHandle,ref HImage, mathParams);
             if (result.IsSuccess)
             {
-                AddLog(0, "查找模板成功");
+                log.Info("查找模板成功");
             }
             else
             {
-                AddLog(1, "查找模板失败");
+                log.Warn(result);
             }
         }
 
@@ -381,43 +356,90 @@ namespace Measure.Halcon.Demo
 
         private void btn_ContinueFind_Click(object sender, EventArgs e)
         {
-           
-            if (mathParams.modelID == null)
+            if (findcts != null&&!findTask.IsCompleted)
             {
-                AddLog(1, "查找模板失败：模板为空");
+                ColseContinuousFind();
+                btn_ContinueFind.Text = "连续查找";
                 return;
             }
-            mathParams.startAngle = Convert.ToDouble(this.txt_Angle.Text.Trim());
-            mathParams.rangAngle = Convert.ToDouble(this.txt_Range.Text.Trim());
-            mathParams.overlap = Convert.ToDouble(this.txt_Overlap.Text.Trim());
-            mathParams.score = Convert.ToDouble(this.txt_Score.Text.Trim());
-            mathParams.numMatchs = Convert.ToInt32(this.txt_NumMatchs.Text.Trim());
-            using (FolderBrowserDialog folderBrowserDialog =new FolderBrowserDialog())
+
+            btn_ContinueFind.Text = "关闭连续查找";
+            if (mathParams.modelID == null)
             {
-                if(folderBrowserDialog.ShowDialog()== DialogResult.OK)
+                log.Warn("查找模板失败：模板为空");
+                return;
+            }
+            
+            LoadParamsFromUi();
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                if (!string.IsNullOrEmpty(lastFindPath)) {
+                    folderBrowserDialog.SelectedPath= lastFindPath;
+                }
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
                     string path = folderBrowserDialog.SelectedPath;
+                    lastFindPath= path;
                     FileInfo[] files = new DirectoryInfo(path).GetFiles();
-                    Task.Run(() => {
-                        foreach (FileInfo file in files)
-                        {
-
-                            if (image.ReadImage(file.FullName, ref HwindowHandle, ref HImage).IsSuccess)
-                            {
-                                var result = shapeModelHelper.FindShapeMode(ref HwindowHandle, ref HImage, mathParams);
-                                if (!result.IsSuccess)
-                                {
-                                    AddLog(1, "查找模板失败");
-                                }
-
-                            }
-                            Thread.Sleep(3000);
-                        }
-                    });
+                    findcts = new CancellationTokenSource();
+                    CancellationToken token = findcts.Token;
+                  findTask=Task.Factory.StartNew(() => ContinuousFindThread(token, files),
+                      token, TaskCreationOptions.LongRunning,
+                       TaskScheduler.Default);
                 }
-                
-
             }
+        }
+        //连续查找方法
+        private void ContinuousFindThread(CancellationToken token,FileInfo[] files)
+        {
+            while (!token.IsCancellationRequested) {
+                foreach (FileInfo file in files)
+                {
+                    if (token.IsCancellationRequested) break;
+                   var  resultImageHelper = imageHelper.ReadImage(file.FullName, ref HwindowHandle, ref HImage);
+                    if (resultImageHelper.IsSuccess)
+                    {
+                        var result = shapeModelHelper.FindShapeMode(ref HwindowHandle, ref HImage, mathParams);
+                        if (!result.IsSuccess)
+                        {
+                            log.Warn(result);
+                        }
+                    }
+                    else
+                    {
+                        log.Warn(resultImageHelper);
+                    }
+                   token.WaitHandle.WaitOne(2000);
+                }
+            }
+            ;
+            
+        }
+        //关闭连续查找方法
+        private void ColseContinuousFind()
+        {
+            try
+            {
+                findcts.Cancel();
+                findcts = null;
+                log.Info("关闭连续查找");
+             
+            }
+            catch (Exception ex)
+            {
+                log.Error(OperationResult.CreateFailResult("关闭连续查找失败", ex));
+            }
+            
+           
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            grabCts?.Cancel();       // 让采集循环退出
+            findcts?.Cancel();
+            grabTask.Wait(500);
+            findTask.Wait(500);
+            imageHelper.CloseCam();    // 关相机，别把句柄留给进程退出兜底
         }
     }
 }

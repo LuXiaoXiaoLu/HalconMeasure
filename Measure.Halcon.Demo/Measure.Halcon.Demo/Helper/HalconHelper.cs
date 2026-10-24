@@ -23,14 +23,10 @@ namespace Measure.Halcon.Demo.Helper
                 HOperatorSet.SetColored(hwindowHandle, 12);
                 return  OperationResult.CreateSuccessResult();
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 hwindowHandle = null;
-                return new OperationResult()
-                {
-                    IsSuccess = false,
-                    ErrorMsg = ex.Message
-                };
+                return OperationResult.CreateFailResult("Halcon 初始化失败", ex);
             }
         }
         //判断HObject对象是否有效
@@ -66,7 +62,7 @@ namespace Measure.Halcon.Demo.Helper
             //String: A tuple of strings containing the text messages to be displayed.
             //CoordSystem: If set to 'window', the text position is given
             //   with respect to the window coordinate system.
-            //   If set to 'image', image coordinates are used.
+            //   If set to 'imageHelper', imageHelper coordinates are used.
             //   (This may be useful in zoomed images.)
             //Row: The row coordinate of the desired text position.
             //   You can pass a single value or a tuple of values.
@@ -248,7 +244,7 @@ namespace Measure.Halcon.Demo.Helper
             if ((int)(new HTuple(hv_CoordSystem_COPY_INP_TMP.TupleNotEqual("window"))) != 0)
             {
                 hv_CoordSystem_COPY_INP_TMP.Dispose();
-                hv_CoordSystem_COPY_INP_TMP = "image";
+                hv_CoordSystem_COPY_INP_TMP = "imageHelper";
             }
             //
             if ((int)(new HTuple(hv_Color_COPY_INP_TMP.TupleEqual(""))) != 0)

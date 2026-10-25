@@ -100,7 +100,7 @@ namespace Measure.Halcon.Demo.Helper
                 {
                     halconHelper.disp_message(HwindowHandle, "定位失败", "window", 20, 20, "red", "false");
 
-                    return new OperationResult { IsSuccess = false, ErrorMsg = "未找到模板" };
+                    return new OperationResult { IsSuccess = false, Msg = "未找到模板" };
                 }
             }
             catch (Exception ex)

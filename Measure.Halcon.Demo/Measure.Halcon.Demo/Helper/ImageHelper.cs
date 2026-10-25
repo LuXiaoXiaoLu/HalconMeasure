@@ -223,7 +223,7 @@ namespace Measure.Halcon.Demo
                 return new OperationResult()
                 {
                     IsSuccess = false,
-                    ErrorMsg = "相机未打开，无法设置 " + param,
+                    Msg = "相机未打开，无法设置 " + param,
                 };
             }
 
@@ -255,7 +255,7 @@ namespace Measure.Halcon.Demo
                     return new OperationResult()
                     {
                         IsSuccess = false,
-                        ErrorMsg = string.IsNullOrEmpty(ext)
+                        Msg = string.IsNullOrEmpty(ext)
                             ? "文件路径没有扩展名，无法判断保存格式"
                             : "不支持保存为 \"" + ext + "\" 格式，请使用 bmp / png / jpg / jpeg / tif / tiff",
                     };

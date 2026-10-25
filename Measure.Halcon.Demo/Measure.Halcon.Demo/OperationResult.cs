@@ -17,7 +17,7 @@ namespace Measure.Halcon.Demo
         /// <summary>
         /// 错误信息
         /// </summary>
-        public string ErrorMsg { get; set; }
+        public string Msg { get; set; }
 
 
         public static OperationResult CreateSuccessResult()
@@ -25,7 +25,16 @@ namespace Measure.Halcon.Demo
             return new OperationResult()
             {
                 IsSuccess = true,
-                ErrorMsg = "Success"
+                Msg = "Success"
+            };
+        }
+
+        public static OperationResult CreateSuccessResult(string msg)
+        {
+            return new OperationResult()
+            {
+                IsSuccess = true,
+                Msg = msg
             };
         }
 
@@ -34,12 +43,22 @@ namespace Measure.Halcon.Demo
             return new OperationResult()
             {
                 IsSuccess = false,
-                ErrorMsg = errorMsg,
+                Msg = errorMsg,
                 Error = error
             };
         }
 
-        
+        public static OperationResult CreateFailResult(string errorMsg)
+        {
+            return new OperationResult()
+            {
+                IsSuccess = false,
+                Msg = errorMsg,
+                Error = null
+            };
+        }
+
+
 
     }
 }

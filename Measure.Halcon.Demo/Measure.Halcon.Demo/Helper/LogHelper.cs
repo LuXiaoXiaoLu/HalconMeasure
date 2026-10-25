@@ -59,7 +59,7 @@ namespace Measure.Halcon.Demo.Helper
             }
 
             WriteLogToFile(index, result);
-            AppendLogToUi(index, result.ErrorMsg);
+            AppendLogToUi(index, result.Msg);
         }
 
         /// <summary>把日志写进文件。线程安全，可在任意线程调用。</summary>
@@ -69,9 +69,9 @@ namespace Measure.Halcon.Demo.Helper
             // 正文里若出现 {{ 会被模板语法当转义吃掉；走参数则原样保留
             switch (index)
             {
-                case LogError: Log.Error(result.Error, "{LogText}", result.ErrorMsg); break;
-                case LogWarn: Log.Warning(result.Error, "{LogText}", result.ErrorMsg); break;
-                default: Log.Information(result.Error, "{LogText}", result.ErrorMsg); break;
+                case LogError: Log.Error(result.Error, "{LogText}", result.Msg); break;
+                case LogWarn: Log.Warning(result.Error, "{LogText}", result.Msg); break;
+                default: Log.Information(result.Error, "{LogText}", result.Msg); break;
             }
         }
 

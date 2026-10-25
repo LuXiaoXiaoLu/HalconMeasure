@@ -87,6 +87,9 @@ namespace Measure.Halcon.Demo
         private Task grabTask = Task.CompletedTask;
         //上一次打开连续查找模板图片文件夹地址
         string lastFindPath =string.Empty;
+        //圆参数模板
+
+        private CircleParams circleParams = new CircleParams();
 
         //模板匹配对象
         private ShapeModelHelper shapeModelHelper = new ShapeModelHelper();
@@ -118,7 +121,7 @@ namespace Measure.Halcon.Demo
             }
 
             this.hWindowControl1.Focus();
-            LoadParamsFromUi();
+            LoadMathParamsFromUi();
             var result=shapeModelHelper.CreateShapeModel( ref HwindowHandle,ref  HImage,  mathParams);
             if (result.IsSuccess) {
                 log.Info("创建模板成功");
@@ -328,7 +331,7 @@ namespace Measure.Halcon.Demo
                 return;
             }
 
-            LoadParamsFromUi();
+            LoadMathParamsFromUi();
 
              var result = shapeModelHelper.FindShapeMode(ref HwindowHandle,ref HImage, mathParams);
             if (result.IsSuccess)
@@ -345,13 +348,21 @@ namespace Measure.Halcon.Demo
         {
 
         }
-        private void LoadParamsFromUi()
+        private void LoadMathParamsFromUi()
         {
             mathParams.startAngle = Convert.ToDouble(txt_Angle.Text.Trim());
             mathParams.rangAngle = Convert.ToDouble(txt_Range.Text.Trim());
             mathParams.overlap = Convert.ToDouble(txt_Overlap.Text.Trim());
             mathParams.score = Convert.ToDouble(txt_Score.Text.Trim());
             mathParams.numMatchs = Convert.ToInt32(txt_NumMatchs.Text.Trim());
+        }
+
+        private void LoadCircleParamsFromUi()
+        {
+            circleParams.circle_Elements = Convert.ToInt32(this.txt_CircleElements.Text.Trim());
+            circleParams.circle_Threshold=Convert.ToInt32(this.txt_CircleThreshold.Text.Trim());
+            circleParams.circle_Sigma = Convert.ToInt32(this.txt_CircleSigma.Text.Trim());
+           
         }
 
         private void btn_ContinueFind_Click(object sender, EventArgs e)
@@ -370,7 +381,7 @@ namespace Measure.Halcon.Demo
                 return;
             }
             
-            LoadParamsFromUi();
+            LoadMathParamsFromUi();
             using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
             {
                 if (!string.IsNullOrEmpty(lastFindPath)) {
@@ -441,5 +452,43 @@ namespace Measure.Halcon.Demo
             findTask.Wait(500);
             imageHelper.CloseCam();    // 关相机，别把句柄留给进程退出兜底
         }
+
+        private void btn_CircleROI_Click(object sender, EventArgs e)
+        {
+            hWindowControl1.Focus();
+            halconHelper.draw_spoke3(HImage, out HObject hRegions, HwindowHandle, circleParams.circle_Elements, circleParams.circle_Caliper_Height, 
+                circleParams.circle_Caliper_Width,out circleParams.rOI_X, out circleParams.rOI_Y, out circleParams.circle_Direct);
+            if (circleParams.rOI_X.Length < 4)
+            {
+                log.Error("创建ROI失败");
+            }
+            else
+            {
+                HOperatorSet.DispObj(HImage, HwindowHandle);
+                HOperatorSet.DispObj(hRegions, HwindowHandle);
+                log.Info("创建ROI成功");
+            }
+        }
+
+        private void btn_CircleFit_Click(object sender, EventArgs e)
+        {
+            //LoadCircleParamsFromUi();
+           var result = halconHelper.Fit_Circle(HImage, circleParams, out HObject hRegion, out HTuple resultRow,
+           out HObject result_Circle, out HTuple hv_RowCenter, out HTuple hv_ColCenter,
+           out HTuple hv_Radius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
+           out HTuple hv_ArcAngle);
+            HOperatorSet.DispObj(HImage, HwindowHandle);
+            HOperatorSet.DispObj(hRegion, HwindowHandle);
+            if (result.IsSuccess)
+            {
+                log.Info("圆拟合成功");
+            }
+            else
+            {
+                log.Warn(result);
+            }
+        }
+
+
     }
 }

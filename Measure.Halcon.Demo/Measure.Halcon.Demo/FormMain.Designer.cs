@@ -518,6 +518,7 @@
             this.btn_CircleFit.TabIndex = 13;
             this.btn_CircleFit.Text = "拟合";
             this.btn_CircleFit.UseVisualStyleBackColor = true;
+            this.btn_CircleFit.Click += new System.EventHandler(this.btn_CircleFit_Click);
             // 
             // btn_CircleROI
             // 
@@ -527,6 +528,7 @@
             this.btn_CircleROI.TabIndex = 14;
             this.btn_CircleROI.Text = "圆ROI";
             this.btn_CircleROI.UseVisualStyleBackColor = true;
+            this.btn_CircleROI.Click += new System.EventHandler(this.btn_CircleROI_Click);
             // 
             // cmb_CirclePointSelect
             // 

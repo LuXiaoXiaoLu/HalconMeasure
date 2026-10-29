@@ -39,7 +39,7 @@ namespace Measure.Halcon.Demo.Helper
                 if (mathParams.modelID != null)
                 {
                     halconHelper.disp_message(HwindowHandle, "创建模板成功", "window", 20, 20, "green", "false");
-                    return OperationResult.CreateSuccessResult();
+                    return OperationResult.CreateSuccessResult("创建模板成功");
                 }
                 else
                 {
@@ -94,7 +94,7 @@ namespace Measure.Halcon.Demo.Helper
 
                     halconHelper.disp_message(HwindowHandle, "定位成功", "window", 20, 20, "green", "false");
 
-                    return OperationResult.CreateSuccessResult();
+                    return OperationResult.CreateSuccessResult("查找模板成功");
                 }
                 else
                 {

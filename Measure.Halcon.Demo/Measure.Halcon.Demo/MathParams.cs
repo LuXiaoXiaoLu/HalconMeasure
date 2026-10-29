@@ -81,5 +81,17 @@ namespace Measure.Halcon.Demo.Helper
             }
 
         }
+
+        public override string ToString()
+        {
+            string model = (modelID == null) ? "未创建" : "已创建";
+            string region = (modelRegion != null && modelRegion.IsInitialized()) ? "有" : "无";
+
+            return $"起始角={startAngle}°, 范围={rangAngle}°, 最小分={score}, 匹配数={numMatchs}, " +
+                   $"重叠={overlap}, 贪婪={greediness}, " +
+                   $"缩放R=[{scaleRMin},{scaleRMax}], 缩放C=[{scaleCMin},{scaleCMax}], " +
+                   $"模板={model}, 模板区域={region}";
+        }
+
     }
 }

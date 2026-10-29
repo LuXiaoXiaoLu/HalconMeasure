@@ -28,17 +28,44 @@ namespace Measure.Halcon.Demo.Helper
         /// <summary>记一条普通信息。</summary>
         public void Info(string log) { AddLog(LogInfo, log); }
 
+        
+
         /// <summary>记一条警告。</summary>
         public void Warn(string log) { AddLog(LogWarn, log); }
 
         /// <summary>记一条错误。</summary>
         public void Error(string log) { AddLog(LogError, log); }
 
-        /// <summary>记一个失败的操作结果（自动带上完整异常栈）。</summary>
-        public void Warn(OperationResult result) { AddLog(LogWarn, result); }
+        /// <summary>
+        /// 记录一个操作结果，级别由结果自身决定：
+        /// 成功 → Info；业务失败（无异常）→ Warn；技术故障（带异常）→ Error。
+        /// 调用点不再自己判断成功/失败、不再自己选级别。
+        /// </summary>
+        public void Result(OperationResult result)
+        {
+            if (result == null)
+            {
+                Warn("(result 为 null)");
+                return;
+            }
 
-        /// <summary>记一个失败的操作结果（自动带上完整异常栈）。</summary>
-        public void Error(OperationResult result) { AddLog(LogError, result); }
+            if (result.IsSuccess)
+            {
+                AddLog(LogInfo, result);
+            }
+            else
+            {
+                AddLog(result.Error != null ? LogError : LogWarn, result);
+            }
+        }
+
+        /// <summary>只记失败，成功静默。级别仍由内部判断：带异常→Error，否则→Warn。</summary>
+        public void Fail(OperationResult result)
+        {
+            if (result == null || result.IsSuccess) return;
+            AddLog(result.Error != null ? LogError : LogWarn, result);
+        }
+
 
         private void AddLog(int index, string log)
         {

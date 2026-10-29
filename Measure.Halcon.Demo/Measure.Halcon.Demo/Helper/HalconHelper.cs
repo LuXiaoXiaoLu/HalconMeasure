@@ -22,7 +22,7 @@ namespace Measure.Halcon.Demo.Helper
                 HOperatorSet.SetDraw(hwindowHandle, "margin");
                 HOperatorSet.SetColor(hwindowHandle, "red");
                 HOperatorSet.SetColored(hwindowHandle, 12);
-                return  OperationResult.CreateSuccessResult();
+                return  OperationResult.CreateSuccessResult("Halcon 初始化成功");
             }
             catch (Exception ex)
             {
@@ -1688,7 +1688,7 @@ namespace Measure.Halcon.Demo.Helper
                     HOperatorSet.GenCrossContourXld(out HObject cross, resultRow, resultCol, 20, new HTuple(45));
                     pts_to_best_circle(out result_Circle, resultRow, resultCol,circle.circle_Min_Points_Num,resultArcType, out  hv_RowCenter, out  hv_ColCenter,
                     out  hv_Radius, out  hv_StartPhi, out  hv_EndPhi, out hv_PointOrder,out  hv_ArcAngle);
-                    return OperationResult.CreateSuccessResult();
+                    return OperationResult.CreateSuccessResult("拟合圆成功");
                 }
                 else
                 {

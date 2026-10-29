@@ -34,7 +34,7 @@ namespace Measure.Halcon.Demo
                 CloseCam();
                 HOperatorSet.OpenFramegrabber(Drvname, 0, 0, 0, 0, 0, 0, "progressive", -1, "default", -1, "false", "default",
                 CamName, 0, -1, out acqHandle);
-                return  OperationResult.CreateSuccessResult();
+                return OperationResult.CreateSuccessResult("打开相机成功");
             }
             catch (Exception ex)
             {
@@ -62,7 +62,7 @@ namespace Measure.Halcon.Demo
         }
 
         //关闭相机
-        public OperationResult CloseCam( )
+        public OperationResult CloseCam()
         {
             if(IsCameraOpen())
             {
@@ -70,7 +70,7 @@ namespace Measure.Halcon.Demo
                     {
                         HOperatorSet.CloseFramegrabber(acqHandle);
                         acqHandle=null;
-                        return OperationResult.CreateSuccessResult();
+                        return OperationResult.CreateSuccessResult("关闭相机成功");
                     }
                     catch (Exception ex)
                     {
@@ -78,7 +78,7 @@ namespace Measure.Halcon.Demo
                     }
             }
 
-            return OperationResult.CreateSuccessResult();
+            return OperationResult.CreateSuccessResult("关闭相机成功");
         }
 
         //相机读取图像
@@ -90,7 +90,7 @@ namespace Measure.Halcon.Demo
                 HOperatorSet.GetImageSize(hImage, out HTuple width, out HTuple height);
                 HOperatorSet.SetPart(WindowHandle, 0, 0, height - 1, width - 1);
                 HOperatorSet.DispObj(hImage, WindowHandle);
-                return OperationResult.CreateSuccessResult();
+                return OperationResult.CreateSuccessResult("采图成功");
             }
             catch (Exception ex)
             {
@@ -107,7 +107,7 @@ namespace Measure.Halcon.Demo
                 HOperatorSet.GetImageSize(hImage, out HTuple width, out HTuple height);
                 HOperatorSet.SetPart(WindowHandle, 0, 0, height - 1, width - 1);
                 HOperatorSet.DispObj(hImage, WindowHandle);
-                return OperationResult.CreateSuccessResult();
+                return OperationResult.CreateSuccessResult("读取图像成功");
             }
             catch (Exception ex)
             {
@@ -230,11 +230,10 @@ namespace Measure.Halcon.Demo
             try
             {
                 HOperatorSet.SetFramegrabberParam(acqHandle, param, value);
-                return OperationResult.CreateSuccessResult();
+                return OperationResult.CreateSuccessResult("设置 " + param + " 成功");
             }
             catch (HalconException ex)
             {
-                System.Diagnostics.Debug.WriteLine("设置 " + param + " 失败：" + ex);
                 return OperationResult.CreateFailResult("设置 " + param + " 失败", ex);
             }
         }
@@ -269,7 +268,7 @@ namespace Measure.Halcon.Demo
                 }
 
                 HOperatorSet.WriteImage(hImage, format, 0, path);
-                return OperationResult.CreateSuccessResult();
+                return OperationResult.CreateSuccessResult("保存图像成功");
             }
             catch (Exception ex)
             {

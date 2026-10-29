@@ -500,6 +500,7 @@
             this.btn_Calib.TabIndex = 15;
             this.btn_Calib.Text = "标定";
             this.btn_Calib.UseVisualStyleBackColor = true;
+            this.btn_Calib.Click += new System.EventHandler(this.btn_Calib_Click);
             // 
             // btn_Measure
             // 
@@ -509,6 +510,7 @@
             this.btn_Measure.TabIndex = 15;
             this.btn_Measure.Text = "测量";
             this.btn_Measure.UseVisualStyleBackColor = true;
+            this.btn_Measure.Click += new System.EventHandler(this.btn_Measure_Click);
             // 
             // btn_CircleFit
             // 

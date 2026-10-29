@@ -18,11 +18,27 @@ namespace Measure.Halcon.Demo.Helper
             circle_Sigma = 1;
             circle_Transition = "all";
             circle_Point_Select = "max";
-
+            circle_Dis_Min = 1;
+            circle_Dis_Max = 99;
+            scale = 1.0;
 
         }
 
 
+        public override string ToString()
+        {
+            return $"卡尺[数={circle_Elements}, 高={circle_Caliper_Height}, 宽={circle_Caliper_Width}], " +
+                   $"边缘[最小点数={circle_Min_Points_Num}, 阈值={circle_Threshold}, 滤波={circle_Sigma}, " +
+                   $"极性={circle_Transition}, 点选择={circle_Point_Select}], " +
+                   $"直径=[{circle_Dis_Min},{circle_Dis_Max}], 标定={scale}, " +
+                   $"ROI点数={TupleLen(rOI_X)}, 圆心点数={TupleLen(circleCenter_X)}, " +
+                   $"半径点数={TupleLen(circleRadius)}, 距离={distance}";
+        }
+
+        private static int TupleLen(HTuple t)
+        {
+            return (t == null) ? 0 : t.Length;
+        }
 
         //卡尺个数
         /// <summary>

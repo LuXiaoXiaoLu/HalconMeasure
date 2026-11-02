@@ -1661,7 +1661,9 @@ namespace Measure.Halcon.Demo.Helper
             return;
         }
 
-        public OperationResult Fit_Circle(HObject image,CircleParams circle,out HObject hRegion,out HTuple resultRow,
+
+
+        public OperationResult Fit_Circle(HObject image,CircleParams circle, HTuple homMat2d_T, out HObject hRegion,out HTuple resultRow,
             out HObject result_Circle, out HTuple hv_RowCenter, out HTuple hv_ColCenter,
             out HTuple hv_Radius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
             out HTuple hv_ArcAngle)
@@ -1677,19 +1679,48 @@ namespace Measure.Halcon.Demo.Helper
             result_Circle = null;
             resultRow=null;
             hRegion=null;
+
             try
             {
-                spoke(image, out hRegion, circle.circle_Elements, circle.circle_Caliper_Height,circle.circle_Caliper_Width
-                    , circle.circle_Sigma, circle.circle_Threshold,circle.circle_Transition ,circle.circle_Point_Select, circle.rOI_X, circle.rOI_Y, 
-                    circle.circle_Direct,out resultRow, out HTuple resultCol, out HTuple resultArcType);
+                HTuple resultCol, resultArcType;
+                if (homMat2d_T.Length > 1)
+                {
+                    HOperatorSet.AffineTransPoint2d(homMat2d_T, circle.rOI_Y, circle.rOI_X, out HTuple rOI_yNew, out HTuple rOI_xNew);
+
+
+                    spoke(image, out hRegion, circle.circle_Elements, circle.circle_Caliper_Height, circle.circle_Caliper_Width
+                   , circle.circle_Sigma, circle.circle_Threshold, circle.circle_Transition, circle.circle_Point_Select, rOI_yNew, rOI_xNew,
+                   circle.circle_Direct, out resultRow, out resultCol, out resultArcType);
+                }
+                else
+                {
+                    spoke(image, out hRegion, circle.circle_Elements, circle.circle_Caliper_Height, circle.circle_Caliper_Width
+                   , circle.circle_Sigma, circle.circle_Threshold, circle.circle_Transition, circle.circle_Point_Select, circle.rOI_Y, circle.rOI_X,
+                   circle.circle_Direct, out resultRow, out  resultCol, out  resultArcType);
+
+                }
 
                 if (resultRow.Length > circle.circle_Min_Points_Num)
                 {
                     HOperatorSet.GenCrossContourXld(out HObject cross, resultRow, resultCol, 20, new HTuple(45));
-                    pts_to_best_circle(out result_Circle, resultRow, resultCol,circle.circle_Min_Points_Num,resultArcType, out  hv_RowCenter, out  hv_ColCenter,
-                    out  hv_Radius, out  hv_StartPhi, out  hv_EndPhi, out hv_PointOrder,out  hv_ArcAngle);
-                    return OperationResult.CreateSuccessResult("拟合圆成功");
+
+                    pts_to_best_circle(out result_Circle, resultRow, resultCol, circle.circle_Min_Points_Num, resultArcType,
+                        out hv_RowCenter, out hv_ColCenter, out hv_Radius,
+                        out hv_StartPhi, out hv_EndPhi, out hv_PointOrder, out hv_ArcAngle);
+
+                    // HALCON 的角度都是弧度，换算成"度"更直观
+                    double startDeg = hv_StartPhi.D * 180.0 / Math.PI;
+                    double endDeg = hv_EndPhi.D * 180.0 / Math.PI;
+                    double arcDeg = hv_ArcAngle.D * 180.0 / Math.PI;
+
+                    string msg = $"拟合圆成功: 圆心(Row={hv_RowCenter.D:F2}, Col={hv_ColCenter.D:F2}), " +
+                                 $"半径={hv_Radius.D:F2}px, 起始角={startDeg:F2}°, " +
+                                 $"结束角={endDeg:F2}°, 圆弧角={arcDeg:F2}°";
+
+                    cross.Dispose();    
+                    return OperationResult.CreateSuccessResult(msg);
                 }
+
                 else
                 {
                     result_Circle = null;
@@ -1703,5 +1734,8 @@ namespace Measure.Halcon.Demo.Helper
             }
 
         }
+
+
+
     }
 }

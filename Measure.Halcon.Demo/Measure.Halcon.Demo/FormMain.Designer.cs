@@ -87,12 +87,17 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txt_CircleElements = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Savefile = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImportParamsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tb_Gain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tb_ExposureTime)).BeginInit();
             this.gb1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // hWindowControl1
@@ -100,7 +105,7 @@
             this.hWindowControl1.BackColor = System.Drawing.Color.Black;
             this.hWindowControl1.BorderColor = System.Drawing.Color.Black;
             this.hWindowControl1.ImagePart = new System.Drawing.Rectangle(0, 0, 640, 480);
-            this.hWindowControl1.Location = new System.Drawing.Point(27, 28);
+            this.hWindowControl1.Location = new System.Drawing.Point(27, 43);
             this.hWindowControl1.Margin = new System.Windows.Forms.Padding(4);
             this.hWindowControl1.Name = "hWindowControl1";
             this.hWindowControl1.Size = new System.Drawing.Size(477, 380);
@@ -110,7 +115,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.list_Info);
-            this.groupBox1.Location = new System.Drawing.Point(27, 440);
+            this.groupBox1.Location = new System.Drawing.Point(27, 447);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(477, 205);
             this.groupBox1.TabIndex = 1;
@@ -126,7 +131,7 @@
             this.columnHeader2});
             this.list_Info.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.list_Info.HideSelection = false;
-            this.list_Info.Location = new System.Drawing.Point(21, 24);
+            this.list_Info.Location = new System.Drawing.Point(21, 25);
             this.list_Info.Name = "list_Info";
             this.list_Info.Size = new System.Drawing.Size(439, 166);
             this.list_Info.SmallImageList = this.imageList1;
@@ -165,7 +170,7 @@
             this.groupBox2.Controls.Add(this.btn_SaveImage);
             this.groupBox2.Controls.Add(this.chk_RealTimeProc);
             this.groupBox2.Controls.Add(this.chk_Trigger);
-            this.groupBox2.Location = new System.Drawing.Point(565, 29);
+            this.groupBox2.Location = new System.Drawing.Point(565, 36);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(443, 231);
             this.groupBox2.TabIndex = 5;
@@ -335,7 +340,7 @@
             this.gb1.Controls.Add(this.label12);
             this.gb1.Controls.Add(this.txt_Angle);
             this.gb1.Controls.Add(this.label6);
-            this.gb1.Location = new System.Drawing.Point(565, 262);
+            this.gb1.Location = new System.Drawing.Point(565, 268);
             this.gb1.Name = "gb1";
             this.gb1.Size = new System.Drawing.Size(443, 163);
             this.gb1.TabIndex = 6;
@@ -485,12 +490,13 @@
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.txt_CircleElements);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Location = new System.Drawing.Point(565, 427);
+            this.groupBox3.Location = new System.Drawing.Point(565, 433);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(443, 227);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "圆测量";
+            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // btn_Calib
             // 
@@ -674,6 +680,40 @@
             this.label9.TabIndex = 5;
             this.label9.Text = "搜索点数";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1089, 28);
+            this.menuStrip1.TabIndex = 8;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileStripMenuItem
+            // 
+            this.fileStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Savefile,
+            this.ImportParamsMenuItem});
+            this.fileStripMenuItem.Name = "fileStripMenuItem";
+            this.fileStripMenuItem.Size = new System.Drawing.Size(53, 24);
+            this.fileStripMenuItem.Text = "文件";
+            // 
+            // Savefile
+            // 
+            this.Savefile.Name = "Savefile";
+            this.Savefile.Size = new System.Drawing.Size(224, 26);
+            this.Savefile.Text = "保存参数";
+            this.Savefile.Click += new System.EventHandler(this.Savefile_Click);
+            // 
+            // ImportParamsMenuItem
+            // 
+            this.ImportParamsMenuItem.Name = "ImportParamsMenuItem";
+            this.ImportParamsMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.ImportParamsMenuItem.Text = "加载参数";
+            this.ImportParamsMenuItem.Click += new System.EventHandler(this.ImportParamsMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
@@ -684,11 +724,14 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.hWindowControl1);
+            this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.Text = "零件测量";
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -698,7 +741,10 @@
             this.gb1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -761,6 +807,10 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txt_CircleElements;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Savefile;
+        private System.Windows.Forms.ToolStripMenuItem ImportParamsMenuItem;
     }
 }
 

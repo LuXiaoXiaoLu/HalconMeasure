@@ -44,7 +44,7 @@ namespace Measure.Halcon.Demo.Helper
         /// <summary>
         /// 卡尺数量
         /// </summary>
-        public int circle_Elements;
+        public int circle_Elements { get; set; }
 
 
         //圆卡尺工具宽度
@@ -58,24 +58,24 @@ namespace Measure.Halcon.Demo.Helper
         public int circle_Min_Points_Num;
 
         //圆边缘点阈值
-        public int circle_Threshold;
+        public int circle_Threshold { get; set; }
 
         //圆边缘点滤波系数
-        public double circle_Sigma;
+        public double circle_Sigma { get; set; }
 
         //圆边缘点极性
-        public string circle_Transition;
+        public string circle_Transition { get; set; }
 
         //圆边缘点选择
-        public string circle_Point_Select;
+        public string circle_Point_Select { get; set; }
 
 
         //圆最小直径
-        public double circle_Dis_Min;
+        public double circle_Dis_Min { get; set; }
 
 
         //圆最大直径
-        public double circle_Dis_Max;
+        public double circle_Dis_Max { get; set; }
 
         //像素标定系数
 

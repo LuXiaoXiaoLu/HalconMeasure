@@ -9,11 +9,11 @@ namespace Measure.Halcon.Demo.Helper
 
 {
     //模板参数
-    internal class MathParams
+    internal class MatchParams
 
     {
 
-        public MathParams ()
+        public MatchParams ()
         {
             startAngle = -45;
             rangAngle = 90;
@@ -33,7 +33,7 @@ namespace Measure.Halcon.Demo.Helper
             get { return startAngle * Math.PI / 180.0; }
         }
         //起始角度
-        public double startAngle;
+        public double startAngle { get; set; }
 
         /// 角度范围(弧度)
         public double RangeAngleRad
@@ -41,10 +41,10 @@ namespace Measure.Halcon.Demo.Helper
             get { return rangAngle * Math.PI / 180.0; }
         }
         //角度范围
-        public double rangAngle;
+        public double rangAngle { get; set; }
 
         //最小分数
-        public double score;
+        public double score { get; set; }
 
         //行最小缩放
         public double scaleRMin;
@@ -62,10 +62,10 @@ namespace Measure.Halcon.Demo.Helper
         public double greediness;
 
         //匹配数量
-        public int numMatchs;
+        public int numMatchs { get; set; }
 
         //最大重叠度
-        public double overlap;
+        public double overlap { get; set; }
 
         //极性
         public HTuple metric;
@@ -74,7 +74,7 @@ namespace Measure.Halcon.Demo.Helper
 
         public HTuple modelID;
 
-        ~MathParams()
+        ~MatchParams()
         {
             if (modelID != null) { 
                 HOperatorSet.ClearShapeModel(modelID);

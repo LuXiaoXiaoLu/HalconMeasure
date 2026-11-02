@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Shapes;
 using static System.Net.WebRequestMethods;
 
 namespace Measure.Halcon.Demo
@@ -38,6 +39,7 @@ namespace Measure.Halcon.Demo
         {
             InitializeComponent();
             InitialParams();
+            BindParams();
             log = new LogHelper(list_Info);
             this.FormClosed += FormMain_FormClosed;
             this.list_Info.Columns[1].Width = list_Info.Width - this.list_Info.Columns[0].Width - 20;
@@ -47,6 +49,14 @@ namespace Measure.Halcon.Demo
             {
                 return;
             }
+
+            var result = shapeModelHelper.ImportShapeModel(basePath, mathParams, circleParams);
+            log.Result(result);
+            if (result.IsSuccess)
+            {
+                RefreshBindings(this);   // 参数 → 界面 强制刷新一遍
+            }
+
             if (!imageHelper.IsCameraOpen())
             {
                 var openCamresult = imageHelper.OpenCam(CamName, "ssss");
@@ -76,7 +86,8 @@ namespace Measure.Halcon.Demo
 
                 }
             }
-            
+           
+
         }
         
         private ImageHelper imageHelper = new ImageHelper();
@@ -100,6 +111,9 @@ namespace Measure.Halcon.Demo
         private Task grabTask = Task.CompletedTask;
         //上一次打开连续查找模板图片文件夹地址
         string lastFindPath =string.Empty;
+        //上一次保存参数文件夹地址
+        
+
         //圆参数模板
 
         private CircleParams circleParams = new CircleParams();
@@ -107,29 +121,97 @@ namespace Measure.Halcon.Demo
         //模板匹配对象
         private ShapeModelHelper shapeModelHelper = new ShapeModelHelper();
         //匹配模板数据
-        private MathParams mathParams = new MathParams();
+        private MatchParams mathParams = new MatchParams();
         private LogHelper log;
+
+        private string basePath = Application.StartupPath + "\\model";
 
         public void InitialParams()
         {
-            this.cmb_CirclePointSelect.DataSource=Enum.GetValues(typeof(CirclePointSelect));
-            this.cmb_CircleTransition.DataSource = Enum.GetValues(typeof(CircleTransitiom));
-            this.txt_Angle.Text = mathParams.startAngle.ToString();
-            this.txt_Range.Text=mathParams.rangAngle.ToString();
-            this.txt_Overlap.Text=mathParams.overlap.ToString();
-            this.txt_Score.Text=mathParams.score.ToString();
-            this.txt_NumMatchs.Text=mathParams.numMatchs.ToString();
+            // 用「枚举名」填 Items（字符串），这样 SelectedItem 能按 "max" 精确选中；
+            // 若用 DataSource 绑枚举对象，Text 的读写会被数据绑定接管，显示不可靠
+            this.cmb_CirclePointSelect.Items.Clear();
+            this.cmb_CirclePointSelect.Items.AddRange(Enum.GetNames(typeof(CirclePointSelect)));
+            this.cmb_CircleTransition.Items.Clear();
+            this.cmb_CircleTransition.Items.AddRange(Enum.GetNames(typeof(CircleTransitiom)));
+            // 数值参数改由 DataBindings 自动填充，见 BindParams()
 
 
 
-            this.txt_CircleElements.Text=circleParams.circle_Elements.ToString();
-            this.txt_CircleThreshold.Text=circleParams.circle_Threshold.ToString();
-            this.txt_CircleSigma.Text=circleParams.circle_Sigma.ToString();
-            this.cmb_CircleTransition.Text = circleParams.circle_Transition;
-            this.cmb_CirclePointSelect.Text = circleParams.circle_Point_Select;
-            this.txt_DisMin.Text=circleParams.circle_Dis_Min.ToString();
-            this.txt_DisMax.Text=circleParams.circle_Dis_Max.ToString();
+            this.cmb_CircleTransition.SelectedItem = circleParams.circle_Transition;
+            this.cmb_CirclePointSelect.SelectedItem = circleParams.circle_Point_Select;
 
+        }
+
+        /// <summary>
+        /// 把界面上的数值参数与参数对象双向绑定：
+        /// 参数改了界面自动刷新，界面输入自动写回参数，不再需要手写 Load/Initial 同步。
+        /// </summary>
+        private void BindParams()
+        {
+            // 匹配模板参数
+            BindDouble(txt_Angle, mathParams, nameof(mathParams.startAngle));
+            BindDouble(txt_Range, mathParams, nameof(mathParams.rangAngle));
+            BindDouble(txt_Overlap, mathParams, nameof(mathParams.overlap));
+            BindDouble(txt_Score, mathParams, nameof(mathParams.score));
+            BindInt(txt_NumMatchs, mathParams, nameof(mathParams.numMatchs));
+
+            // 圆测量参数
+            BindInt(txt_CircleElements, circleParams, nameof(circleParams.circle_Elements));
+            BindInt(txt_CircleThreshold, circleParams, nameof(circleParams.circle_Threshold));
+            BindDouble(txt_CircleSigma, circleParams, nameof(circleParams.circle_Sigma));
+            BindDouble(txt_DisMin, circleParams, nameof(circleParams.circle_Dis_Min));
+            BindDouble(txt_DisMax, circleParams, nameof(circleParams.circle_Dis_Max));
+        }
+
+        /// <summary>TextBox ↔ double 属性双向绑定；输入非法时保持参数原值，不抛异常。</summary>
+        private void BindDouble(TextBox box, object source, string propertyName)
+        {
+            box.DataBindings.Add("Text", source, propertyName, true, DataSourceUpdateMode.OnPropertyChanged);
+            Binding binding = box.DataBindings[0];
+            var prop = source.GetType().GetProperty(propertyName);
+
+            binding.Format += (s, e) =>
+            {
+                if (e.Value is double d) e.Value = d.ToString("F2");
+            };
+
+            binding.Parse += (s, e) =>
+            {
+                if (double.TryParse(e.Value?.ToString(), out double v)) e.Value = v;
+                else e.Value = prop.GetValue(source);   // 非法输入：保持原值
+            };
+        }
+
+        /// <summary>TextBox ↔ int 属性双向绑定；输入非法时保持参数原值。</summary>
+        private void BindInt(TextBox box, object source, string propertyName)
+        {
+            box.DataBindings.Add("Text", source, propertyName, true, DataSourceUpdateMode.OnPropertyChanged);
+            Binding binding = box.DataBindings[0];
+            var prop = source.GetType().GetProperty(propertyName);
+
+            binding.Parse += (s, e) =>
+            {
+                if (int.TryParse(e.Value?.ToString(), out int v)) e.Value = v;
+                else e.Value = prop.GetValue(source);   // 非法输入：保持原值
+            };
+        }
+
+        /// <summary>
+        /// 强制所有绑定重新从数据源读值，把界面刷新成参数对象的当前值。
+        /// 参数类没实现 INotifyPropertyChanged，代码改属性后界面不会自己变，
+        /// 所以加载参数后要手动补一次「数据源 → 控件」的同步。
+        /// </summary>
+        private void RefreshBindings(Control parent)
+        {
+            foreach (Control c in parent.Controls)
+            {
+                foreach (Binding b in c.DataBindings)
+                {
+                    b.ReadValue();          // 数据源 → 控件
+                }
+                RefreshBindings(c);         // 递归：GroupBox 里的控件也要刷
+            }
         }
 
         /// <summary>
@@ -214,10 +296,7 @@ namespace Measure.Halcon.Demo
         private void chk_Trigger_CheckedChanged(object sender, EventArgs e)
         {
             var result = imageHelper.SetTriggerMode(chk_Trigger.Checked);
-            if (!result.IsSuccess)
-            {
-                log.Fail(result);
-            }
+            log.Fail(result);
         }
         
         private void tb_ExposureTime_Scroll(object sender, EventArgs e)
@@ -350,7 +429,7 @@ namespace Measure.Halcon.Demo
             {
                 return;
             }
-            var result = shapeModelHelper.FindShapeMode(ref HwindowHandle,ref HImage, mathParams);
+            var result = shapeModelHelper.FindShapeMode(ref HwindowHandle,ref HImage, mathParams,out HTuple homMat2d_T);
             log.Result(result);
         }
 
@@ -360,48 +439,16 @@ namespace Measure.Halcon.Demo
         }
         private OperationResult LoadMathParamsFromUi()
         {
-            try
-            {
-                mathParams.startAngle = Convert.ToDouble(txt_Angle.Text.Trim());
-                mathParams.rangAngle = Convert.ToDouble(txt_Range.Text.Trim());
-                mathParams.overlap = Convert.ToDouble(txt_Overlap.Text.Trim());
-                mathParams.score = Convert.ToDouble(txt_Score.Text.Trim());
-                mathParams.numMatchs = Convert.ToInt32(txt_NumMatchs.Text.Trim());
-              
-                return OperationResult.CreateSuccessResult("匹配模板参数设置成功:" + mathParams.ToString());
-            }
-            catch (Exception ex)
-            {
-
-                return OperationResult.CreateFailResult("匹配模板参数设置失败", ex);
-            }
-
+            // 参数已由 DataBindings 实时同步到 mathParams，这里只负责记录结果
+            return OperationResult.CreateSuccessResult("匹配模板参数设置成功:" + mathParams.ToString());
         }
 
         private OperationResult LoadCircleParamsFromUi()
         {
-
-            try
-            {
-                circleParams.circle_Elements = Convert.ToInt32(this.txt_CircleElements.Text.Trim());
-                circleParams.circle_Threshold = Convert.ToInt32(this.txt_CircleThreshold.Text.Trim());
-                circleParams.circle_Sigma = Convert.ToInt32(this.txt_CircleSigma.Text.Trim());
-                circleParams.circle_Transition = this.cmb_CircleTransition.Text;
-                circleParams.circle_Point_Select = this.cmb_CirclePointSelect.Text;
-                circleParams.circle_Dis_Min = Convert.ToDouble(txt_DisMin.Text.Trim());
-                circleParams.circle_Dis_Max = Convert.ToDouble(txt_DisMax.Text.Trim());
-                return OperationResult.CreateSuccessResult("圆拟合参数设置成功:"+circleParams.ToString());
-            }
-            catch (Exception ex)
-            {
-
-                return OperationResult.CreateFailResult("圆拟合参数设置失败", ex);
-            }
-
-
-
-
-           
+            // 数值参数已由 DataBindings 实时同步；下拉框仍需手动同步一次
+            circleParams.circle_Transition = this.cmb_CircleTransition.Text;
+            circleParams.circle_Point_Select = this.cmb_CirclePointSelect.Text;
+            return OperationResult.CreateSuccessResult("圆拟合参数设置成功:" + circleParams.ToString());
         }
 
         private void btn_ContinueFind_Click(object sender, EventArgs e)
@@ -451,7 +498,7 @@ namespace Measure.Halcon.Demo
                    var  resultImageHelper = imageHelper.ReadImage(file.FullName, ref HwindowHandle, ref HImage);
                     if (resultImageHelper.IsSuccess)
                     {
-                        var result = shapeModelHelper.FindShapeMode(ref HwindowHandle, ref HImage, mathParams);
+                        var result = shapeModelHelper.FindShapeMode(ref HwindowHandle, ref HImage, mathParams, out HTuple homMat2d_T);
                         if (!result.IsSuccess)
                         {
                             log.Fail(result);
@@ -496,6 +543,13 @@ namespace Measure.Halcon.Demo
 
         private void btn_CircleROI_Click(object sender, EventArgs e)
         {
+            if (!HalconHelper.IsObjectValid(HImage))
+            {
+                log.Warn("创建圆ROI失败：图像未打开");
+                return;
+            }
+
+            HOperatorSet.DispObj(HImage, HwindowHandle);
             hWindowControl1.Focus();
             var loadResult= LoadCircleParamsFromUi();
             log.Result(loadResult);
@@ -503,9 +557,9 @@ namespace Measure.Halcon.Demo
             {
                 return;
             }
-           
+            
             halconHelper.draw_spoke3(HImage, out HObject hRegions, HwindowHandle, circleParams.circle_Elements, circleParams.circle_Caliper_Height, 
-                circleParams.circle_Caliper_Width,out circleParams.rOI_X, out circleParams.rOI_Y, out circleParams.circle_Direct);
+                circleParams.circle_Caliper_Width,out circleParams.rOI_Y, out circleParams.rOI_X, out circleParams.circle_Direct);
             if (circleParams.rOI_X.Length < 4)
             {
                 log.Error("创建ROI失败");
@@ -520,15 +574,28 @@ namespace Measure.Halcon.Demo
 
         private void btn_CircleFit_Click(object sender, EventArgs e)
         {
+            if (!HalconHelper.IsObjectValid(HImage))
+            {
+                log.Warn("拟合失败：图像未打开");
+                return;
+            }
+
+            if (circleParams.rOI_X == null || circleParams.rOI_X.Length < 4 )  
+            {
+                log.Error("未创建圆ROI");
+                return;
+            }
+
+
             var loadResult=LoadCircleParamsFromUi();
             log.Result(loadResult);
             if (!loadResult.IsSuccess)
             {
                 return;
             }
-           var result = halconHelper.Fit_Circle(HImage, circleParams, out HObject hRegion, out HTuple resultRow,
+           var result = halconHelper.Fit_Circle(HImage, circleParams,0, out HObject hRegion, out HTuple resultRow,
            out HObject result_Circle, out HTuple hv_RowCenter, out HTuple hv_ColCenter,
-           out HTuple hv_Radius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
+           out circleParams.circleRadius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
            out HTuple hv_ArcAngle);
             HOperatorSet.DispObj(HImage, HwindowHandle);
             HOperatorSet.DispObj(result_Circle, HwindowHandle);
@@ -537,72 +604,152 @@ namespace Measure.Halcon.Demo
 
         private void btn_Calib_Click(object sender, EventArgs e)
         {
-            if (circleParams.circleRadius == null && circleParams.circleRadius.TupleInt()>0)
+            var loadResut = LoadCircleParamsFromUi();
+            log.Result(loadResut);
+            if (!loadResut.IsSuccess) {
+                return;
+            }
+            if (circleParams.circleRadius != null && circleParams.circleRadius.TupleInt()>0)
             {
-                circleParams.scale=Convert.ToDouble(this.txt_Distance.Text.Trim())/(circleParams.circleRadius.TupleInt()/2);
+                circleParams.scale=Convert.ToDouble(this.txt_Distance.Text.Trim())/(circleParams.circleRadius*2.0);
                 log.Info("标定成功"+circleParams.scale);
             }
             else
             {
-                log.Error("标定参数错误");
+                log.Warn("标定失败：请先「拟合圆」，拿到像素半径后再标定");
             }
         }
 
         private void btn_Measure_Click(object sender, EventArgs e)
         {
-            Measure(HImage, HwindowHandle);
+            
+            OperationResult loadResut = LoadCircleParamsFromUi();
+            log.Result(loadResut);
+            if (!loadResut.IsSuccess) {
+                return;
+            };
+
+          OperationResult result=Measure(HImage, HwindowHandle);
+          log.Result(result);
+
         }
 
-        private OperationResult Measure(HObject hImage,HTuple hWindowHandle)
+        private OperationResult Measure(HObject hImage, HTuple hWindowHandle)
         {
-
             try
             {
-                var result = shapeModelHelper.FindShapeMode(ref hWindowHandle, ref hImage, mathParams);
-                if (!result.IsSuccess)
-                {
-                    return result;
-                }
+                // 第 1 步：查找模板
+                var findResult = shapeModelHelper.FindShapeMode(ref hWindowHandle, ref hImage, mathParams, out HTuple homMat2d_T);
+                if (!findResult.IsSuccess)
+                    return OperationResult.CreateFailResult("测量失败：模板匹配。" + findResult.Msg, findResult.Error);
 
-                log.Info("模板匹配成功");
+                // 第 2 步：拟合圆
+                var fitResult = halconHelper.Fit_Circle(HImage, circleParams, homMat2d_T, out HObject hRegion, out HTuple resultRow,
+                    out HObject result_Circle, out HTuple hv_RowCenter, out HTuple hv_ColCenter,
+                    out HTuple hv_Radius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
+                    out HTuple hv_ArcAngle);
+                if (!fitResult.IsSuccess)
+                    return OperationResult.CreateFailResult("测量失败：圆拟合。" + fitResult.Msg, fitResult.Error);
 
+               
 
-                result = halconHelper.Fit_Circle(HImage, circleParams, out HObject hRegion, out HTuple resultRow,
-               out HObject result_Circle, out HTuple hv_RowCenter, out HTuple hv_ColCenter,
-               out HTuple hv_Radius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
-               out HTuple hv_ArcAngle);
-
-                if (!result.IsSuccess)
-                {
-                    return result;
-                }
-
-                log.Info("圆拟合成功");
-
-
+                // 第 3 步：判断直径
                 double distance = circleParams.scale * hv_Radius * 2;
+                if (distance < circleParams.circle_Dis_Min || distance > circleParams.circle_Dis_Max)
+                {
+                    HOperatorSet.DispObj(HImage, HwindowHandle);
+                    halconHelper.disp_message(HwindowHandle, "测量结果：NG " + distance, "window", 35, 20, "red", "false");
+                    return OperationResult.CreateFailResult("测量结果：NG " + distance);   // 无异常 → Warn
+                }
 
-                if (distance >= circleParams.circle_Dis_Min && distance <= circleParams.circle_Dis_Max)
-                {
-                    halconHelper.disp_message(HwindowHandle, "测量成功:" + distance, "window", 20, 20, "green", "false");
-                    log.Info("测量成功:" + distance);
-                    return OperationResult.CreateSuccessResult("测量成功:" + distance);
-                }
-                else
-                {
-                    halconHelper.disp_message(HwindowHandle, "测量失败", "window", 20, 20, "red", "false");
-                    log.Warn("测量失败:" + distance);
-                    return OperationResult.CreateFailResult("测量失败");
-                }
+                
+                HOperatorSet.DispObj(result_Circle, HwindowHandle);
+                halconHelper.disp_message(HwindowHandle, "OK:" + distance, "window", 35, 20, "green", "false");
+                return OperationResult.CreateSuccessResult("OK:" + distance);
             }
             catch (Exception ex)
             {
-
-                return OperationResult.CreateFailResult("测量失败", ex);
+                return OperationResult.CreateFailResult("测量失败", ex);   // 带异常 → Error
             }
+        }
 
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Savefile_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folder=new FolderBrowserDialog())
+            {
+                if (!string.IsNullOrEmpty(basePath))
+                {
+                    folder.SelectedPath = basePath;
+                }
+                if (folder.ShowDialog() ==DialogResult.OK )
+                {
+                    string path=folder.SelectedPath;
+                    var result = shapeModelHelper.SaveShapeModel(basePath, mathParams,circleParams);
+                    log.Result(result);
+                }
+            }
             
+        }
 
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (true)   
+            {
+                var r = MessageBox.Show("有未保存的修改，是否保存？", "提示",
+                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (r == DialogResult.Yes) {
+                    using (FolderBrowserDialog folder = new FolderBrowserDialog())
+                    {
+                        if (!string.IsNullOrEmpty(basePath))
+                        {
+                            folder.SelectedPath = basePath;
+                        }
+                        if (folder.ShowDialog() == DialogResult.OK)
+                        {
+                            string path = folder.SelectedPath;
+                            var result = shapeModelHelper.SaveShapeModel(basePath, mathParams, circleParams);
+                            log.Result(result);
+                        }
+                    }
+
+                }
+                else if (r == DialogResult.Cancel) { e.Cancel = true; } 
+
+            }
+        }
+
+        private void ImportParamsMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            
+            
+            using (var folder = new FolderBrowserDialog()) {
+                if (!string.IsNullOrEmpty(basePath))
+                {
+                    folder.SelectedPath = basePath;
+                }
+                if (folder.ShowDialog() == DialogResult.OK)
+                {
+                    string path = folder.SelectedPath;
+                    var result = shapeModelHelper.ImportShapeModel(path, mathParams, circleParams);
+                    log.Result(result);
+                    if (result.IsSuccess)
+                    {
+                        RefreshBindings(this);   // 参数 → 界面 强制刷新一遍
+                    }
+                }
+
+            }
         }
     }
 }

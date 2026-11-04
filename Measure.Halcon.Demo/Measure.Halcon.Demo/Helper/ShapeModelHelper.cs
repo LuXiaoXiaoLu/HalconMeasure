@@ -6,7 +6,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using IniParser;        // FileIniDataParser 等解析类
-using IniParser.Model;  // IniData 这个数据模型
+using IniParser.Model;
+using System.IO;  // IniData 这个数据模型
 
 
 namespace Measure.Halcon.Demo.Helper
@@ -250,7 +251,24 @@ namespace Measure.Halcon.Demo.Helper
         }
 
 
-
+        public OperationResult GetAllShapeModel(string basePath,out List<string> list)
+        {
+            try
+            {
+                list= new List<string>();
+                DirectoryInfo directory = new DirectoryInfo(basePath);
+                foreach (var item in directory.GetDirectories())
+                {
+                  list.Add(item.Name);
+                }
+                return OperationResult.CreateSuccessResult("读取模板列表成功");
+            }
+            catch (Exception ex )
+            {
+                list = null;
+                return OperationResult.CreateFailResult("读取模板列表失败", ex);
+            }
+        }
        
     }
 }

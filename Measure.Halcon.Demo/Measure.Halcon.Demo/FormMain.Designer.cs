@@ -91,6 +91,14 @@
             this.fileStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Savefile = new System.Windows.Forms.ToolStripMenuItem();
             this.ImportParamsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.delModel = new System.Windows.Forms.Button();
+            this.readModel = new System.Windows.Forms.Button();
+            this.saveModel = new System.Windows.Forms.Button();
+            this.listModel = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.modelName = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tb_Gain)).BeginInit();
@@ -98,6 +106,7 @@
             this.gb1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // hWindowControl1
@@ -340,7 +349,7 @@
             this.gb1.Controls.Add(this.label12);
             this.gb1.Controls.Add(this.txt_Angle);
             this.gb1.Controls.Add(this.label6);
-            this.gb1.Location = new System.Drawing.Point(565, 268);
+            this.gb1.Location = new System.Drawing.Point(565, 261);
             this.gb1.Name = "gb1";
             this.gb1.Size = new System.Drawing.Size(443, 163);
             this.gb1.TabIndex = 6;
@@ -490,9 +499,9 @@
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.txt_CircleElements);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Location = new System.Drawing.Point(565, 433);
+            this.groupBox3.Location = new System.Drawing.Point(565, 419);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(443, 227);
+            this.groupBox3.Size = new System.Drawing.Size(443, 235);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "圆测量";
@@ -687,7 +696,7 @@
             this.fileStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1089, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1024, 28);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -703,22 +712,102 @@
             // Savefile
             // 
             this.Savefile.Name = "Savefile";
-            this.Savefile.Size = new System.Drawing.Size(224, 26);
+            this.Savefile.Size = new System.Drawing.Size(152, 26);
             this.Savefile.Text = "保存参数";
             this.Savefile.Click += new System.EventHandler(this.Savefile_Click);
             // 
             // ImportParamsMenuItem
             // 
             this.ImportParamsMenuItem.Name = "ImportParamsMenuItem";
-            this.ImportParamsMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.ImportParamsMenuItem.Size = new System.Drawing.Size(152, 26);
             this.ImportParamsMenuItem.Text = "加载参数";
             this.ImportParamsMenuItem.Click += new System.EventHandler(this.ImportParamsMenuItem_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.delModel);
+            this.groupBox4.Controls.Add(this.readModel);
+            this.groupBox4.Controls.Add(this.saveModel);
+            this.groupBox4.Controls.Add(this.listModel);
+            this.groupBox4.Controls.Add(this.label16);
+            this.groupBox4.Controls.Add(this.label15);
+            this.groupBox4.Controls.Add(this.modelName);
+            this.groupBox4.Location = new System.Drawing.Point(28, 665);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(979, 78);
+            this.groupBox4.TabIndex = 9;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "模板管理";
+            // 
+            // delModel
+            // 
+            this.delModel.Location = new System.Drawing.Point(823, 30);
+            this.delModel.Name = "delModel";
+            this.delModel.Size = new System.Drawing.Size(104, 30);
+            this.delModel.TabIndex = 6;
+            this.delModel.Text = "删除模板";
+            this.delModel.UseVisualStyleBackColor = true;
+            this.delModel.Click += new System.EventHandler(this.delModel_Click);
+            // 
+            // readModel
+            // 
+            this.readModel.Location = new System.Drawing.Point(695, 30);
+            this.readModel.Name = "readModel";
+            this.readModel.Size = new System.Drawing.Size(104, 30);
+            this.readModel.TabIndex = 5;
+            this.readModel.Text = "读取模板";
+            this.readModel.UseVisualStyleBackColor = true;
+            this.readModel.Click += new System.EventHandler(this.readModel_Click);
+            // 
+            // saveModel
+            // 
+            this.saveModel.Location = new System.Drawing.Point(265, 30);
+            this.saveModel.Name = "saveModel";
+            this.saveModel.Size = new System.Drawing.Size(104, 30);
+            this.saveModel.TabIndex = 4;
+            this.saveModel.Text = "保存模板";
+            this.saveModel.UseVisualStyleBackColor = true;
+            this.saveModel.Click += new System.EventHandler(this.saveModel_Click);
+            // 
+            // listModel
+            // 
+            this.listModel.FormattingEnabled = true;
+            this.listModel.Location = new System.Drawing.Point(548, 31);
+            this.listModel.Name = "listModel";
+            this.listModel.Size = new System.Drawing.Size(125, 31);
+            this.listModel.TabIndex = 3;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(468, 35);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(78, 23);
+            this.label16.TabIndex = 2;
+            this.label16.Text = "选择模板";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(22, 34);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(78, 23);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "模板名称";
+            // 
+            // modelName
+            // 
+            this.modelName.Location = new System.Drawing.Point(107, 32);
+            this.modelName.Name = "modelName";
+            this.modelName.Size = new System.Drawing.Size(110, 29);
+            this.modelName.TabIndex = 0;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1089, 675);
+            this.ClientSize = new System.Drawing.Size(1024, 755);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.gb1);
             this.Controls.Add(this.groupBox2);
@@ -743,6 +832,8 @@
             this.groupBox3.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -811,6 +902,14 @@
         private System.Windows.Forms.ToolStripMenuItem fileStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Savefile;
         private System.Windows.Forms.ToolStripMenuItem ImportParamsMenuItem;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox modelName;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox listModel;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button readModel;
+        private System.Windows.Forms.Button saveModel;
+        private System.Windows.Forms.Button delModel;
     }
 }
 

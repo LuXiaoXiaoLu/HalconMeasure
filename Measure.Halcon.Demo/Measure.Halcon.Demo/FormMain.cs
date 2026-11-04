@@ -7,13 +7,10 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Shapes;
-using static System.Net.WebRequestMethods;
 
 namespace Measure.Halcon.Demo
 {
@@ -42,6 +39,8 @@ namespace Measure.Halcon.Demo
             BindParams();
             log = new LogHelper(list_Info);
             this.FormClosed += FormMain_FormClosed;
+            this.FormClosing += FormMain_FormClosing;
+            log.Result(LoadModelList());
             this.list_Info.Columns[1].Width = list_Info.Width - this.list_Info.Columns[0].Width - 20;
             var halconInitialresult = halconHelper.HalconInitial(hWindowControl1, out HwindowHandle);
             log.Result(halconInitialresult);
@@ -112,10 +111,11 @@ namespace Measure.Halcon.Demo
         //上一次打开连续查找模板图片文件夹地址
         string lastFindPath =string.Empty;
         //上一次保存参数文件夹地址
-        
+
+        //模板名称
+        string modelFileName;
 
         //圆参数模板
-
         private CircleParams circleParams = new CircleParams();
 
         //模板匹配对象
@@ -135,12 +135,9 @@ namespace Measure.Halcon.Demo
             this.cmb_CircleTransition.Items.Clear();
             this.cmb_CircleTransition.Items.AddRange(Enum.GetNames(typeof(CircleTransitiom)));
             // 数值参数改由 DataBindings 自动填充，见 BindParams()
-
-
-
             this.cmb_CircleTransition.SelectedItem = circleParams.circle_Transition;
             this.cmb_CirclePointSelect.SelectedItem = circleParams.circle_Point_Select;
-
+            
         }
 
         /// <summary>
@@ -597,9 +594,20 @@ namespace Measure.Halcon.Demo
            out HObject result_Circle, out HTuple hv_RowCenter, out HTuple hv_ColCenter,
            out circleParams.circleRadius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
            out HTuple hv_ArcAngle);
-            HOperatorSet.DispObj(HImage, HwindowHandle);
-            HOperatorSet.DispObj(result_Circle, HwindowHandle);
+
+            // 先记日志、先判成败：拟合失败时 result_Circle 是 null，
+            // 直接 DispObj 会抛 HALCON #4056（object-ID is NULL）
             log.Result(result);
+            if (!result.IsSuccess)
+            {
+                return;
+            }
+
+            HOperatorSet.DispObj(HImage, HwindowHandle);
+            if (HalconHelper.IsObjectValid(result_Circle))
+            {
+                HOperatorSet.DispObj(result_Circle, HwindowHandle);
+            }
         }
 
         private void btn_Calib_Click(object sender, EventArgs e)
@@ -683,8 +691,45 @@ namespace Measure.Halcon.Demo
 
         }
 
+        private OperationResult LoadModelList()
+        {
+
+            try
+            {
+                var getAllShapeModelResult = shapeModelHelper.GetAllShapeModel(basePath, out List<string> list);
+                if (!getAllShapeModelResult.IsSuccess)
+                {
+                    return OperationResult.CreateFailResult("读取模板列表失败：" + getAllShapeModelResult.Msg, getAllShapeModelResult.Error);
+                }
+                this.listModel.Items.Clear();
+                if (list.Count == 0)
+                {
+                    return OperationResult.CreateFailResult("还没保存过模板，请先创建并保存");
+                }
+                this.listModel.Items.AddRange(list.ToArray());
+                return OperationResult.CreateSuccessResult("读取模板列表成功");
+
+            }
+            catch (Exception ex)
+            {
+
+                return OperationResult.CreateFailResult("载入模板列表失败", ex);
+            }
+
+           
+        }
+
+
+
+
         private void Savefile_Click(object sender, EventArgs e)
         {
+            var result = LoadCircleParamsFromUi();
+            if (!result.IsSuccess)
+            {
+                log.Result(result);
+                return;
+            }
             using (FolderBrowserDialog folder=new FolderBrowserDialog())
             {
                 if (!string.IsNullOrEmpty(basePath))
@@ -694,7 +739,7 @@ namespace Measure.Halcon.Demo
                 if (folder.ShowDialog() ==DialogResult.OK )
                 {
                     string path=folder.SelectedPath;
-                    var result = shapeModelHelper.SaveShapeModel(basePath, mathParams,circleParams);
+                     result = shapeModelHelper.SaveShapeModel(path, mathParams,circleParams);
                     log.Result(result);
                 }
             }
@@ -708,20 +753,39 @@ namespace Measure.Halcon.Demo
                 var r = MessageBox.Show("有未保存的修改，是否保存？", "提示",
                     MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (r == DialogResult.Yes) {
-                    using (FolderBrowserDialog folder = new FolderBrowserDialog())
+                    modelFileName = (this.modelName.Text ?? string.Empty).Trim();
+                    bool IsValiresult = IsValidModelName(modelFileName, out string IsValiReson);
+                    if (!IsValiresult)
                     {
-                        if (!string.IsNullOrEmpty(basePath))
-                        {
-                            folder.SelectedPath = basePath;
-                        }
-                        if (folder.ShowDialog() == DialogResult.OK)
-                        {
-                            string path = folder.SelectedPath;
-                            var result = shapeModelHelper.SaveShapeModel(basePath, mathParams, circleParams);
-                            log.Result(result);
-                        }
+                        log.Warn("保存模板失败：" + IsValiReson);
+                        return;
                     }
 
+                    var result = LoadCircleParamsFromUi();
+                    if (!result.IsSuccess)
+                    {
+                        log.Result(result);
+                        return;
+                    }
+                    string path = Path.Combine(basePath, modelFileName);
+                    try
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        log.Result(OperationResult.CreateFailResult("创建模板目录失败：" + path, ex));
+                    }
+
+                    result = shapeModelHelper.SaveShapeModel(path, mathParams, circleParams);
+                    log.Result(result);
+                    if (!result.IsSuccess)
+                    {
+                        return;
+                    }
+                    LoadModelList();
+                    this.listModel.SelectedItem = modelName;
                 }
                 else if (r == DialogResult.Cancel) { e.Cancel = true; } 
 
@@ -730,25 +794,121 @@ namespace Measure.Halcon.Demo
 
         private void ImportParamsMenuItem_Click(object sender, EventArgs e)
         {
-            
-            
-            
-            using (var folder = new FolderBrowserDialog()) {
-                if (!string.IsNullOrEmpty(basePath))
-                {
-                    folder.SelectedPath = basePath;
-                }
-                if (folder.ShowDialog() == DialogResult.OK)
-                {
-                    string path = folder.SelectedPath;
-                    var result = shapeModelHelper.ImportShapeModel(path, mathParams, circleParams);
-                    log.Result(result);
-                    if (result.IsSuccess)
-                    {
-                        RefreshBindings(this);   // 参数 → 界面 强制刷新一遍
-                    }
-                }
+            string ImportModelName=this.listModel.Text.Trim();
+            string path = Path.Combine(basePath, ImportModelName);
+            var result = shapeModelHelper.ImportShapeModel(path, mathParams, circleParams);
+            log.Result(result);
+            if (result.IsSuccess)
+             {
+                RefreshBindings(this);   
+             }
+                
 
+            
+        }
+
+        private void saveModel_Click(object sender, EventArgs e)
+        {
+            modelFileName = (this.modelName.Text ?? string.Empty).Trim();
+            bool IsValiresult = IsValidModelName(modelFileName, out string IsValiReson);
+            if (!IsValiresult)
+            {
+                log.Warn("保存模板失败：" + IsValiReson);
+                return;
+            }
+
+            var result = LoadCircleParamsFromUi();
+            if (!result.IsSuccess)
+            {
+                log.Result(result);
+                return;
+            }
+            string path = Path.Combine(basePath, modelFileName);
+            if (File.Exists(Path.Combine(path, "param.ini"))) {
+               var answer = MessageBox.Show($"模板「{modelName}」已存在，是否覆盖？", "确认覆盖",
+               MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+               if (answer != DialogResult.Yes) return;
+            }
+
+            try
+            {
+                Directory.CreateDirectory(path);
+            }
+            catch (Exception ex)
+            {
+
+                log.Result(OperationResult.CreateFailResult("创建模板目录失败：" + path, ex));
+            }
+
+            result = shapeModelHelper.SaveShapeModel(path, mathParams, circleParams);
+            log.Result(result);
+            if (!result.IsSuccess)
+            {
+                return;
+            }
+            LoadModelList();
+            this.listModel.SelectedItem = modelName;
+
+        }
+
+
+        private static bool IsValidModelName(string name, out string reason)
+        {
+            reason = null;
+            if (string.IsNullOrWhiteSpace(name)) { reason = "模板名不能为空"; return false; }
+            if (name == "." || name == "..") { reason = "模板名不能是 . 或 .."; return false; }
+            if (name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            { reason = "模板名含非法字符：" + name; return false; }
+            if (name.Length > 64) { reason = "模板名过长（最多 64 字符）"; return false; }
+            return true;
+        }
+
+
+        private void readModel_Click(object sender, EventArgs e)
+        {
+            string ImportModelName = this.listModel.Text.Trim();
+            if (this.listModel.SelectedIndex<0 || string.IsNullOrEmpty(ImportModelName))
+            {
+                log.Warn("请选择读取模板");
+                return;
+            }
+            
+            
+            string path = Path.Combine(basePath, ImportModelName);
+            var result = shapeModelHelper.ImportShapeModel(path, mathParams, circleParams);
+            log.Result(result);
+            if (result.IsSuccess)
+            {
+                RefreshBindings(this);
+            }
+
+
+
+        }
+
+        private void delModel_Click(object sender, EventArgs e)
+        {
+            string ImportModelName = this.listModel.Text.Trim();
+            string path = Path.Combine(basePath, ImportModelName);
+            var  answer = MessageBox.Show($"确定删除「{ImportModelName}」？", "确认删除",
+               MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (!Directory.Exists(path))
+            {
+                MessageBox.Show("该目录已不存在", "提示");
+                LoadModelList(); 
+                return;
+            }
+            if (answer == DialogResult.Yes) {
+                
+                Directory.Delete(path, true);
+                LoadModelList();
+                if (this.listModel.Items.Count > 0) { 
+                    this.listModel.SelectedIndex = 0;
+                }
+                else
+                {
+                    this.listModel.Text= string.Empty;
+                }
             }
         }
     }

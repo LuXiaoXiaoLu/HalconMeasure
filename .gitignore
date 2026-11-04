@@ -4,6 +4,8 @@
 # 编译产物
 bin/
 obj/
+#halcon导出参考文件
+Haclon/
 
 # 用户个人配置
 *.user

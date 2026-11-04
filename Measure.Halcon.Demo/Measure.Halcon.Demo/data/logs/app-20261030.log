@@ -1,0 +1,130 @@
+﻿2026-10-30 19:28:25.052 [INF] Halcon 初始化成功
+2026-10-30 19:28:25.142 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-10-30 19:28:28.511 [INF] 读取图像成功
+2026-10-30 19:28:30.471 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=未创建, 模板区域=有
+2026-10-30 19:28:35.288 [INF] 创建模板成功
+2026-10-30 19:28:37.000 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-10-30 19:28:37.014 [INF] 查找模板成功
+2026-10-30 19:28:38.332 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=0, 圆心点数=0, 半径点数=0, 距离=0
+2026-10-30 19:28:43.955 [INF] 创建ROI成功
+2026-10-30 19:28:45.002 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=8, 圆心点数=0, 半径点数=0, 距离=0
+2026-10-30 19:28:45.373 [INF] 拟合圆成功: 圆心(Row=621.10, Col=863.94), 半径=77.77px, 起始角=0.00°, 结束角=360.00°, 圆弧角=360.00°
+2026-10-30 19:28:49.274 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=8, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:28:49.275 [INF] 标定成功0.321463642130327
+2026-10-30 19:28:51.560 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321463642130327, ROI点数=8, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:28:51.914 [INF] OK:50
+2026-10-30 19:28:57.573 [INF] 读取图像成功
+2026-10-30 19:28:58.432 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321463642130327, ROI点数=8, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:28:58.695 [WRN] 测量失败：圆拟合。拟合圆找到边缘点数太少
+2026-10-30 19:30:51.285 [INF] 读取图像成功
+2026-10-30 19:30:51.822 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321463642130327, ROI点数=8, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:30:52.096 [WRN] 测量失败：圆拟合。拟合圆找到边缘点数太少
+2026-10-30 19:42:25.132 [INF] Halcon 初始化成功
+2026-10-30 19:42:25.220 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-10-30 19:42:29.646 [INF] 读取图像成功
+2026-10-30 19:42:31.192 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=未创建, 模板区域=有
+2026-10-30 19:42:33.587 [INF] 创建模板成功
+2026-10-30 19:42:34.282 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-10-30 19:42:34.299 [INF] 查找模板成功
+2026-10-30 19:42:35.669 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=0, 圆心点数=0, 半径点数=0, 距离=0
+2026-10-30 19:42:39.942 [INF] 创建ROI成功
+2026-10-30 19:42:41.066 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=7, 圆心点数=0, 半径点数=0, 距离=0
+2026-10-30 19:42:41.421 [INF] 拟合圆成功: 圆心(Row=621.08, Col=863.95), 半径=77.78px, 起始角=0.00°, 结束角=360.00°, 圆弧角=360.00°
+2026-10-30 19:42:46.472 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=7, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:42:46.472 [INF] 标定成功0.321421947043725
+2026-10-30 19:42:50.029 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321421947043725, ROI点数=7, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:42:50.362 [INF] OK:50.0207649912033
+2026-10-30 19:42:52.999 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-10-30 19:42:56.397 [INF] 创建模板成功
+2026-10-30 19:42:57.385 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-10-30 19:42:57.392 [INF] 查找模板成功
+2026-10-30 19:42:58.662 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321421947043725, ROI点数=7, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:42:59.011 [INF] OK:50.0000052586339
+2026-10-30 19:43:02.092 [INF] 读取图像成功
+2026-10-30 19:43:02.887 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321421947043725, ROI点数=7, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:43:03.218 [INF] OK:50.1153314229062
+2026-10-30 19:43:10.812 [INF] 读取图像成功
+2026-10-30 19:43:11.740 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321421947043725, ROI点数=7, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:43:12.061 [INF] OK:50.2131878752587
+2026-10-30 19:43:25.562 [INF] 读取图像成功
+2026-10-30 19:43:26.649 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321421947043725, ROI点数=7, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:43:26.996 [INF] OK:50.0229996856423
+2026-10-30 19:43:33.452 [INF] 读取图像成功
+2026-10-30 19:43:38.569 [INF] 读取图像成功
+2026-10-30 19:43:41.987 [INF] 读取图像成功
+2026-10-30 19:43:42.569 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321421947043725, ROI点数=7, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:43:42.902 [INF] OK:50.0374894925539
+2026-10-30 19:43:46.759 [INF] 读取图像成功
+2026-10-30 19:43:47.400 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321421947043725, ROI点数=7, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 19:43:47.726 [INF] OK:50.0740054318518
+2026-10-30 23:11:51.735 [INF] Halcon 初始化成功
+2026-10-30 23:11:51.815 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-10-30 23:11:54.955 [INF] 读取图像成功
+2026-10-30 23:11:56.105 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=未创建, 模板区域=有
+2026-10-30 23:12:02.224 [INF] 创建模板成功
+2026-10-30 23:12:02.972 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-10-30 23:12:03.004 [INF] 查找模板成功
+2026-10-30 23:12:04.206 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=0, 圆心点数=0, 半径点数=0, 距离=0
+2026-10-30 23:12:10.045 [INF] 创建ROI成功
+2026-10-30 23:12:11.315 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=9, 圆心点数=0, 半径点数=0, 距离=0
+2026-10-30 23:12:11.685 [INF] 拟合圆成功: 圆心(Row=621.11, Col=863.94), 半径=77.71px, 起始角=0.00°, 结束角=360.00°, 圆弧角=360.00°
+2026-10-30 23:12:15.405 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=9, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 23:12:15.405 [INF] 标定成功0.32172085815313
+2026-10-30 23:12:17.524 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.32172085815313, ROI点数=9, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 23:12:17.860 [INF] OK:50.0001191415053
+2026-10-30 23:13:04.414 [INF] Halcon 初始化成功
+2026-10-30 23:13:04.497 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-10-30 23:13:07.190 [INF] 读取图像成功
+2026-10-30 23:13:08.445 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=未创建, 模板区域=有
+2026-10-30 23:13:12.100 [INF] 创建模板成功
+2026-10-30 23:13:12.830 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-10-30 23:13:12.848 [INF] 查找模板成功
+2026-10-30 23:13:15.902 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=0, 圆心点数=0, 半径点数=0, 距离=0
+2026-10-30 23:13:22.064 [INF] 创建ROI成功
+2026-10-30 23:13:23.306 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=10, 圆心点数=0, 半径点数=0, 距离=0
+2026-10-30 23:13:23.640 [INF] 拟合圆成功: 圆心(Row=621.14, Col=863.94), 半径=77.78px, 起始角=0.00°, 结束角=360.00°, 圆弧角=360.00°
+2026-10-30 23:13:26.515 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=10, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 23:13:26.515 [INF] 标定成功0.321407691050642
+2026-10-30 23:13:28.495 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321407691050642, ROI点数=10, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 23:13:28.825 [INF] OK:49.9999986831286
+2026-10-30 23:13:54.414 [INF] Halcon 初始化成功
+2026-10-30 23:13:54.497 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-10-30 23:13:57.872 [INF] 读取图像成功
+2026-10-30 23:13:59.154 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=未创建, 模板区域=有
+2026-10-30 23:14:01.595 [INF] 创建模板成功
+2026-10-30 23:14:02.296 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-10-30 23:14:02.304 [INF] 查找模板成功
+2026-10-30 23:14:03.635 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=0, 圆心点数=0, 半径点数=0, 距离=0
+2026-10-30 23:14:09.220 [INF] 创建ROI成功
+2026-10-30 23:14:10.265 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=9, 圆心点数=0, 半径点数=0, 距离=0
+2026-10-30 23:14:10.600 [INF] 拟合圆成功: 圆心(Row=621.13, Col=863.92), 半径=77.75px, 起始角=0.00°, 结束角=360.00°, 圆弧角=360.00°
+2026-10-30 23:14:17.197 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=1, ROI点数=9, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 23:14:17.197 [INF] 标定成功0.321554829530413
+2026-10-30 23:14:18.714 [INF] 圆拟合参数设置成功:卡尺[数=60, 高=60, 宽=15], 边缘[最小点数=5, 阈值=15, 滤波=1, 极性=all, 点选择=max], 直径=[1,99], 标定=0.321554829530413, ROI点数=9, 圆心点数=0, 半径点数=1, 距离=0
+2026-10-30 23:14:19.042 [INF] OK:49.9976075734791
+2026-10-30 23:14:37.380 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有

@@ -12,14 +12,30 @@ namespace Measure.Halcon.Demo
     internal static class Program
     {
         /// <summary>
+        /// 运行时数据根目录（模板 model / 配置 config / 日志 logs 的父目录）。
+        /// Debug：放在项目目录下（清理 bin 不丢、Debug 与 Release 共用一份）；
+        /// Release：放在 exe 旁边。
+        /// </summary>
+        public static readonly string DataRoot = ComputeDataRoot();
+
+        private static string ComputeDataRoot()
+        {
+#if DEBUG
+            string root = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "data");
+#else
+            string root = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data");
+#endif
+            return Path.GetFullPath(root);   // 把 ..\.. 归一化成绝对路径，方便日志里看得清
+        }
+
+        /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
         static void Main()
         {
-            // 锚定到 exe 同级 logs\ 目录
-            string logPath = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory, "logs", "app-.log");
+            // 日志写到数据根目录的 logs\ 下（不再写进 bin\Debug）
+            string logPath = Path.Combine(DataRoot, "logs", "app-.log");
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()

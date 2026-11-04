@@ -124,7 +124,7 @@ namespace Measure.Halcon.Demo
         private MatchParams mathParams = new MatchParams();
         private LogHelper log;
 
-        private string basePath = Application.StartupPath + "\\model";
+        private string basePath = Path.Combine(Program.DataRoot, "model");
 
         public void InitialParams()
         {
@@ -881,10 +881,10 @@ namespace Measure.Halcon.Demo
             {
                 RefreshBindings(this);
             }
-
-
-
         }
+
+
+
 
         private void delModel_Click(object sender, EventArgs e)
         {

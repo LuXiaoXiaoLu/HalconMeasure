@@ -1,0 +1,47 @@
+﻿2026-10-24 19:57:32.159 [FTL] 程序未捕获的异常
+System.Resources.MissingManifestResourceException: 未能找到任何适合于指定的区域性或非特定区域性的资源。请确保在编译时已将“Measure.Halcon.Demo.FormMain.resources”正确嵌入或链接到程序集“Measure.Halcon.Demo”，或者确保所有需要的附属程序集都可加载并已进行了完全签名。
+   在 System.Resources.ManifestBasedResourceGroveler.HandleResourceStreamMissing(String fileName)
+   在 System.Resources.ManifestBasedResourceGroveler.GrovelForResourceSet(CultureInfo culture, Dictionary`2 localResourceSets, Boolean tryParents, Boolean createIfNotExists, StackCrawlMark& stackMark)
+   在 System.Resources.ResourceManager.InternalGetResourceSet(CultureInfo requestedCulture, Boolean createIfNotExists, Boolean tryParents, StackCrawlMark& stackMark)
+   在 System.Resources.ResourceManager.InternalGetResourceSet(CultureInfo culture, Boolean createIfNotExists, Boolean tryParents)
+   在 System.Resources.ResourceManager.GetObject(String name, CultureInfo culture, Boolean wrapUnmanagedMemStream)
+   在 Measure.Halcon.Demo.FormMain.InitializeComponent() 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\FormMain.Designer.cs:行号 145
+   在 Measure.Halcon.Demo.FormMain..ctor() 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\FormMain.cs:行号 24
+   在 Measure.Halcon.Demo.Program.Main() 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Program.cs:行号 41
+2026-10-24 19:57:42.395 [INF] Halcon初始化成功
+2026-10-24 19:57:42.523 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-10-24 19:57:48.266 [INF] 打开图像成功
+2026-10-24 19:57:50.531 [ERR] 采图失败
+HalconDotNet.HOperatorException: HALCON error #1401: Wrong number of values of control parameter 1 in operator grab_image
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.GrabImage(HObject& image, HTuple acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.GrabImage(HObject& hImage, HTuple& WindowHandle) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 89
+2026-10-24 23:05:33.621 [INF] Halcon初始化成功
+2026-10-24 23:05:33.724 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-10-24 23:05:35.590 [ERR] 采图失败
+HalconDotNet.HOperatorException: HALCON error #1401: Wrong number of values of control parameter 1 in operator grab_image
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.GrabImage(HObject& image, HTuple acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.GrabImage(HObject& hImage, HTuple& WindowHandle) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 89
+2026-10-24 23:05:38.643 [INF] 打开图像成功
+2026-10-24 23:05:48.299 [INF] 创建模板成功
+2026-10-24 23:05:49.339 [INF] 查找模板成功
+2026-10-24 23:06:18.525 [INF] 关闭连续查找
+2026-10-24 23:06:25.382 [ERR] 创建模板失败
+HalconDotNet.HOperatorException: HALCON error #8510: Number of shape model points too small in operator create_shape_model
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.CreateShapeModel(HObject template, HTuple numLevels, HTuple angleStart, HTuple angleExtent, HTuple angleStep, HTuple optimization, HTuple metric, HTuple contrast, HTuple minContrast, HTuple& modelID)
+   在 Measure.Halcon.Demo.Helper.ShapeModelHelper.CreateShapeModel(HTuple& HwindowHandle, HObject& image, MathParams mathParams) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ShapeModelHelper.cs:行号 31

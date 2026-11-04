@@ -1,0 +1,88 @@
+﻿2026-10-23 18:27:21.305 [INF] Halcon初始化成功
+2026-10-23 18:27:21.405 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 18:27:25.502 [INF] 打开图像成功
+2026-10-23 18:27:29.103 [INF] 创建模板成功
+2026-10-23 18:27:30.597 [INF] 查找模板成功
+2026-10-23 18:28:23.538 [FTL] 程序未捕获的异常
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 Measure.Halcon.Demo.FormMain.btn_ContinueFind_Click(Object sender, EventArgs e) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\FormMain.cs:行号 438
+   在 System.Windows.Forms.Control.OnClick(EventArgs e)
+   在 System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   在 System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   在 System.Windows.Forms.Control.WndProc(Message& m)
+   在 System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   在 System.Windows.Forms.Button.WndProc(Message& m)
+   在 System.Windows.Forms.NativeWindow.DebuggableCallback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+   在 System.Windows.Forms.UnsafeNativeMethods.DispatchMessageW(MSG& msg)
+   在 System.Windows.Forms.Application.ComponentManager.System.Windows.Forms.UnsafeNativeMethods.IMsoComponentManager.FPushMessageLoop(IntPtr dwComponentID, Int32 reason, Int32 pvLoopData)
+   在 System.Windows.Forms.Application.ThreadContext.RunMessageLoopInner(Int32 reason, ApplicationContext context)
+   在 System.Windows.Forms.Application.ThreadContext.RunMessageLoop(Int32 reason, ApplicationContext context)
+   在 Measure.Halcon.Demo.Program.Main() 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Program.cs:行号 41
+2026-10-23 18:33:18.571 [INF] Halcon初始化成功
+2026-10-23 18:33:18.654 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 18:33:21.816 [INF] 打开图像成功
+2026-10-23 18:33:29.485 [INF] 创建模板成功
+2026-10-23 18:33:31.299 [INF] 查找模板成功
+2026-10-23 18:34:31.112 [INF] Halcon初始化成功
+2026-10-23 18:34:31.192 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 18:34:35.216 [INF] 打开图像成功
+2026-10-23 18:34:41.532 [INF] 创建模板成功
+2026-10-23 18:34:45.442 [INF] 查找模板成功
+2026-10-23 18:36:43.931 [INF] Halcon初始化成功
+2026-10-23 18:36:44.016 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 18:36:55.329 [INF] Halcon初始化成功
+2026-10-23 18:36:55.417 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 18:36:57.897 [INF] 打开图像成功
+2026-10-23 18:37:01.964 [INF] 创建模板成功
+2026-10-23 18:37:03.567 [INF] 查找模板成功
+2026-10-23 18:46:46.675 [INF] Halcon初始化成功
+2026-10-23 18:46:46.790 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 18:46:50.135 [INF] 打开图像成功
+2026-10-23 18:46:54.461 [INF] 创建模板成功
+2026-10-23 18:46:55.645 [INF] 查找模板成功
+2026-10-23 18:47:31.382 [INF] 关闭连续查找
+2026-10-23 18:47:54.699 [INF] 关闭连续查找
+2026-10-23 18:55:42.553 [INF] Halcon初始化成功
+2026-10-23 18:55:42.641 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 18:55:43.602 [WRN] 创建模板失败：图像未打开
+2026-10-23 18:55:58.385 [INF] Halcon初始化成功
+2026-10-23 18:55:58.472 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 18:55:59.281 [WRN] 创建模板失败：图像未打开
+2026-10-23 18:56:00.649 [WRN] 创建模板失败：图像未打开
+2026-10-23 18:56:01.028 [WRN] 创建模板失败：图像未打开
+2026-10-23 18:56:01.202 [WRN] 创建模板失败：图像未打开
+2026-10-23 18:56:01.542 [WRN] 创建模板失败：图像未打开
+2026-10-23 19:41:35.145 [INF] Halcon初始化成功
+2026-10-23 19:41:35.241 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 19:41:42.652 [WRN] 创建模板失败：图像未打开
+2026-10-23 19:41:43.609 [WRN] 查找模板失败：图像不存在
+2026-10-23 19:41:51.397 [INF] 打开图像成功
+2026-10-23 19:41:52.234 [WRN] 查找模板失败：模板为空
+2026-10-23 19:42:03.480 [WRN] 查找模板失败：模板为空
+2026-10-23 19:42:04.300 [WRN] 查找模板失败：模板为空
+2026-10-23 19:42:07.368 [ERR] 创建模板失败
+2026-10-23 19:47:25.408 [INF] Halcon初始化成功
+2026-10-23 19:47:25.488 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 19:47:29.503 [INF] 打开图像成功
+2026-10-23 19:47:34.193 [INF] 创建模板成功
+2026-10-23 19:47:39.322 [INF] 打开图像成功
+2026-10-23 19:47:51.391 [INF] 创建模板成功
+2026-10-23 19:47:55.582 [INF] 创建模板成功
+2026-10-23 19:48:07.621 [INF] 创建模板成功
+2026-10-23 19:48:14.598 [INF] 创建模板成功
+2026-10-23 19:48:23.462 [INF] 创建模板成功
+2026-10-23 19:48:36.609 [INF] Halcon初始化成功
+2026-10-23 19:48:36.689 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 19:48:37.694 [WRN] 创建模板失败：图像未打开
+2026-10-23 19:48:41.773 [INF] 打开图像成功
+2026-10-23 19:48:47.910 [INF] 创建模板成功
+2026-10-23 19:48:50.761 [INF] 查找模板成功
+2026-10-23 19:48:51.956 [INF] 查找模板成功
+2026-10-23 19:53:06.009 [INF] Halcon初始化成功
+2026-10-23 19:53:06.089 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 19:53:09.907 [INF] 打开图像成功
+2026-10-23 19:53:12.060 [ERR] 创建模板失败
+2026-10-23 19:54:16.400 [INF] Halcon初始化成功
+2026-10-23 19:54:16.475 [ERR] 相机打开失败HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+2026-10-23 19:54:19.831 [INF] 打开图像成功
+2026-10-23 19:54:20.988 [ERR] 创建模板失败:HALCON error #8510: Number of shape model points too small in operator create_shape_model

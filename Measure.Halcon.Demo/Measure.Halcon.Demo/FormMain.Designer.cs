@@ -99,6 +99,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.modelName = new System.Windows.Forms.TextBox();
+            this.but_ContinueMeasure = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tb_Gain)).BeginInit();
@@ -734,14 +735,14 @@
             this.groupBox4.Controls.Add(this.modelName);
             this.groupBox4.Location = new System.Drawing.Point(28, 665);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(979, 78);
+            this.groupBox4.Size = new System.Drawing.Size(847, 78);
             this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "模板管理";
             // 
             // delModel
             // 
-            this.delModel.Location = new System.Drawing.Point(823, 30);
+            this.delModel.Location = new System.Drawing.Point(728, 30);
             this.delModel.Name = "delModel";
             this.delModel.Size = new System.Drawing.Size(104, 30);
             this.delModel.TabIndex = 6;
@@ -751,7 +752,7 @@
             // 
             // readModel
             // 
-            this.readModel.Location = new System.Drawing.Point(695, 30);
+            this.readModel.Location = new System.Drawing.Point(608, 30);
             this.readModel.Name = "readModel";
             this.readModel.Size = new System.Drawing.Size(104, 30);
             this.readModel.TabIndex = 5;
@@ -761,7 +762,7 @@
             // 
             // saveModel
             // 
-            this.saveModel.Location = new System.Drawing.Point(265, 30);
+            this.saveModel.Location = new System.Drawing.Point(227, 30);
             this.saveModel.Name = "saveModel";
             this.saveModel.Size = new System.Drawing.Size(104, 30);
             this.saveModel.TabIndex = 4;
@@ -772,7 +773,7 @@
             // listModel
             // 
             this.listModel.FormattingEnabled = true;
-            this.listModel.Location = new System.Drawing.Point(548, 31);
+            this.listModel.Location = new System.Drawing.Point(472, 31);
             this.listModel.Name = "listModel";
             this.listModel.Size = new System.Drawing.Size(125, 31);
             this.listModel.TabIndex = 3;
@@ -780,7 +781,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(468, 35);
+            this.label16.Location = new System.Drawing.Point(385, 35);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(78, 23);
             this.label16.TabIndex = 2;
@@ -802,11 +803,22 @@
             this.modelName.Size = new System.Drawing.Size(110, 29);
             this.modelName.TabIndex = 0;
             // 
+            // but_ContinueMeasure
+            // 
+            this.but_ContinueMeasure.Location = new System.Drawing.Point(897, 694);
+            this.but_ContinueMeasure.Name = "but_ContinueMeasure";
+            this.but_ContinueMeasure.Size = new System.Drawing.Size(91, 31);
+            this.but_ContinueMeasure.TabIndex = 10;
+            this.but_ContinueMeasure.Text = "连续测量";
+            this.but_ContinueMeasure.UseVisualStyleBackColor = true;
+            this.but_ContinueMeasure.Click += new System.EventHandler(this.but_ContinueMeasure_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1024, 755);
+            this.Controls.Add(this.but_ContinueMeasure);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.gb1);
@@ -910,6 +922,7 @@
         private System.Windows.Forms.Button readModel;
         private System.Windows.Forms.Button saveModel;
         private System.Windows.Forms.Button delModel;
+        private System.Windows.Forms.Button but_ContinueMeasure;
     }
 }
 

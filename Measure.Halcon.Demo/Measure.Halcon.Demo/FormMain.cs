@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace Measure.Halcon.Demo
 {
@@ -38,6 +40,10 @@ namespace Measure.Halcon.Demo
             InitialParams();
             BindParams();
             log = new LogHelper(list_Info);
+            // 程序级状态配置：必须在 log 之后、LoadModelList 之前初始化，
+            // 因为 LoadModelList 里要读 appSettings.LastModelName，且 Load 的失败要写日志
+            appSettings = new AppSettings(Path.Combine(Program.DataRoot, "config", "State.ini"));
+            log.Fail(appSettings.Load());
             this.FormClosed += FormMain_FormClosed;
             this.FormClosing += FormMain_FormClosing;
             log.Result(LoadModelList());
@@ -85,10 +91,10 @@ namespace Measure.Halcon.Demo
 
                 }
             }
-           
+
 
         }
-        
+
         private ImageHelper imageHelper = new ImageHelper();
         //相机名称
         private const string CamName = "GigEVision2";
@@ -103,13 +109,17 @@ namespace Measure.Halcon.Demo
         private CancellationTokenSource grabCts;
 
         //连续查找标志位
-        private CancellationTokenSource findcts;
+        private CancellationTokenSource findCts;
+        //连续测量标准位
+        private CancellationTokenSource measureCts;
         //连续查找模板线程
         private Task findTask = Task.CompletedTask;
         //连续采图线程
         private Task grabTask = Task.CompletedTask;
+
+        private Task measureTask=Task.CompletedTask;
         //上一次打开连续查找模板图片文件夹地址
-        string lastFindPath =string.Empty;
+        string lastFindPath = string.Empty;
         //上一次保存参数文件夹地址
 
         //模板名称
@@ -124,7 +134,12 @@ namespace Measure.Halcon.Demo
         private MatchParams mathParams = new MatchParams();
         private LogHelper log;
 
+        //程序级状态配置（data\config\app.ini）：上次用的模板等界面痕迹
+        private AppSettings appSettings;
+
         private string basePath = Path.Combine(Program.DataRoot, "model");
+
+        private bool cleanupDone;      // 防重入字段
 
         public void InitialParams()
         {
@@ -137,7 +152,7 @@ namespace Measure.Halcon.Demo
             // 数值参数改由 DataBindings 自动填充，见 BindParams()
             this.cmb_CircleTransition.SelectedItem = circleParams.circle_Transition;
             this.cmb_CirclePointSelect.SelectedItem = circleParams.circle_Point_Select;
-            
+
         }
 
         /// <summary>
@@ -234,17 +249,17 @@ namespace Measure.Halcon.Demo
             }
 
             this.hWindowControl1.Focus();
-            var loadresult= LoadMathParamsFromUi();
+            var loadresult = LoadMathParamsFromUi();
             log.Result(loadresult);
             if (!loadresult.IsSuccess) {
                 return;
             }
 
-          
-            var result=shapeModelHelper.CreateShapeModel( ref HwindowHandle,ref  HImage,  mathParams);
+
+            var result = shapeModelHelper.CreateShapeModel(ref HwindowHandle, ref HImage, mathParams);
             log.Result(result);
         }
-        
+
 
         private void btn_OpenImage_Click(object sender, EventArgs e)
         {
@@ -280,7 +295,7 @@ namespace Measure.Halcon.Demo
 
         private void btn_OneShot_Click(object sender, EventArgs e)
         {
-            var result= imageHelper.GrabImage(ref HImage, ref HwindowHandle);
+            var result = imageHelper.GrabImage(ref HImage, ref HwindowHandle);
             log.Result(result);
 
         }
@@ -295,7 +310,7 @@ namespace Measure.Halcon.Demo
             var result = imageHelper.SetTriggerMode(chk_Trigger.Checked);
             log.Fail(result);
         }
-        
+
         private void tb_ExposureTime_Scroll(object sender, EventArgs e)
         {
             this.tb_ExposureTime.Focus();
@@ -326,7 +341,7 @@ namespace Measure.Halcon.Demo
 
         private void btn_Grab_Click(object sender, EventArgs e)
         {
-            if (!grabTask.IsCompleted)                       
+            if (!grabTask.IsCompleted)
             {
                 log.Warn("已经在连续采图，勿重复启动");
                 return;
@@ -339,7 +354,7 @@ namespace Measure.Halcon.Demo
 
                     log.Result(openCamresult);
 
-                 
+
                     double exposure = imageHelper.GetExposureTime();
                     double gain = imageHelper.GetGain();
 
@@ -362,10 +377,10 @@ namespace Measure.Halcon.Demo
             }
 
             var source = new CancellationTokenSource();
-            grabCts = source;                         
+            grabCts = source;
             CancellationToken token = source.Token;
 
-            grabTask= Task.Factory.StartNew(
+            grabTask = Task.Factory.StartNew(
                 () => GrabImageThread(token),
                 token,
                 TaskCreationOptions.LongRunning,   // 常驻采集循环：开专用线程，不占线程池
@@ -381,7 +396,7 @@ namespace Measure.Halcon.Demo
         {
             try
             {
-                while (!token.IsCancellationRequested)   
+                while (!token.IsCancellationRequested)
                 {
                     var result = imageHelper.GrabImage(ref HImage, ref HwindowHandle);
 
@@ -401,11 +416,10 @@ namespace Measure.Halcon.Demo
 
         private void btn_StopGrab_Click(object sender, EventArgs e)
         {
-            grabCts?.Cancel();
-            log.Info("停止连续采图");
+            StopWorker(ref grabCts, grabTask, "连续采图");
         }
 
-      
+
 
         private void btn_FindShapeModel_Click(object sender, EventArgs e)
         {
@@ -414,19 +428,19 @@ namespace Measure.Halcon.Demo
                 log.Warn("查找模板失败：图像不存在");
                 return;
             }
-            if(mathParams.modelID == null)
+            if (mathParams.modelID == null)
             {
                 log.Warn("查找模板失败：模板为空");
                 return;
             }
 
-            var loadResult=   LoadMathParamsFromUi();
+            var loadResult = LoadMathParamsFromUi();
             log.Result(loadResult);
             if (!loadResult.IsSuccess)
             {
                 return;
             }
-            var result = shapeModelHelper.FindShapeMode(ref HwindowHandle,ref HImage, mathParams,out HTuple homMat2d_T);
+            var result = shapeModelHelper.FindShapeMode(ref HwindowHandle, ref HImage, mathParams, out HTuple homMat2d_T);
             log.Result(result);
         }
 
@@ -450,49 +464,55 @@ namespace Measure.Halcon.Demo
 
         private void btn_ContinueFind_Click(object sender, EventArgs e)
         {
-            if (findcts != null&&!findTask.IsCompleted)
+            if (findCts != null && !findTask.IsCompleted)
             {
                 ColseContinuousFind();
                 btn_ContinueFind.Text = "连续查找";
                 return;
             }
 
-            btn_ContinueFind.Text = "关闭连续查找";
+           
             if (mathParams.modelID == null)
             {
                 log.Warn("查找模板失败：模板为空");
                 return;
             }
-
+            btn_ContinueFind.Text = "关闭连续查找";
             var loadResult = LoadMathParamsFromUi();
             log.Result(loadResult);
             if (!loadResult.IsSuccess) return;
             using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
             {
                 if (!string.IsNullOrEmpty(lastFindPath)) {
-                    folderBrowserDialog.SelectedPath= lastFindPath;
+                    folderBrowserDialog.SelectedPath = lastFindPath;
                 }
                 if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
                     string path = folderBrowserDialog.SelectedPath;
-                    lastFindPath= path;
+                    lastFindPath = path;
                     FileInfo[] files = new DirectoryInfo(path).GetFiles();
-                    findcts = new CancellationTokenSource();
-                    CancellationToken token = findcts.Token;
-                  findTask=Task.Factory.StartNew(() => ContinuousFindThread(token, files),
-                      token, TaskCreationOptions.LongRunning,
-                       TaskScheduler.Default);
+                    if (files.Length == 0)
+                    {
+                        log.Warn("目录里没有图片：" + path);
+                        btn_ContinueFind.Text = "连续查找";
+                        return;
+                    }
+                    findCts = new CancellationTokenSource();
+                    CancellationToken token = findCts.Token;
+                    findTask = Task.Factory.StartNew(() => ContinuousFindThread(token, files),
+                        token, TaskCreationOptions.LongRunning,
+                         TaskScheduler.Default);
                 }
             }
         }
         //连续查找方法
-        private void ContinuousFindThread(CancellationToken token,FileInfo[] files)
+        private void ContinuousFindThread(CancellationToken token, FileInfo[] files)
         {
             while (!token.IsCancellationRequested) {
                 foreach (FileInfo file in files)
                 {
                     if (token.IsCancellationRequested) break;
-                   var  resultImageHelper = imageHelper.ReadImage(file.FullName, ref HwindowHandle, ref HImage);
+                    var resultImageHelper = imageHelper.ReadImage(file.FullName, ref HwindowHandle, ref HImage);
                     if (resultImageHelper.IsSuccess)
                     {
                         var result = shapeModelHelper.FindShapeMode(ref HwindowHandle, ref HImage, mathParams, out HTuple homMat2d_T);
@@ -505,37 +525,66 @@ namespace Measure.Halcon.Demo
                     {
                         log.Fail(resultImageHelper);
                     }
-                   token.WaitHandle.WaitOne(2000);
+                    token.WaitHandle.WaitOne(2000);
                 }
             }
             ;
-            
+
         }
         //关闭连续查找方法
         private void ColseContinuousFind()
         {
+            StopWorker(ref findCts, findTask, "连续查找");
+        }
+
+        /// <summary>
+        /// 停止一个后台循环任务，并等它<b>真正退出</b>。连续采图 / 连续查找 / 连续测量三处共用。
+        /// </summary>
+        /// <param name="cts">要取消的 CancellationTokenSource；确认退出后会被置为 null（所以要 ref）。</param>
+        /// <param name="task">该 CancellationTokenSource 对应的后台任务。</param>
+        /// <param name="name">日志里显示的名字，如 "连续查找"。</param>
+        /// <returns>true = 已确认停止（或本来就没在跑）；false = 超时仍未退出。</returns>
+        /// <remarks>
+        /// 为什么必须 Wait：Cancel() 只是「发出请求」，线程要跑到下一次检查 token 的地方才会退出。
+        /// 不等就置 null，等于告诉按钮「现在空闲」，用户再点一次就会启动第二个线程，
+        /// 两个线程同时读写 HImage、同时往同一个窗口画图。
+        /// </remarks>
+        private bool StopWorker(ref CancellationTokenSource cts, Task task, string name)
+        {
+            if (cts == null) return true;          // 本来就没在跑
+
+            cts.Cancel();                          // ① 只发出取消请求
+
+            bool exited;
             try
             {
-                findcts.Cancel();
-                findcts = null;
-                log.Info("关闭连续查找");
-             
+                exited = task.Wait(2000);          // ② 等它真的退出（线程睡在 WaitOne 里时会被立即唤醒）
             }
-            catch (Exception ex)
+            catch (AggregateException ex)
             {
-                log.Fail(OperationResult.CreateFailResult("关闭连续查找失败", ex));
+                // 线程自己抛了异常（比如 HALCON 算子失败）。任务此时已经结束，
+                // 但那个异常过去没人看过 —— 这里顺手落地，否则会被静默丢弃
+                log.Fail(OperationResult.CreateFailResult(name + " 线程异常结束", ex.InnerException ?? ex));
+                exited = true;
             }
-            
-           
+
+            if (!exited)
+            {
+                // 线程还卡在 HALCON 算子中间（匹配/拟合耗时）。故意不置 null，
+                // 让「是否在跑」的判断保持为真，避免用户再点一次启动第二个线程
+                log.Warn(name + " 线程未在 2 秒内退出，请稍后重试");
+                return false;
+            }
+
+            cts.Dispose();
+            cts = null;                            // ③ 确认退出后才清空
+            log.Info(name + " 已停止");
+            return true;
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            grabCts?.Cancel();       // 让采集循环退出
-            findcts?.Cancel();
-            grabTask.Wait(500);
-            findTask.Wait(500);
-            imageHelper.CloseCam();    // 关相机，别把句柄留给进程退出兜底
+           
         }
 
         private void btn_CircleROI_Click(object sender, EventArgs e)
@@ -548,15 +597,15 @@ namespace Measure.Halcon.Demo
 
             HOperatorSet.DispObj(HImage, HwindowHandle);
             hWindowControl1.Focus();
-            var loadResult= LoadCircleParamsFromUi();
+            var loadResult = LoadCircleParamsFromUi();
             log.Result(loadResult);
             if (!loadResult.IsSuccess)
             {
                 return;
             }
-            
-            halconHelper.draw_spoke3(HImage, out HObject hRegions, HwindowHandle, circleParams.circle_Elements, circleParams.circle_Caliper_Height, 
-                circleParams.circle_Caliper_Width,out circleParams.rOI_Y, out circleParams.rOI_X, out circleParams.circle_Direct);
+
+            halconHelper.draw_spoke3(HImage, out HObject hRegions, HwindowHandle, circleParams.circle_Elements, circleParams.circle_Caliper_Height,
+                circleParams.circle_Caliper_Width, out circleParams.rOI_Y, out circleParams.rOI_X, out circleParams.circle_Direct);
             if (circleParams.rOI_X.Length < 4)
             {
                 log.Error("创建ROI失败");
@@ -577,23 +626,23 @@ namespace Measure.Halcon.Demo
                 return;
             }
 
-            if (circleParams.rOI_X == null || circleParams.rOI_X.Length < 4 )  
+            if (circleParams.rOI_X == null || circleParams.rOI_X.Length < 4)
             {
                 log.Error("未创建圆ROI");
                 return;
             }
 
 
-            var loadResult=LoadCircleParamsFromUi();
+            var loadResult = LoadCircleParamsFromUi();
             log.Result(loadResult);
             if (!loadResult.IsSuccess)
             {
                 return;
             }
-           var result = halconHelper.Fit_Circle(HImage, circleParams,0, out HObject hRegion, out HTuple resultRow,
-           out HObject result_Circle, out HTuple hv_RowCenter, out HTuple hv_ColCenter,
-           out circleParams.circleRadius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
-           out HTuple hv_ArcAngle);
+            var result = halconHelper.Fit_Circle(HImage, circleParams, 0, out HObject hRegion, out HTuple resultRow,
+            out HObject result_Circle, out HTuple hv_RowCenter, out HTuple hv_ColCenter,
+            out circleParams.circleRadius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
+            out HTuple hv_ArcAngle);
 
             // 先记日志、先判成败：拟合失败时 result_Circle 是 null，
             // 直接 DispObj 会抛 HALCON #4056（object-ID is NULL）
@@ -617,10 +666,10 @@ namespace Measure.Halcon.Demo
             if (!loadResut.IsSuccess) {
                 return;
             }
-            if (circleParams.circleRadius != null && circleParams.circleRadius.TupleInt()>0)
+            if (circleParams.circleRadius != null && circleParams.circleRadius.TupleInt() > 0)
             {
-                circleParams.scale=Convert.ToDouble(this.txt_Distance.Text.Trim())/(circleParams.circleRadius*2.0);
-                log.Info("标定成功"+circleParams.scale);
+                circleParams.scale = Convert.ToDouble(this.txt_Distance.Text.Trim()) / (circleParams.circleRadius * 2.0);
+                log.Info("标定成功" + circleParams.scale);
             }
             else
             {
@@ -630,15 +679,15 @@ namespace Measure.Halcon.Demo
 
         private void btn_Measure_Click(object sender, EventArgs e)
         {
-            
+
             OperationResult loadResut = LoadCircleParamsFromUi();
             log.Result(loadResut);
             if (!loadResut.IsSuccess) {
                 return;
             };
 
-          OperationResult result=Measure(HImage, HwindowHandle);
-          log.Result(result);
+            OperationResult result = Measure(HImage, HwindowHandle);
+            log.Result(result);
 
         }
 
@@ -652,27 +701,27 @@ namespace Measure.Halcon.Demo
                     return OperationResult.CreateFailResult("测量失败：模板匹配。" + findResult.Msg, findResult.Error);
 
                 // 第 2 步：拟合圆
-                var fitResult = halconHelper.Fit_Circle(HImage, circleParams, homMat2d_T, out HObject hRegion, out HTuple resultRow,
+                var fitResult = halconHelper.Fit_Circle(hImage, circleParams, homMat2d_T, out HObject hRegion, out HTuple resultRow,
                     out HObject result_Circle, out HTuple hv_RowCenter, out HTuple hv_ColCenter,
                     out HTuple hv_Radius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
                     out HTuple hv_ArcAngle);
                 if (!fitResult.IsSuccess)
                     return OperationResult.CreateFailResult("测量失败：圆拟合。" + fitResult.Msg, fitResult.Error);
 
-               
+
 
                 // 第 3 步：判断直径
                 double distance = circleParams.scale * hv_Radius * 2;
                 if (distance < circleParams.circle_Dis_Min || distance > circleParams.circle_Dis_Max)
                 {
-                    HOperatorSet.DispObj(HImage, HwindowHandle);
-                    halconHelper.disp_message(HwindowHandle, "测量结果：NG " + distance, "window", 35, 20, "red", "false");
+                    HOperatorSet.DispObj(hImage, hWindowHandle);
+                    halconHelper.disp_message(hWindowHandle, "测量结果：NG " + distance, "window", 35, 20, "red", "false");
                     return OperationResult.CreateFailResult("测量结果：NG " + distance);   // 无异常 → Warn
                 }
 
-                
-                HOperatorSet.DispObj(result_Circle, HwindowHandle);
-                halconHelper.disp_message(HwindowHandle, "OK:" + distance, "window", 35, 20, "green", "false");
+
+                HOperatorSet.DispObj(result_Circle, hWindowHandle);
+                halconHelper.disp_message(hWindowHandle, "OK:" + distance, "window", 35, 20, "green", "false");
                 return OperationResult.CreateSuccessResult("OK:" + distance);
             }
             catch (Exception ex)
@@ -707,7 +756,13 @@ namespace Measure.Halcon.Demo
                     return OperationResult.CreateFailResult("还没保存过模板，请先创建并保存");
                 }
                 this.listModel.Items.AddRange(list.ToArray());
-                return OperationResult.CreateSuccessResult("读取模板列表成功");
+
+                // 默认选中上次用过的模板；没记录过、或那个模板已被删掉，就退回第一个
+                // 注意存的是「名字」不是索引：目录增删后索引会漂移，名字才稳定
+                int lastIndex = this.listModel.Items.IndexOf(appSettings.LastModelName);
+                this.listModel.SelectedIndex = lastIndex >= 0 ? lastIndex : 0;
+
+                return OperationResult.CreateSuccessResult("读取模板列表成功，共 " + list.Count + " 个");
 
             }
             catch (Exception ex)
@@ -716,7 +771,7 @@ namespace Measure.Halcon.Demo
                 return OperationResult.CreateFailResult("载入模板列表失败", ex);
             }
 
-           
+
         }
 
 
@@ -730,125 +785,127 @@ namespace Measure.Halcon.Demo
                 log.Result(result);
                 return;
             }
-            using (FolderBrowserDialog folder=new FolderBrowserDialog())
+            using (FolderBrowserDialog folder = new FolderBrowserDialog())
             {
                 if (!string.IsNullOrEmpty(basePath))
                 {
                     folder.SelectedPath = basePath;
                 }
-                if (folder.ShowDialog() ==DialogResult.OK )
+                if (folder.ShowDialog() == DialogResult.OK)
                 {
-                    string path=folder.SelectedPath;
-                     result = shapeModelHelper.SaveShapeModel(path, mathParams,circleParams);
+                    string path = folder.SelectedPath;
+                    result = shapeModelHelper.SaveShapeModel(path, mathParams, circleParams);
                     log.Result(result);
                 }
             }
-            
+
         }
+
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (true)   
+            if (cleanupDone) return;
+
+            var r = MessageBox.Show("有未保存的修改，是否保存？", "提示",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (r == DialogResult.Cancel)
             {
-                var r = MessageBox.Show("有未保存的修改，是否保存？", "提示",
-                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if (r == DialogResult.Yes) {
-                    modelFileName = (this.modelName.Text ?? string.Empty).Trim();
-                    bool IsValiresult = IsValidModelName(modelFileName, out string IsValiReson);
-                    if (!IsValiresult)
-                    {
-                        log.Warn("保存模板失败：" + IsValiReson);
-                        return;
-                    }
-
-                    var result = LoadCircleParamsFromUi();
-                    if (!result.IsSuccess)
-                    {
-                        log.Result(result);
-                        return;
-                    }
-                    string path = Path.Combine(basePath, modelFileName);
-                    try
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    catch (Exception ex)
-                    {
-
-                        log.Result(OperationResult.CreateFailResult("创建模板目录失败：" + path, ex));
-                    }
-
-                    result = shapeModelHelper.SaveShapeModel(path, mathParams, circleParams);
-                    log.Result(result);
-                    if (!result.IsSuccess)
-                    {
-                        return;
-                    }
-                    LoadModelList();
-                    this.listModel.SelectedItem = modelName;
-                }
-                else if (r == DialogResult.Cancel) { e.Cancel = true; } 
-
+                e.Cancel = true;        // 用户想留下
+                return;                 // 什么都别清理
             }
-        }
 
-        private void ImportParamsMenuItem_Click(object sender, EventArgs e)
-        {
-            string ImportModelName=this.listModel.Text.Trim();
-            string path = Path.Combine(basePath, ImportModelName);
-            var result = shapeModelHelper.ImportShapeModel(path, mathParams, circleParams);
-            log.Result(result);
-            if (result.IsSuccess)
-             {
-                RefreshBindings(this);   
-             }
-                
-
-            
-        }
-
-        private void saveModel_Click(object sender, EventArgs e)
-        {
-            modelFileName = (this.modelName.Text ?? string.Empty).Trim();
-            bool IsValiresult = IsValidModelName(modelFileName, out string IsValiReson);
-            if (!IsValiresult)
+            if (r == DialogResult.Yes && !TrySaveCurrentModel())
             {
-                log.Warn("保存模板失败：" + IsValiReson);
+                // 保存失败 → 拦住关闭，让用户有机会修正（比如模板名是空的）
+                MessageBox.Show("保存失败，请检查模板名称或日志。", "无法关闭",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                e.Cancel = true;
                 return;
             }
 
-            var result = LoadCircleParamsFromUi();
-            if (!result.IsSuccess)
+            // 到这里才是「确定要关」→ 按顺序收尾
+            cleanupDone = true;
+
+            grabCts?.Cancel();
+            findCts?.Cancel();
+            measureCts?.Cancel();
+
+            bool ok1 = grabTask.Wait(2000);
+            bool ok2 = findTask.Wait(2000);
+            bool ok3 = measureTask.Wait(2000);
+            if (!ok1 || !ok2 || !ok3) log.Warn("关闭时仍有后台线程未退出");
+
+            imageHelper.CloseCam();
+        }
+
+
+        private bool TrySaveCurrentModel()
+        {
+            // ① 模板名：从输入框取（不是下拉框），并做非法字符校验
+            //    局部变量故意不叫 modelName —— 那个是 TextBox 控件，同名太容易写错
+            string templateName = (this.modelName.Text ?? string.Empty).Trim();
+            if (!IsValidModelName(templateName, out string reason))
             {
-                log.Result(result);
-                return;
-            }
-            string path = Path.Combine(basePath, modelFileName);
-            if (File.Exists(Path.Combine(path, "param.ini"))) {
-               var answer = MessageBox.Show($"模板「{modelName}」已存在，是否覆盖？", "确认覆盖",
-               MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-               if (answer != DialogResult.Yes) return;
+                log.Warn("保存模板失败：" + reason);
+                return false;
             }
 
+            // ② 界面 → 参数（数值靠 DataBindings 已同步，极性/点选择靠这个方法）
+            var loadResult = LoadCircleParamsFromUi();
+            if (!loadResult.IsSuccess)
+            {
+                log.Result(loadResult);
+                return false;
+            }
+
+            // ③ 目录必须先建：HALCON 的 WriteShapeModel 不会自动创建目录，
+            //    目录不存在时会抛异常，最后只表现为「参数保存失败」，看不出真实原因
+            string path = Path.Combine(basePath, templateName);
             try
             {
                 Directory.CreateDirectory(path);
             }
             catch (Exception ex)
             {
-
                 log.Result(OperationResult.CreateFailResult("创建模板目录失败：" + path, ex));
+                return false;          // ← 原代码这里漏了 return，建目录失败还会继续往下写文件
             }
 
-            result = shapeModelHelper.SaveShapeModel(path, mathParams, circleParams);
-            log.Result(result);
-            if (!result.IsSuccess)
+            // ④ 落盘（param.ini + model.she + model_region.tif + roi_*.tup 一起写）
+            var saveResult = shapeModelHelper.SaveShapeModel(path, mathParams, circleParams);
+            log.Result(saveResult);
+            if (!saveResult.IsSuccess)
             {
-                return;
+                return false;
             }
-            LoadModelList();
-            this.listModel.SelectedItem = modelName;
 
+            // ⑤ 刷新列表并选中刚保存的模板（传字符串，不是 TextBox 控件对象）
+            log.Fail(LoadModelList());
+            this.listModel.SelectedItem = templateName;
+
+            return true;
+        }
+
+
+        private void ImportParamsMenuItem_Click(object sender, EventArgs e)
+        {
+            string ImportModelName = this.listModel.Text.Trim();
+            string path = Path.Combine(basePath, ImportModelName);
+            var result = shapeModelHelper.ImportShapeModel(path, mathParams, circleParams);
+            log.Result(result);
+            if (result.IsSuccess)
+            {
+                RefreshBindings(this);
+            }
+
+
+
+        }
+
+        private void saveModel_Click(object sender, EventArgs e)
+        {
+            TrySaveCurrentModel();
         }
 
 
@@ -867,19 +924,21 @@ namespace Measure.Halcon.Demo
         private void readModel_Click(object sender, EventArgs e)
         {
             string ImportModelName = this.listModel.Text.Trim();
-            if (this.listModel.SelectedIndex<0 || string.IsNullOrEmpty(ImportModelName))
+            if (this.listModel.SelectedIndex < 0 || string.IsNullOrEmpty(ImportModelName))
             {
                 log.Warn("请选择读取模板");
                 return;
             }
-            
-            
+
+
             string path = Path.Combine(basePath, ImportModelName);
             var result = shapeModelHelper.ImportShapeModel(path, mathParams, circleParams);
             log.Result(result);
             if (result.IsSuccess)
             {
                 RefreshBindings(this);
+                // 真的加载成功了才记「上次用的模板」——选中只是看一眼，加载才算用了
+                log.Fail(appSettings.SetLastModelName(ImportModelName));
             }
         }
 
@@ -890,26 +949,96 @@ namespace Measure.Halcon.Demo
         {
             string ImportModelName = this.listModel.Text.Trim();
             string path = Path.Combine(basePath, ImportModelName);
-            var  answer = MessageBox.Show($"确定删除「{ImportModelName}」？", "确认删除",
+            var answer = MessageBox.Show($"确定删除「{ImportModelName}」？", "确认删除",
                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (!Directory.Exists(path))
             {
                 MessageBox.Show("该目录已不存在", "提示");
-                LoadModelList(); 
+                LoadModelList();
                 return;
             }
             if (answer == DialogResult.Yes) {
-                
+
                 Directory.Delete(path, true);
                 LoadModelList();
-                if (this.listModel.Items.Count > 0) { 
+                if (this.listModel.Items.Count > 0) {
                     this.listModel.SelectedIndex = 0;
                 }
                 else
                 {
-                    this.listModel.Text= string.Empty;
+                    this.listModel.Text = string.Empty;
                 }
             }
+        }
+
+        private void but_ContinueMeasure_Click(object sender, EventArgs e)
+        {
+            if (measureCts != null && !measureTask.IsCompleted)
+            {
+                ColseContinuousMeasure();
+                but_ContinueMeasure.Text = "连续测量";
+                return;
+            }
+
+            if (mathParams.modelID == null || circleParams.rOI_X == null || circleParams.rOI_X.Length < 4) {
+                log.Warn("缺少模板");
+                return;
+            }
+            but_ContinueMeasure.Text = "停止测量";
+
+
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                if (!string.IsNullOrEmpty(lastFindPath))
+                {
+                    folderBrowserDialog.SelectedPath = lastFindPath;
+                }
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK) {
+                    lastFindPath=folderBrowserDialog.SelectedPath;
+                    string path = folderBrowserDialog.SelectedPath;
+                    FileInfo[] files = new DirectoryInfo(path).GetFiles();
+
+                    if (files.Length == 0)
+                    {
+                        log.Warn("目录里没有图片：" + path);
+                        but_ContinueMeasure.Text = "连续测量";
+                        return;
+                    }
+
+                    measureCts = new CancellationTokenSource();
+                    var token=measureCts.Token;
+                    measureTask =  Task.Factory.StartNew(() => ContinueMeasure(token, files),
+                        token, TaskCreationOptions.LongRunning,
+                         TaskScheduler.Default);
+                }
+
+            }
+        }
+
+        private void ContinueMeasure(CancellationToken token,FileInfo[] files)
+        {
+
+            while (!token.IsCancellationRequested)
+            {
+                foreach (FileInfo file in files) {
+                    if (token.IsCancellationRequested) break;
+                    var ReadImageResult = imageHelper.ReadImage(file.FullName,ref HwindowHandle, ref HImage);
+                    if (ReadImageResult.IsSuccess) {
+                        var measureResult = Measure(HImage, HwindowHandle);
+                        log.Result(measureResult);
+                    }
+                    else
+                    {
+                        log.Fail(ReadImageResult);
+                    }
+                    token.WaitHandle.WaitOne(2000);
+                }
+            }
+        }
+
+        private void ColseContinuousMeasure()
+        {
+            StopWorker(ref measureCts, measureTask, "连续测量");
         }
     }
 }

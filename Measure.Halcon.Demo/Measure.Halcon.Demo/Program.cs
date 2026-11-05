@@ -16,17 +16,24 @@ namespace Measure.Halcon.Demo
         /// Debug：放在项目目录下（清理 bin 不丢、Debug 与 Release 共用一份）；
         /// Release：放在 exe 旁边。
         /// </summary>
-        public static readonly string DataRoot = ComputeDataRoot();
+        public static readonly string DataRoot = ResolveDataRoot();
 
-        private static string ComputeDataRoot()
+        private static string ResolveDataRoot()
         {
-#if DEBUG
-            string root = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "data");
-#else
-            string root = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data");
-#endif
-            return Path.GetFullPath(root);   // 把 ..\.. 归一化成绝对路径，方便日志里看得清
+            string exeDir = AppDomain.CurrentDomain.BaseDirectory;
+            string besideExe = Path.Combine(exeDir, "data");
+
+            // ① 部署形态：exe 旁边有 data，就用它
+            if (Directory.Exists(besideExe)) return Path.GetFullPath(besideExe);
+
+            // ② 开发形态：项目目录下有 data（bin\Debug / bin\Release 上两级 = 项目目录）
+            string projectLevel = Path.GetFullPath(Path.Combine(exeDir, "..", "..", "data"));
+            if (Directory.Exists(projectLevel)) return projectLevel;
+
+            // ③ 兜底：都没找到，就在 exe 旁建一个
+            return Path.GetFullPath(besideExe);
         }
+
 
         /// <summary>
         /// 应用程序的主入口点。
@@ -49,6 +56,10 @@ namespace Measure.Halcon.Demo
                     encoding: Encoding.UTF8,
                     flushToDiskInterval: TimeSpan.FromSeconds(1)) // 崩溃最多丢 1 秒
                 .CreateLogger();
+            Directory.CreateDirectory(DataRoot);
+            Directory.CreateDirectory(Path.Combine(DataRoot, "model"));
+            Directory.CreateDirectory(Path.Combine(DataRoot, "config"));
+            Directory.CreateDirectory(Path.Combine(DataRoot, "logs"));
 
             try
             {

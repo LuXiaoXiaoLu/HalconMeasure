@@ -34,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="halcondotnet, Version=25.11.0.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
@@ -93,8 +94,11 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="CircleParams.cs" />
+    <Compile Include="Helper\AppSettings.cs" />
+    <Compile Include="Helper\DeviceSettings.cs" />
     <Compile Include="Helper\HalconHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
+    <Compile Include="Helper\IniStore.cs" />
     <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="MatchParams.cs" />
     <Compile Include="Helper\ShapeModelHelper.cs" />

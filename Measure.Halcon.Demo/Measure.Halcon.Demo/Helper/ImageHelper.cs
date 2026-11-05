@@ -99,6 +99,7 @@ namespace Measure.Halcon.Demo
         }
 
         //读取本地图像
+        //读取本地图像
         public OperationResult ReadImage(string imagePath, ref HTuple WindowHandle, ref HObject hImage)
         {
             try

@@ -98,6 +98,21 @@ namespace Measure.Halcon.Demo
             }
         }
 
+        public OperationResult GrabImage(out HObject hImage)
+        {
+            try
+            {
+                HOperatorSet.GrabImage(out hImage, acqHandle);
+                HOperatorSet.GetImageSize(hImage, out HTuple width, out HTuple height);
+                return OperationResult.CreateSuccessResult("采图成功");
+            }
+            catch (Exception ex)
+            {
+                hImage = null;
+                return OperationResult.CreateFailResult("采图失败", ex);
+            }
+        }
+
         //读取本地图像
         //读取本地图像
         public OperationResult ReadImage(string imagePath, ref HTuple WindowHandle, ref HObject hImage)

@@ -77,5 +77,7 @@ namespace Measure.Halcon.Demo.Helper
             LastModelName = lastModelName;
             return _store.Save();
         }
+
+       
     }
 }

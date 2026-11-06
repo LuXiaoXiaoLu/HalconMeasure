@@ -15,7 +15,16 @@ namespace Measure.Halcon.Demo.Helper
     internal class ShapeModelHelper
     {
         private HalconHelper halconHelper = new HalconHelper();
-       private FileIniDataParser parser = new FileIniDataParser();
+   
+        private static readonly string[] ModelFiles =
+        {
+            "model.she",            // 定位模板
+            "model_region.tif",     // 模板区域
+            "roi_row.tup",          // 圆 ROI 卡尺点（行）
+            "roi_col.tup",          // 圆 ROI 卡尺点（列）
+            "roi_dir.tup",          // 圆 ROI 卡尺方向
+            "param.ini"             // 各类参数
+        };
 
         //创建匹配模板
         public OperationResult CreateShapeModel(ref HTuple HwindowHandle, ref HObject image, MatchParams mathParams)
@@ -141,7 +150,15 @@ namespace Measure.Halcon.Demo.Helper
         {
             try
             {
+                List<string> missFiles= new List<string>();
+                var checkModelResult= CheckModel(path, out missFiles);
+                if (!checkModelResult.IsSuccess)
+                {
+                    return OperationResult.CreateFailResult("加载模板失败：" + checkModelResult.Msg,checkModelResult.Error);
+                }
+
                 var parser = new FileIniDataParser();
+                
                 IniData read = parser.ReadFile(path + "\\param.ini");
 
                 matchParams.startAngle = Convert.ToDouble(read["定位参数"]["起始角度"]);
@@ -250,6 +267,38 @@ namespace Measure.Halcon.Demo.Helper
             }
         }
 
+        public OperationResult CheckModel(string path, out List<string> missingFiles)
+        {
+            missingFiles = new List<string>();
+            if (string.IsNullOrWhiteSpace(path))
+                return OperationResult.CreateFailResult("检查模板失败：路径为空");
+            if (!Directory.Exists(path))                       
+                return OperationResult.CreateFailResult("检查模板失败：目录不存在 " + path);
+            try
+            {
+                foreach (string neam in ModelFiles)
+                {
+                    if (!File.Exists(Path.Combine(path, neam)))
+                    {
+                        missingFiles.Add(neam);
+                    }
+                }
+
+                if(missingFiles.Count == 0)
+                {
+                    return OperationResult.CreateSuccessResult("模板完整：" + Path.GetFileName(path));
+                }
+
+                return   OperationResult.CreateFailResult(
+            "模板不完整，缺少 " + missingFiles.Count + " 个文件：" + string.Join("、", missingFiles));
+            }
+            catch (Exception ex)
+            {
+
+                missingFiles = new List<string>();
+                return OperationResult.CreateFailResult("检查模板失败：" + path, ex);
+            }
+        }
 
         public OperationResult GetAllShapeModel(string basePath,out List<string> list)
         {

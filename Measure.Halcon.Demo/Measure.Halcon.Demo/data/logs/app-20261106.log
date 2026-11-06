@@ -1,0 +1,64 @@
+﻿2026-11-06 10:23:52.635 [INF] 读取模板列表成功，共 3 个
+2026-11-06 10:23:52.676 [INF] Halcon 初始化成功
+2026-11-06 10:23:52.683 [INF] 参数加载成功
+2026-11-06 10:23:52.829 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-06 10:24:12.426 [INF] 参数保存成功
+2026-11-06 10:24:19.522 [INF] 参数保存成功
+2026-11-06 10:24:21.491 [INF] 读取模板列表成功，共 3 个
+2026-11-06 10:24:21.531 [INF] Halcon 初始化成功
+2026-11-06 10:24:21.539 [INF] 参数加载成功
+2026-11-06 10:24:21.587 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-06 10:24:25.991 [INF] 参数加载成功
+2026-11-06 10:24:29.505 [WRN] 保存模板失败：模板名不能为空
+2026-11-06 10:24:38.488 [INF] 参数保存成功
+2026-11-06 10:24:40.852 [INF] 读取模板列表成功，共 3 个
+2026-11-06 10:24:40.892 [INF] Halcon 初始化成功
+2026-11-06 10:24:40.900 [INF] 参数加载成功
+2026-11-06 10:24:41.020 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-06 10:24:44.566 [INF] 参数加载成功
+2026-11-06 10:24:50.798 [INF] 读取模板列表成功，共 3 个
+2026-11-06 10:24:50.834 [INF] Halcon 初始化成功
+2026-11-06 10:24:50.834 [INF] 参数加载成功
+2026-11-06 10:24:50.882 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-06 10:35:03.157 [INF] 读取模板列表成功，共 3 个
+2026-11-06 10:35:03.199 [INF] Halcon 初始化成功
+2026-11-06 10:35:03.207 [INF] 参数加载成功
+2026-11-06 10:35:03.263 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-06 10:35:44.563 [INF] 读取模板列表成功，共 3 个
+2026-11-06 10:35:44.600 [INF] Halcon 初始化成功
+2026-11-06 10:35:44.600 [WRN] 加载模板失败：模板不完整，缺少 1 个文件：roi_row.tup
+2026-11-06 10:35:44.648 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-06 10:35:52.230 [WRN] 加载模板失败：模板不完整，缺少 1 个文件：roi_row.tup
+2026-11-06 10:35:54.792 [INF] 参数加载成功
+2026-11-06 10:36:36.445 [INF] 参数加载成功
+2026-11-06 10:36:50.175 [WRN] 保存模板失败：模板名不能为空

@@ -55,7 +55,7 @@ namespace Measure.Halcon.Demo
                 return;
             }
 
-            var result = shapeModelHelper.ImportShapeModel(basePath, mathParams, circleParams);
+            var result = shapeModelHelper.ImportShapeModel(Path.Combine(basePath, appSettings.LastModelName), mathParams, circleParams);
             log.Result(result);
             if (result.IsSuccess)
             {
@@ -123,8 +123,6 @@ namespace Measure.Halcon.Demo
         //上一次保存参数文件夹地址
 
         //模板名称
-        string modelFileName;
-
         //圆参数模板
         private CircleParams circleParams = new CircleParams();
 

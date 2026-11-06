@@ -9,6 +9,7 @@ namespace Measure.Halcon.Demo.Engine
 {
     internal class CameraImageSource : IImageSource
     {
+        private readonly ImageHelper _imageHelper;
         public string Name { get { return "相机"; } }
 
         public int IntervalMs { get { return 0; } }
@@ -17,7 +18,12 @@ namespace Measure.Halcon.Demo.Engine
 
         public OperationResult GrabImage(out HObject image)
         {
-            throw new NotImplementedException();
+          return  _imageHelper.GrabImage(out image);
+        }
+
+        public CameraImageSource(ImageHelper imageHelper)
+        {
+            _imageHelper = imageHelper;
         }
     }
 }

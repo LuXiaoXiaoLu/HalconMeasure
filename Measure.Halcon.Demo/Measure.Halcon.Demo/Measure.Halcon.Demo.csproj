@@ -87,20 +87,23 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\CameraImageSource.cs" />
+    <Compile Include="Engine\FileImageSource.cs" />
+    <Compile Include="Engine\IImageSource.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="CircleParams.cs" />
+    <Compile Include="params\CircleParams.cs" />
     <Compile Include="Helper\AppSettings.cs" />
     <Compile Include="Helper\DeviceSettings.cs" />
     <Compile Include="Helper\HalconHelper.cs" />
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="Helper\IniStore.cs" />
     <Compile Include="Helper\LogHelper.cs" />
-    <Compile Include="MatchParams.cs" />
+    <Compile Include="params\MatchParams.cs" />
     <Compile Include="Helper\ShapeModelHelper.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Program.cs" />

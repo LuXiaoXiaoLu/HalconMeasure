@@ -1,0 +1,117 @@
+﻿2026-11-07 10:08:04.216 [INF] 读取模板列表成功，共 3 个
+2026-11-07 10:08:04.257 [INF] Halcon 初始化成功
+2026-11-07 10:08:04.267 [INF] 参数加载成功
+2026-11-07 10:08:04.322 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-07 10:08:08.287 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 10:08:27.193 [WRN] 目录里没有图片：E:\code\Csharp\Measure\testdata
+2026-11-07 10:08:30.046 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 10:08:55.307 [INF] 连续查找 已停止
+2026-11-07 10:11:13.597 [INF] 读取模板列表成功，共 3 个
+2026-11-07 10:11:13.637 [INF] Halcon 初始化成功
+2026-11-07 10:11:13.646 [INF] 参数加载成功
+2026-11-07 10:11:13.697 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-07 10:11:15.096 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 10:11:46.586 [INF] 连续查找 已停止
+2026-11-07 10:13:09.167 [INF] 读取模板列表成功，共 3 个
+2026-11-07 10:13:09.207 [INF] Halcon 初始化成功
+2026-11-07 10:13:09.212 [INF] 参数加载成功
+2026-11-07 10:13:09.262 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-07 10:13:10.892 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 10:13:36.496 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-07 10:13:50.647 [INF] 连续查找 结束
+2026-11-07 10:33:44.426 [INF] 读取模板列表成功，共 3 个
+2026-11-07 10:33:44.466 [INF] Halcon 初始化成功
+2026-11-07 10:33:44.476 [INF] 参数加载成功
+2026-11-07 10:33:44.535 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-07 10:33:45.526 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 10:34:08.416 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-07 10:34:20.266 [INF] 连续查找 结束
+2026-11-07 17:50:21.955 [INF] 读取模板列表成功，共 3 个
+2026-11-07 17:50:21.994 [INF] Halcon 初始化成功
+2026-11-07 17:50:21.999 [INF] 参数加载成功
+2026-11-07 17:50:22.039 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-07 17:50:34.526 [ERR] 保存图像失败
+HalconDotNet.HOperatorException: HALCON error #4056: Image data management: object-ID is NULL (0) in operator write_image
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.WriteImage(HObject image, HTuple format, HTuple fillColor, HTuple fileName)
+   在 Measure.Halcon.Demo.ImageHelper.SaveImage(String path, HObject hImage) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 293
+2026-11-07 17:50:38.870 [ERR] 采图失败
+HalconDotNet.HOperatorException: HALCON error #1401: Wrong number of values of control parameter 1 in operator grab_image
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.GrabImage(HObject& image, HTuple acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.GrabImage(HObject& hImage, HTuple& WindowHandle) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 89
+2026-11-07 17:50:40.716 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-07 17:50:47.394 [INF] 读取图像成功
+2026-11-07 17:50:54.766 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 17:50:54.789 [INF] 查找模板成功
+2026-11-07 17:50:59.437 [INF] 参数加载成功
+2026-11-07 17:51:01.335 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 17:51:15.719 [INF] 创建模板成功
+2026-11-07 17:51:19.389 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 17:51:19.394 [INF] 查找模板成功
+2026-11-07 17:51:24.343 [INF] 参数保存成功
+2026-11-07 17:51:30.745 [INF] 参数保存成功
+2026-11-07 17:51:33.103 [INF] 参数加载成功
+2026-11-07 17:51:36.124 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 17:51:36.135 [INF] 查找模板成功
+2026-11-07 17:51:38.932 [INF] 参数加载成功
+2026-11-07 17:51:40.114 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 17:51:40.121 [INF] 查找模板成功
+2026-11-07 17:51:42.417 [INF] 参数加载成功
+2026-11-07 17:51:43.234 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-07 17:51:43.244 [INF] 查找模板成功
+2026-11-07 17:52:18.280 [WRN] 测量结果：NG 100.000024048037
+2026-11-07 17:52:20.615 [WRN] 测量结果：NG 100.083168065942
+2026-11-07 17:52:22.984 [WRN] 测量结果：NG 100.308348723503
+2026-11-07 17:52:25.310 [WRN] 测量结果：NG 100.156559860511
+2026-11-07 17:52:27.650 [WRN] 测量结果：NG 100.459695026075
+2026-11-07 17:52:30.004 [WRN] 测量结果：NG 100.085806605724
+2026-11-07 17:52:32.339 [WRN] 测量结果：NG 100.000024048037
+2026-11-07 17:52:34.665 [WRN] 测量结果：NG 100.000024048037
+2026-11-07 17:52:37.014 [WRN] 测量结果：NG 100.083168065942
+2026-11-07 17:52:39.341 [WRN] 测量结果：NG 100.308348723503
+2026-11-07 17:52:41.674 [WRN] 测量结果：NG 100.156559860511
+2026-11-07 17:52:44.015 [WRN] 测量结果：NG 100.459695026075
+2026-11-07 17:52:46.334 [WRN] 测量结果：NG 100.085806605724
+2026-11-07 17:52:48.655 [WRN] 测量结果：NG 100.000024048037
+2026-11-07 17:52:51.050 [WRN] 测量结果：NG 100.000024048037
+2026-11-07 17:52:53.395 [WRN] 测量结果：NG 100.083168065942
+2026-11-07 17:52:55.727 [WRN] 测量结果：NG 100.308348723503
+2026-11-07 17:52:58.065 [WRN] 测量结果：NG 100.156559860511
+2026-11-07 17:53:00.395 [WRN] 测量结果：NG 100.459695026075
+2026-11-07 17:53:02.724 [WRN] 测量结果：NG 100.085806605724
+2026-11-07 17:53:05.064 [WRN] 测量结果：NG 100.000024048037
+2026-11-07 17:53:07.404 [WRN] 测量结果：NG 100.000024048037
+2026-11-07 17:53:07.819 [INF] 参数保存成功

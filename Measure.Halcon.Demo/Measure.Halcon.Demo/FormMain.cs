@@ -1,5 +1,7 @@
 ﻿using HalconDotNet;
+using Measure.Halcon.Demo.Engine;
 using Measure.Halcon.Demo.Helper;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +9,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,6 +43,9 @@ namespace Measure.Halcon.Demo
             InitialParams();
             BindParams();
             log = new LogHelper(list_Info);
+            engine = new RunEngine(log);
+            listener =new  SocketHeler( new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp),log);
+            log.Result(listener.StartSockeServer());
             // 程序级状态配置：必须在 log 之后、LoadModelList 之前初始化，
             // 因为 LoadModelList 里要读 appSettings.LastModelName，且 Load 的失败要写日志
             appSettings = new AppSettings(Path.Combine(Program.DataRoot, "config", "State.ini"));
@@ -47,6 +53,7 @@ namespace Measure.Halcon.Demo
             this.FormClosed += FormMain_FormClosed;
             this.FormClosing += FormMain_FormClosing;
             log.Result(LoadModelList());
+            cameraImageSource = new CameraImageSource(imageHelper);
             this.list_Info.Columns[1].Width = list_Info.Width - this.list_Info.Columns[0].Width - 20;
             var halconInitialresult = halconHelper.HalconInitial(hWindowControl1, out HwindowHandle);
             log.Result(halconInitialresult);
@@ -94,10 +101,17 @@ namespace Measure.Halcon.Demo
 
 
         }
-
+        //事件处理引擎
+        private RunEngine engine;
         private ImageHelper imageHelper = new ImageHelper();
         //相机名称
         private const string CamName = "GigEVision2";
+
+        // 流程名：既传给 engine.Start，也用来判断「现在跑的是不是我自己」
+        // 用常量而不是字面量，避免两处拼写不一致导致判断永远失败
+        private const string FlowGrab = "连续采图";
+        private const string FlowFind = "连续查找";
+        private const string FlowMeasure = "连续测量";
         //图片显示句柄
         private HTuple HwindowHandle = new HTuple();
         //图片
@@ -108,16 +122,9 @@ namespace Measure.Halcon.Demo
         //连续采图标志位
         private CancellationTokenSource grabCts;
 
-        //连续查找标志位
-        private CancellationTokenSource findCts;
-        //连续测量标准位
-        private CancellationTokenSource measureCts;
-        //连续查找模板线程
-        private Task findTask = Task.CompletedTask;
         //连续采图线程
         private Task grabTask = Task.CompletedTask;
-
-        private Task measureTask=Task.CompletedTask;
+      
         //上一次打开连续查找模板图片文件夹地址
         string lastFindPath = string.Empty;
         //上一次保存参数文件夹地址
@@ -139,6 +146,9 @@ namespace Measure.Halcon.Demo
 
         private bool cleanupDone;      // 防重入字段
 
+        private SocketHeler listener;
+
+        private CameraImageSource cameraImageSource;
         public void InitialParams()
         {
             // 用「枚举名」填 Items（字符串），这样 SelectedItem 能按 "max" 精确选中；
@@ -249,7 +259,8 @@ namespace Measure.Halcon.Demo
             this.hWindowControl1.Focus();
             var loadresult = LoadMathParamsFromUi();
             log.Result(loadresult);
-            if (!loadresult.IsSuccess) {
+            if (!loadresult.IsSuccess)
+            {
                 return;
             }
 
@@ -265,7 +276,8 @@ namespace Measure.Halcon.Demo
             {
                 openFileDialog.Filter = "BMP 图片(*.bmp)|*.bmp|PNG 图片(*.png)|*.png|JPEG 图片(*.jpg;*.jpeg)|*.jpg;*.jpeg|TIFF 图片(*.tif;*.tiff)|*.tif;*.tiff";
                 openFileDialog.Multiselect = false;
-                if (openFileDialog.ShowDialog() == DialogResult.OK) {
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
                     string imagePath = openFileDialog.FileName;
                     var result = imageHelper.ReadImage(imagePath, ref HwindowHandle, ref HImage);
                     log.Result(result);
@@ -293,7 +305,8 @@ namespace Measure.Halcon.Demo
 
         private void btn_OneShot_Click(object sender, EventArgs e)
         {
-            var result = imageHelper.GrabImage(ref HImage, ref HwindowHandle);
+            var result = cameraImageSource.GrabImage( out HImage);
+            halconHelper.DisplayImage(HImage, HwindowHandle);
             log.Result(result);
 
         }
@@ -414,7 +427,7 @@ namespace Measure.Halcon.Demo
 
         private void btn_StopGrab_Click(object sender, EventArgs e)
         {
-            StopWorker(ref grabCts, grabTask, "连续采图");
+
         }
 
 
@@ -462,14 +475,20 @@ namespace Measure.Halcon.Demo
 
         private void btn_ContinueFind_Click(object sender, EventArgs e)
         {
-            if (findCts != null && !findTask.IsCompleted)
+            if (engine.State != EngineState.Idle)
             {
-                ColseContinuousFind();
-                btn_ContinueFind.Text = "连续查找";
+                // 自己开着 → 点它就是「停止」；别人开着 → 直接拒绝，不顶掉对方
+                if (engine.CurrentName == FlowFind)
+                {
+                    engine.Stop(2000);
+                    btn_ContinueFind.Text = "连续查找";
+                    return;
+                }
+
+                log.Warn("「" + engine.CurrentName + "」正在运行，请先停止它");
                 return;
             }
 
-           
             if (mathParams.modelID == null)
             {
                 log.Warn("查找模板失败：模板为空");
@@ -481,7 +500,8 @@ namespace Measure.Halcon.Demo
             if (!loadResult.IsSuccess) return;
             using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
             {
-                if (!string.IsNullOrEmpty(lastFindPath)) {
+                if (!string.IsNullOrEmpty(lastFindPath))
+                {
                     folderBrowserDialog.SelectedPath = lastFindPath;
                 }
                 if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
@@ -495,94 +515,40 @@ namespace Measure.Halcon.Demo
                         btn_ContinueFind.Text = "连续查找";
                         return;
                     }
-                    findCts = new CancellationTokenSource();
-                    CancellationToken token = findCts.Token;
-                    findTask = Task.Factory.StartNew(() => ContinuousFindThread(token, files),
-                        token, TaskCreationOptions.LongRunning,
-                         TaskScheduler.Default);
+                    var source = new FileImageSource(files);
+
+                    bool engineStartResult = engine.Start(FlowFind,
+                          source,
+                          ProcessFind,
+                          r => { 
+                              log.Fail(r);
+                              FindData md = (r as OperationResult<FindData>)?.Data;
+                              listener.SendData(md.ToList());
+                          
+                          });
+
+                    if (!engineStartResult)
+                    {
+                        btn_ContinueFind.Text = "连续查找";
+                        return;
+                    }
                 }
             }
         }
-        //连续查找方法
-        private void ContinuousFindThread(CancellationToken token, FileInfo[] files)
+        //连续查找过程
+        private OperationResult ProcessFind(HObject image)
         {
-            while (!token.IsCancellationRequested) {
-                foreach (FileInfo file in files)
-                {
-                    if (token.IsCancellationRequested) break;
-                    var resultImageHelper = imageHelper.ReadImage(file.FullName, ref HwindowHandle, ref HImage);
-                    if (resultImageHelper.IsSuccess)
-                    {
-                        var result = shapeModelHelper.FindShapeMode(ref HwindowHandle, ref HImage, mathParams, out HTuple homMat2d_T);
-                        if (!result.IsSuccess)
-                        {
-                            log.Fail(result);
-                        }
-                    }
-                    else
-                    {
-                        log.Fail(resultImageHelper);
-                    }
-                    token.WaitHandle.WaitOne(2000);
-                }
-            }
-            ;
-
-        }
-        //关闭连续查找方法
-        private void ColseContinuousFind()
-        {
-            StopWorker(ref findCts, findTask, "连续查找");
+            return shapeModelHelper.FindShapeMode(ref HwindowHandle, ref image, mathParams, out HTuple homMat2d_T);
         }
 
-        /// <summary>
-        /// 停止一个后台循环任务，并等它<b>真正退出</b>。连续采图 / 连续查找 / 连续测量三处共用。
-        /// </summary>
-        /// <param name="cts">要取消的 CancellationTokenSource；确认退出后会被置为 null（所以要 ref）。</param>
-        /// <param name="task">该 CancellationTokenSource 对应的后台任务。</param>
-        /// <param name="name">日志里显示的名字，如 "连续查找"。</param>
-        /// <returns>true = 已确认停止（或本来就没在跑）；false = 超时仍未退出。</returns>
-        /// <remarks>
-        /// 为什么必须 Wait：Cancel() 只是「发出请求」，线程要跑到下一次检查 token 的地方才会退出。
-        /// 不等就置 null，等于告诉按钮「现在空闲」，用户再点一次就会启动第二个线程，
-        /// 两个线程同时读写 HImage、同时往同一个窗口画图。
-        /// </remarks>
-        private bool StopWorker(ref CancellationTokenSource cts, Task task, string name)
-        {
-            if (cts == null) return true;          // 本来就没在跑
 
-            cts.Cancel();                          // ① 只发出取消请求
 
-            bool exited;
-            try
-            {
-                exited = task.Wait(2000);          // ② 等它真的退出（线程睡在 WaitOne 里时会被立即唤醒）
-            }
-            catch (AggregateException ex)
-            {
-                // 线程自己抛了异常（比如 HALCON 算子失败）。任务此时已经结束，
-                // 但那个异常过去没人看过 —— 这里顺手落地，否则会被静默丢弃
-                log.Fail(OperationResult.CreateFailResult(name + " 线程异常结束", ex.InnerException ?? ex));
-                exited = true;
-            }
 
-            if (!exited)
-            {
-                // 线程还卡在 HALCON 算子中间（匹配/拟合耗时）。故意不置 null，
-                // 让「是否在跑」的判断保持为真，避免用户再点一次启动第二个线程
-                log.Warn(name + " 线程未在 2 秒内退出，请稍后重试");
-                return false;
-            }
 
-            cts.Dispose();
-            cts = null;                            // ③ 确认退出后才清空
-            log.Info(name + " 已停止");
-            return true;
-        }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-           
+
         }
 
         private void btn_CircleROI_Click(object sender, EventArgs e)
@@ -661,7 +627,8 @@ namespace Measure.Halcon.Demo
         {
             var loadResut = LoadCircleParamsFromUi();
             log.Result(loadResut);
-            if (!loadResut.IsSuccess) {
+            if (!loadResut.IsSuccess)
+            {
                 return;
             }
             if (circleParams.circleRadius != null && circleParams.circleRadius.TupleInt() > 0)
@@ -680,9 +647,11 @@ namespace Measure.Halcon.Demo
 
             OperationResult loadResut = LoadCircleParamsFromUi();
             log.Result(loadResut);
-            if (!loadResut.IsSuccess) {
+            if (!loadResut.IsSuccess)
+            {
                 return;
-            };
+            }
+            ;
 
             OperationResult result = Measure(HImage, HwindowHandle);
             log.Result(result);
@@ -707,12 +676,12 @@ namespace Measure.Halcon.Demo
                     return OperationResult.CreateFailResult("测量失败：圆拟合。" + fitResult.Msg, fitResult.Error);
 
 
-
+                HOperatorSet.DispObj(hImage, hWindowHandle);
                 // 第 3 步：判断直径
                 double distance = circleParams.scale * hv_Radius * 2;
                 if (distance < circleParams.circle_Dis_Min || distance > circleParams.circle_Dis_Max)
                 {
-                    HOperatorSet.DispObj(hImage, hWindowHandle);
+                  
                     halconHelper.disp_message(hWindowHandle, "测量结果：NG " + distance, "window", 35, 20, "red", "false");
                     return OperationResult.CreateFailResult("测量结果：NG " + distance);   // 无异常 → Warn
                 }
@@ -825,14 +794,9 @@ namespace Measure.Halcon.Demo
             // 到这里才是「确定要关」→ 按顺序收尾
             cleanupDone = true;
 
-            grabCts?.Cancel();
-            findCts?.Cancel();
-            measureCts?.Cancel();
 
-            bool ok1 = grabTask.Wait(2000);
-            bool ok2 = findTask.Wait(2000);
-            bool ok3 = measureTask.Wait(2000);
-            if (!ok1 || !ok2 || !ok3) log.Warn("关闭时仍有后台线程未退出");
+
+            engine.Stop(200);
 
             imageHelper.CloseCam();
         }
@@ -886,20 +850,7 @@ namespace Measure.Halcon.Demo
         }
 
 
-        private void ImportParamsMenuItem_Click(object sender, EventArgs e)
-        {
-            string ImportModelName = this.listModel.Text.Trim();
-            string path = Path.Combine(basePath, ImportModelName);
-            var result = shapeModelHelper.ImportShapeModel(path, mathParams, circleParams);
-            log.Result(result);
-            if (result.IsSuccess)
-            {
-                RefreshBindings(this);
-            }
-
-
-
-        }
+      
 
         private void saveModel_Click(object sender, EventArgs e)
         {
@@ -955,11 +906,13 @@ namespace Measure.Halcon.Demo
                 LoadModelList();
                 return;
             }
-            if (answer == DialogResult.Yes) {
+            if (answer == DialogResult.Yes)
+            {
 
                 Directory.Delete(path, true);
                 LoadModelList();
-                if (this.listModel.Items.Count > 0) {
+                if (this.listModel.Items.Count > 0)
+                {
                     this.listModel.SelectedIndex = 0;
                 }
                 else
@@ -971,14 +924,22 @@ namespace Measure.Halcon.Demo
 
         private void but_ContinueMeasure_Click(object sender, EventArgs e)
         {
-            if (measureCts != null && !measureTask.IsCompleted)
+            if (engine.State != EngineState.Idle)
             {
-                ColseContinuousMeasure();
-                but_ContinueMeasure.Text = "连续测量";
+                // 自己开着 → 点它就是「停止」；别人开着 → 直接拒绝，不顶掉对方
+                if (engine.CurrentName == FlowMeasure)
+                {
+                    ColseContinuousMeasure();
+                    but_ContinueMeasure.Text = "连续测量";
+                    return;
+                }
+
+                log.Warn("「" + engine.CurrentName + "」正在运行，请先停止它");
                 return;
             }
 
-            if (mathParams.modelID == null || circleParams.rOI_X == null || circleParams.rOI_X.Length < 4) {
+            if (mathParams.modelID == null || circleParams.rOI_X == null || circleParams.rOI_X.Length < 4)
+            {
                 log.Warn("缺少模板");
                 return;
             }
@@ -991,8 +952,9 @@ namespace Measure.Halcon.Demo
                 {
                     folderBrowserDialog.SelectedPath = lastFindPath;
                 }
-                if (folderBrowserDialog.ShowDialog() == DialogResult.OK) {
-                    lastFindPath=folderBrowserDialog.SelectedPath;
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                {
+                    lastFindPath = folderBrowserDialog.SelectedPath;
                     string path = folderBrowserDialog.SelectedPath;
                     FileInfo[] files = new DirectoryInfo(path).GetFiles();
 
@@ -1002,41 +964,38 @@ namespace Measure.Halcon.Demo
                         but_ContinueMeasure.Text = "连续测量";
                         return;
                     }
-
-                    measureCts = new CancellationTokenSource();
-                    var token=measureCts.Token;
-                    measureTask =  Task.Factory.StartNew(() => ContinueMeasure(token, files),
-                        token, TaskCreationOptions.LongRunning,
-                         TaskScheduler.Default);
+                    IImageSource imageSource = new FileImageSource(files);
+                    bool s = engine.Start(FlowMeasure,
+                           imageSource,
+                           ProcessMeasure,
+                           r => { log.Fail(r); }
+                           );
                 }
 
             }
         }
-
-        private void ContinueMeasure(CancellationToken token,FileInfo[] files)
+        private OperationResult ProcessMeasure(HObject image)
         {
-
-            while (!token.IsCancellationRequested)
-            {
-                foreach (FileInfo file in files) {
-                    if (token.IsCancellationRequested) break;
-                    var ReadImageResult = imageHelper.ReadImage(file.FullName,ref HwindowHandle, ref HImage);
-                    if (ReadImageResult.IsSuccess) {
-                        var measureResult = Measure(HImage, HwindowHandle);
-                        log.Result(measureResult);
-                    }
-                    else
-                    {
-                        log.Fail(ReadImageResult);
-                    }
-                    token.WaitHandle.WaitOne(2000);
-                }
-            }
+            return Measure(image, HwindowHandle);
         }
+
+
 
         private void ColseContinuousMeasure()
         {
-            StopWorker(ref measureCts, measureTask, "连续测量");
+            if (engine.State == EngineState.Running) {
+                engine.Stop(200);
+            }
+        }
+
+        private void Mian_Click(object sender, EventArgs e)
+        {
+            panel_Comm.Visible = false;
+        }
+
+        private void UcComm_Click(object sender, EventArgs e)
+        {
+            panel_Comm.Visible = true;
         }
     }
 }

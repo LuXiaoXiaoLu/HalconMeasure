@@ -836,6 +836,15 @@ namespace Measure.Halcon.Demo.Helper
             }
         }
 
+        public void DisplayImage(HObject image, HTuple HwindowHandle)
+        {
+            HOperatorSet.GetImageSize(image, out HTuple width, out HTuple height);
+            HOperatorSet.SetPart(HwindowHandle, 0, 0, height - 1, width - 1);
+            HOperatorSet.DispObj(image, HwindowHandle);
+        }
+
+
+
         public void spoke(HObject ho_Image, out HObject ho_Regions, HTuple hv_Elements,
     HTuple hv_DetectHeight, HTuple hv_DetectWidth, HTuple hv_Sigma, HTuple hv_Threshold,
     HTuple hv_Transition, HTuple hv_Select, HTuple hv_ROIRows, HTuple hv_ROICols,

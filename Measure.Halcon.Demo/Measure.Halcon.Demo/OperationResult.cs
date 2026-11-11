@@ -61,4 +61,21 @@ namespace Measure.Halcon.Demo
 
 
     }
+
+    public class OperationResult<T> : OperationResult
+    {
+        public T Data { get; set; }
+
+        public static OperationResult<T> CreateSuccessResult(T data, string msg = "成功")
+            => new OperationResult<T> { IsSuccess = true, Msg = msg, Data = data };
+
+        public static new OperationResult<T> CreateFailResult(string msg)
+            => new OperationResult<T> { IsSuccess = false, Msg = msg };
+
+        public static new OperationResult<T> CreateFailResult(string msg, Exception ex)
+            => new OperationResult<T> { IsSuccess = false, Msg = msg, Error = ex };
+    }
+
+
+
 }

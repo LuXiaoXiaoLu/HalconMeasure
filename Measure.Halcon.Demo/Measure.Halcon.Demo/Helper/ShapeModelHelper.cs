@@ -86,6 +86,8 @@ namespace Measure.Halcon.Demo.Helper
                 HOperatorSet.FindShapeModel(image, mathParams.modelID, mathParams.StartAngleRad, mathParams.RangeAngleRad, mathParams.score, mathParams.numMatchs,
             mathParams.overlap, "least_squares", 0, mathParams.greediness, out HTuple row, out HTuple column, out HTuple angle, out HTuple score);
 
+              halconHelper.DisplayImage(image, HwindowHandle);
+
                 //判断结果
                 if (row.Length > 0)
                 {
@@ -104,16 +106,20 @@ namespace Measure.Halcon.Demo.Helper
                     HOperatorSet.AreaCenter(mathParams.modelRegion, out HTuple area, out HTuple row1, out HTuple column1);
                     HOperatorSet.VectorAngleToRigid(row1, column1, 0, row, column, angle, out homMat2d_T);
 
+                   
 
-                    HOperatorSet.DispObj(image, HwindowHandle);
 
                     HOperatorSet.DispObj(contours2, HwindowHandle);
 
                     HOperatorSet.DispObj(cross, HwindowHandle);
 
                     halconHelper.disp_message(HwindowHandle, "定位成功", "window", 20, 20, "green", "false");
-
-                    return OperationResult.CreateSuccessResult("查找模板成功");
+                    FindData findData = new FindData();
+                    findData.ColCenter = column1[0].D;
+                    findData.RowCenter= row1[0].D;
+                    findData.Angle = angle[0].D;
+                    findData.IsOk = true;
+                    return OperationResult<FindData>.CreateSuccessResult(findData);
                 }
                 else
                 {
@@ -121,6 +127,9 @@ namespace Measure.Halcon.Demo.Helper
 
                     return new OperationResult { IsSuccess = false, Msg = "未找到模板" };
                 }
+
+
+
             }
             catch (Exception ex)
             {
@@ -132,6 +141,8 @@ namespace Measure.Halcon.Demo.Helper
 
 
         }
+
+     
 
         public void ClearShapeModel(ref HTuple modelId)
         {

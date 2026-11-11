@@ -254,6 +254,7 @@ namespace Measure.Halcon.Demo
             }
         }
 
+      
         /// <summary>
         /// </summary>
         /// <param name="path">完整的文件路径，如 D:\img\1.bmp</param>

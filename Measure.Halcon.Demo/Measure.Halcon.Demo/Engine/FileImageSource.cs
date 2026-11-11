@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 internal class FileImageSource : IImageSource
 {
     private readonly FileInfo[] files;

@@ -87,10 +87,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txt_CircleElements = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Savefile = new System.Windows.Forms.ToolStripMenuItem();
-            this.ImportParamsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.delModel = new System.Windows.Forms.Button();
             this.readModel = new System.Windows.Forms.Button();
@@ -100,14 +96,21 @@
             this.label15 = new System.Windows.Forms.Label();
             this.modelName = new System.Windows.Forms.TextBox();
             this.but_ContinueMeasure = new System.Windows.Forms.Button();
+            this.panel_Comm = new System.Windows.Forms.Panel();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.Mian = new System.Windows.Forms.Label();
+            this.UcComm = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tb_Gain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tb_ExposureTime)).BeginInit();
             this.gb1.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.panel_Comm.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // hWindowControl1
@@ -690,40 +693,6 @@
             this.label9.TabIndex = 5;
             this.label9.Text = "搜索点数";
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1024, 28);
-            this.menuStrip1.TabIndex = 8;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileStripMenuItem
-            // 
-            this.fileStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Savefile,
-            this.ImportParamsMenuItem});
-            this.fileStripMenuItem.Name = "fileStripMenuItem";
-            this.fileStripMenuItem.Size = new System.Drawing.Size(53, 24);
-            this.fileStripMenuItem.Text = "文件";
-            // 
-            // Savefile
-            // 
-            this.Savefile.Name = "Savefile";
-            this.Savefile.Size = new System.Drawing.Size(152, 26);
-            this.Savefile.Text = "保存参数";
-            this.Savefile.Click += new System.EventHandler(this.Savefile_Click);
-            // 
-            // ImportParamsMenuItem
-            // 
-            this.ImportParamsMenuItem.Name = "ImportParamsMenuItem";
-            this.ImportParamsMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.ImportParamsMenuItem.Text = "加载参数";
-            this.ImportParamsMenuItem.Click += new System.EventHandler(this.ImportParamsMenuItem_Click);
-            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.delModel);
@@ -813,11 +782,74 @@
             this.but_ContinueMeasure.UseVisualStyleBackColor = true;
             this.but_ContinueMeasure.Click += new System.EventHandler(this.but_ContinueMeasure_Click);
             // 
+            // panel_Comm
+            // 
+            this.panel_Comm.Controls.Add(this.groupBox5);
+            this.panel_Comm.Location = new System.Drawing.Point(535, 12);
+            this.panel_Comm.Name = "panel_Comm";
+            this.panel_Comm.Size = new System.Drawing.Size(477, 659);
+            this.panel_Comm.TabIndex = 12;
+            this.panel_Comm.Visible = false;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label21);
+            this.groupBox5.Controls.Add(this.label20);
+            this.groupBox5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.groupBox5.Location = new System.Drawing.Point(20, 16);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(443, 624);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "通讯设置";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(278, 43);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(78, 23);
+            this.label21.TabIndex = 1;
+            this.label21.Text = "端口号：";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(26, 41);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(76, 23);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "IP地址：";
+            // 
+            // Mian
+            // 
+            this.Mian.AutoSize = true;
+            this.Mian.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.Mian.Location = new System.Drawing.Point(30, 3);
+            this.Mian.Name = "Mian";
+            this.Mian.Size = new System.Drawing.Size(44, 23);
+            this.Mian.TabIndex = 13;
+            this.Mian.Text = "检测";
+            this.Mian.Click += new System.EventHandler(this.Mian_Click);
+            // 
+            // UcComm
+            // 
+            this.UcComm.AutoSize = true;
+            this.UcComm.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.UcComm.Location = new System.Drawing.Point(104, 3);
+            this.UcComm.Name = "UcComm";
+            this.UcComm.Size = new System.Drawing.Size(44, 23);
+            this.UcComm.TabIndex = 14;
+            this.UcComm.Text = "通信";
+            this.UcComm.Click += new System.EventHandler(this.UcComm_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1024, 755);
+            this.Controls.Add(this.UcComm);
+            this.Controls.Add(this.Mian);
             this.Controls.Add(this.but_ContinueMeasure);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -825,10 +857,9 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.hWindowControl1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.panel_Comm);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.Text = "零件测量";
@@ -842,10 +873,11 @@
             this.gb1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.panel_Comm.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -910,10 +942,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txt_CircleElements;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem Savefile;
-        private System.Windows.Forms.ToolStripMenuItem ImportParamsMenuItem;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox modelName;
         private System.Windows.Forms.Label label15;
@@ -923,6 +951,12 @@
         private System.Windows.Forms.Button saveModel;
         private System.Windows.Forms.Button delModel;
         private System.Windows.Forms.Button but_ContinueMeasure;
+        private System.Windows.Forms.Panel panel_Comm;
+        private System.Windows.Forms.Label Mian;
+        private System.Windows.Forms.Label UcComm;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
     }
 }
 

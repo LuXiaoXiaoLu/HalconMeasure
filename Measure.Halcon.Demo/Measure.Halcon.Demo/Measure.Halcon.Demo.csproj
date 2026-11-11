@@ -90,12 +90,14 @@
     <Compile Include="Engine\CameraImageSource.cs" />
     <Compile Include="Engine\FileImageSource.cs" />
     <Compile Include="Engine\IImageSource.cs" />
+    <Compile Include="Engine\RunEngine.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\SocketHeler.cs" />
     <Compile Include="params\CircleParams.cs" />
     <Compile Include="Helper\AppSettings.cs" />
     <Compile Include="Helper\DeviceSettings.cs" />
@@ -103,9 +105,11 @@
     <Compile Include="Helper\ImageHelper.cs" />
     <Compile Include="Helper\IniStore.cs" />
     <Compile Include="Helper\LogHelper.cs" />
+    <Compile Include="params\FindData.cs" />
     <Compile Include="params\MatchParams.cs" />
     <Compile Include="Helper\ShapeModelHelper.cs" />
     <Compile Include="OperationResult.cs" />
+    <Compile Include="params\MeasureData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">

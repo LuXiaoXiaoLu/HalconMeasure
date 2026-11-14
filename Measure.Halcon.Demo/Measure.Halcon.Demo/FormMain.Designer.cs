@@ -98,6 +98,8 @@
             this.but_ContinueMeasure = new System.Windows.Forms.Button();
             this.panel_Comm = new System.Windows.Forms.Panel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.SocketColse = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.Mian = new System.Windows.Forms.Label();
@@ -111,6 +113,7 @@
             this.groupBox4.SuspendLayout();
             this.panel_Comm.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // hWindowControl1
@@ -793,6 +796,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.groupBox7);
             this.groupBox5.Controls.Add(this.label21);
             this.groupBox5.Controls.Add(this.label20);
             this.groupBox5.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -802,6 +806,26 @@
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "通讯设置";
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.SocketColse);
+            this.groupBox7.Location = new System.Drawing.Point(27, 74);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(394, 116);
+            this.groupBox7.TabIndex = 2;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Socket";
+            // 
+            // SocketColse
+            // 
+            this.SocketColse.Location = new System.Drawing.Point(245, 46);
+            this.SocketColse.Name = "SocketColse";
+            this.SocketColse.Size = new System.Drawing.Size(113, 36);
+            this.SocketColse.TabIndex = 0;
+            this.SocketColse.Text = "关闭";
+            this.SocketColse.UseVisualStyleBackColor = true;
+            this.SocketColse.Click += new System.EventHandler(this.SocketColse_Click);
             // 
             // label21
             // 
@@ -848,6 +872,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1024, 755);
+            this.Controls.Add(this.panel_Comm);
             this.Controls.Add(this.UcComm);
             this.Controls.Add(this.Mian);
             this.Controls.Add(this.but_ContinueMeasure);
@@ -857,7 +882,6 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.hWindowControl1);
-            this.Controls.Add(this.panel_Comm);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -878,6 +902,7 @@
             this.panel_Comm.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -957,6 +982,8 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button SocketColse;
     }
 }
 

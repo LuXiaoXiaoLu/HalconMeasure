@@ -1,0 +1,701 @@
+﻿2026-11-12 14:50:10.864 [INF] 通信初始化成功
+2026-11-12 14:50:10.921 [INF] 读取模板列表成功，共 3 个
+2026-11-12 14:50:10.924 [INF] Halcon 初始化成功
+2026-11-12 14:50:10.933 [INF] 参数加载成功
+2026-11-12 14:50:10.982 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 14:50:33.064 [INF] 通信初始化成功
+2026-11-12 14:50:33.113 [INF] 读取模板列表成功，共 3 个
+2026-11-12 14:50:33.117 [INF] Halcon 初始化成功
+2026-11-12 14:50:33.125 [INF] 参数加载成功
+2026-11-12 14:50:33.177 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 14:50:39.154 [INF] 通信线程已停止
+2026-11-12 14:53:54.449 [INF] 通信初始化成功
+2026-11-12 14:53:54.504 [INF] 读取模板列表成功，共 3 个
+2026-11-12 14:53:54.504 [INF] Halcon 初始化成功
+2026-11-12 14:53:54.513 [INF] 参数加载成功
+2026-11-12 14:53:54.564 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 14:53:57.589 [INF] 通信线程已停止
+2026-11-12 14:58:25.463 [INF] 开机
+2026-11-12 14:58:25.514 [INF] 通信初始化成功
+2026-11-12 14:58:25.522 [INF] 读取模板列表成功，共 3 个
+2026-11-12 14:58:25.533 [INF] Halcon 初始化成功
+2026-11-12 14:58:25.533 [INF] 参数加载成功
+2026-11-12 14:58:25.593 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 15:28:47.530 [INF] 关机
+2026-11-12 15:29:01.848 [INF] 开机
+2026-11-12 15:29:01.893 [INF] 通信初始化成功
+2026-11-12 15:29:01.912 [INF] 读取模板列表成功，共 3 个
+2026-11-12 15:29:01.912 [INF] Halcon 初始化成功
+2026-11-12 15:29:01.923 [INF] 参数加载成功
+2026-11-12 15:29:01.973 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 15:29:15.863 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 15:29:37.223 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 15:30:22.263 [INF] 连续查找 结束
+2026-11-12 15:30:32.169 [INF] 关机
+2026-11-12 15:34:02.233 [INF] 开机
+2026-11-12 15:34:02.292 [INF] 通信初始化成功
+2026-11-12 15:34:02.310 [INF] 读取模板列表成功，共 3 个
+2026-11-12 15:34:02.318 [INF] Halcon 初始化成功
+2026-11-12 15:34:02.328 [INF] 参数加载成功
+2026-11-12 15:34:02.383 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 15:34:10.888 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 15:34:22.553 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 15:35:03.463 [INF] 连续查找 结束
+2026-11-12 15:39:33.778 [INF] 开机
+2026-11-12 15:39:33.832 [INF] 通信初始化成功
+2026-11-12 15:39:33.853 [INF] 读取模板列表成功，共 3 个
+2026-11-12 15:39:33.853 [INF] Halcon 初始化成功
+2026-11-12 15:39:33.862 [INF] 参数加载成功
+2026-11-12 15:39:33.913 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 15:39:42.833 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 15:40:01.833 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 15:40:18.833 [INF] 连续查找 结束
+2026-11-12 15:46:18.532 [FTL] 程序未捕获的异常
+System.Resources.MissingManifestResourceException: 未能找到任何适合于指定的区域性或非特定区域性的资源。请确保在编译时已将“Measure.Halcon.Demo.FormMain.resources”正确嵌入或链接到程序集“Measure.Halcon.Demo”，或者确保所有需要的附属程序集都可加载并已进行了完全签名。
+   在 System.Resources.ManifestBasedResourceGroveler.HandleResourceStreamMissing(String fileName)
+   在 System.Resources.ManifestBasedResourceGroveler.GrovelForResourceSet(CultureInfo culture, Dictionary`2 localResourceSets, Boolean tryParents, Boolean createIfNotExists, StackCrawlMark& stackMark)
+   在 System.Resources.ResourceManager.InternalGetResourceSet(CultureInfo requestedCulture, Boolean createIfNotExists, Boolean tryParents, StackCrawlMark& stackMark)
+   在 System.Resources.ResourceManager.InternalGetResourceSet(CultureInfo culture, Boolean createIfNotExists, Boolean tryParents)
+   在 System.Resources.ResourceManager.GetObject(String name, CultureInfo culture, Boolean wrapUnmanagedMemStream)
+   在 Measure.Halcon.Demo.FormMain.InitializeComponent() 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\FormMain.Designer.cs:行号 166
+   在 Measure.Halcon.Demo.FormMain..ctor() 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\FormMain.cs:行号 42
+   在 Measure.Halcon.Demo.Program.Main() 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Program.cs:行号 68
+2026-11-12 15:46:27.382 [INF] 开机
+2026-11-12 15:46:27.433 [INF] 通信初始化成功
+2026-11-12 15:46:27.446 [INF] 读取模板列表成功，共 3 个
+2026-11-12 15:46:27.453 [INF] Halcon 初始化成功
+2026-11-12 15:46:27.458 [INF] 参数加载成功
+2026-11-12 15:46:27.502 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 15:46:35.738 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 15:46:59.382 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 15:47:35.953 [INF] 连续查找 结束
+2026-11-12 15:49:11.953 [INF] 开机
+2026-11-12 15:49:12.003 [INF] 通信初始化成功
+2026-11-12 15:49:12.019 [INF] 读取模板列表成功，共 3 个
+2026-11-12 15:49:12.019 [INF] Halcon 初始化成功
+2026-11-12 15:49:12.027 [INF] 参数加载成功
+2026-11-12 15:49:12.072 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 15:49:13.258 [INF] PLC 已连接：127.0.0.1:5331
+2026-11-12 15:49:18.696 [INF] 关机
+2026-11-12 15:49:50.999 [INF] 开机
+2026-11-12 15:49:51.092 [INF] 通信初始化成功
+2026-11-12 15:49:51.112 [INF] 读取模板列表成功，共 3 个
+2026-11-12 15:49:51.112 [INF] Halcon 初始化成功
+2026-11-12 15:49:51.122 [INF] 参数加载成功
+2026-11-12 15:49:51.167 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 15:49:52.112 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 15:49:52.942 [INF] PLC 已连接：127.0.0.1:5369
+2026-11-12 15:49:54.030 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 15:49:54.072 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:49:54.074 [INF] 已发送 1 字节：1
+2026-11-12 15:49:54.074 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:49:54.074 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:49:54.074 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:49:56.083 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 15:49:56.087 [INF] 已发送 1 字节：1
+2026-11-12 15:49:56.087 [INF] 已发送 17 字节：0.319817297361948
+2026-11-12 15:49:56.087 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:49:56.087 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:49:58.099 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 15:49:58.104 [INF] 已发送 1 字节：1
+2026-11-12 15:49:58.104 [INF] 已发送 19 字节：-0.0279998677198828
+2026-11-12 15:49:58.104 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:49:58.104 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:50:00.111 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 15:50:00.114 [INF] 已发送 1 字节：1
+2026-11-12 15:50:00.114 [INF] 已发送 19 字节：-0.0214762374861727
+2026-11-12 15:50:00.114 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:50:00.115 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:50:02.135 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 15:50:02.137 [INF] 已发送 1 字节：1
+2026-11-12 15:50:02.138 [INF] 已发送 17 字节：0.370392125488087
+2026-11-12 15:50:02.138 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:50:02.138 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:50:04.149 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 15:50:04.153 [INF] 已发送 1 字节：1
+2026-11-12 15:50:04.153 [INF] 已发送 17 字节：0.019980192454382
+2026-11-12 15:50:04.153 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:50:04.153 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:50:06.164 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:50:06.177 [INF] 已发送 1 字节：1
+2026-11-12 15:50:06.177 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:50:06.178 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:50:06.178 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:50:08.182 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:50:08.197 [ERR] PLC 连接断开，等待重连
+System.Net.Sockets.SocketException (0x80004005): 远程主机强迫关闭了一个现有的连接。
+   在 System.Net.Sockets.Socket.Send(Byte[] buffer)
+   在 Measure.Halcon.Demo.Helper.SocketHeler.Pross(CancellationToken token) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\SocketHeler.cs:行号 95
+2026-11-12 15:50:08.753 [INF] 连续查找 结束
+2026-11-12 15:50:13.683 [WRN] 保存模板失败：模板名不能为空
+2026-11-12 15:50:20.087 [INF] 关机
+2026-11-12 15:50:20.093 [INF] 通信线程已停止
+2026-11-12 15:51:44.380 [INF] 开机
+2026-11-12 15:51:44.430 [INF] 通信初始化成功
+2026-11-12 15:51:44.445 [INF] 读取模板列表成功，共 3 个
+2026-11-12 15:51:44.449 [INF] Halcon 初始化成功
+2026-11-12 15:51:44.455 [INF] 参数加载成功
+2026-11-12 15:51:44.501 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 15:51:44.731 [INF] PLC 已连接：127.0.0.1:5456
+2026-11-12 15:51:45.910 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 15:51:47.998 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 15:51:48.040 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:51:48.053 [INF] 已发送 1 字节：1
+2026-11-12 15:51:48.053 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:51:48.053 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:51:48.053 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:51:50.054 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 15:51:50.059 [INF] 已发送 1 字节：1
+2026-11-12 15:51:50.060 [INF] 已发送 17 字节：0.319817297361948
+2026-11-12 15:51:50.060 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:51:50.060 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:51:52.064 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 15:51:52.071 [INF] 已发送 1 字节：1
+2026-11-12 15:51:52.071 [INF] 已发送 19 字节：-0.0279998677198828
+2026-11-12 15:51:52.072 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:51:52.072 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:51:54.081 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 15:51:54.085 [INF] 已发送 1 字节：1
+2026-11-12 15:51:54.085 [INF] 已发送 19 字节：-0.0214762374861727
+2026-11-12 15:51:54.085 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:51:54.085 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:51:56.100 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 15:51:56.105 [INF] 已发送 1 字节：1
+2026-11-12 15:51:56.105 [INF] 已发送 17 字节：0.370392125488087
+2026-11-12 15:51:56.105 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:51:56.105 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:51:58.119 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 15:51:58.123 [INF] 已发送 1 字节：1
+2026-11-12 15:51:58.123 [INF] 已发送 17 字节：0.019980192454382
+2026-11-12 15:51:58.123 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:51:58.123 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:00.141 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:52:00.143 [INF] 已发送 1 字节：1
+2026-11-12 15:52:00.143 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:52:00.143 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:00.143 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:02.159 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:52:02.164 [INF] 已发送 1 字节：1
+2026-11-12 15:52:02.165 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:52:02.166 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:02.166 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:04.172 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 15:52:04.177 [INF] 已发送 1 字节：1
+2026-11-12 15:52:04.177 [INF] 已发送 17 字节：0.319817297361948
+2026-11-12 15:52:04.177 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:04.177 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:06.185 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 15:52:06.187 [INF] 已发送 1 字节：1
+2026-11-12 15:52:06.187 [INF] 已发送 19 字节：-0.0279998677198828
+2026-11-12 15:52:06.187 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:06.187 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:08.197 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 15:52:08.204 [INF] 已发送 1 字节：1
+2026-11-12 15:52:08.205 [INF] 已发送 19 字节：-0.0214762374861727
+2026-11-12 15:52:08.205 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:08.205 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:10.213 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 15:52:10.218 [INF] 已发送 1 字节：1
+2026-11-12 15:52:10.218 [INF] 已发送 17 字节：0.370392125488087
+2026-11-12 15:52:10.218 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:10.218 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:12.231 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 15:52:12.236 [INF] 已发送 1 字节：1
+2026-11-12 15:52:12.236 [INF] 已发送 17 字节：0.019980192454382
+2026-11-12 15:52:12.236 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:12.236 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:14.251 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:52:14.260 [INF] 已发送 1 字节：1
+2026-11-12 15:52:14.260 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:52:14.260 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:14.260 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:16.262 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:52:16.271 [INF] 已发送 1 字节：1
+2026-11-12 15:52:16.271 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:52:16.271 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:16.271 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:18.281 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 15:52:18.289 [INF] 已发送 1 字节：1
+2026-11-12 15:52:18.289 [INF] 已发送 17 字节：0.319817297361948
+2026-11-12 15:52:18.289 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:18.289 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:20.300 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 15:52:20.314 [INF] 已发送 1 字节：1
+2026-11-12 15:52:20.314 [INF] 已发送 19 字节：-0.0279998677198828
+2026-11-12 15:52:20.314 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:20.314 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:22.313 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 15:52:22.318 [INF] 已发送 1 字节：1
+2026-11-12 15:52:22.318 [INF] 已发送 19 字节：-0.0214762374861727
+2026-11-12 15:52:22.318 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:22.318 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:24.327 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 15:52:24.333 [INF] 已发送 1 字节：1
+2026-11-12 15:52:24.333 [INF] 已发送 17 字节：0.370392125488087
+2026-11-12 15:52:24.333 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:24.333 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:26.337 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 15:52:26.343 [INF] 已发送 1 字节：1
+2026-11-12 15:52:26.343 [INF] 已发送 17 字节：0.019980192454382
+2026-11-12 15:52:26.343 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:26.343 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:28.350 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:52:28.353 [INF] 已发送 1 字节：1
+2026-11-12 15:52:28.353 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:52:28.353 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:28.353 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:30.362 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:52:30.367 [INF] 已发送 1 字节：1
+2026-11-12 15:52:30.367 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:52:30.367 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:30.367 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:32.373 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 15:52:32.384 [INF] 已发送 1 字节：1
+2026-11-12 15:52:32.384 [INF] 已发送 17 字节：0.319817297361948
+2026-11-12 15:52:32.384 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:32.384 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:34.387 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 15:52:34.398 [INF] 已发送 1 字节：1
+2026-11-12 15:52:34.398 [INF] 已发送 19 字节：-0.0279998677198828
+2026-11-12 15:52:34.398 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:34.398 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:36.400 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 15:52:36.407 [INF] 已发送 1 字节：1
+2026-11-12 15:52:36.407 [INF] 已发送 19 字节：-0.0214762374861727
+2026-11-12 15:52:36.407 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:36.407 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:38.415 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 15:52:38.427 [INF] 已发送 1 字节：1
+2026-11-12 15:52:38.427 [INF] 已发送 17 字节：0.370392125488087
+2026-11-12 15:52:38.427 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:38.427 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:40.426 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 15:52:40.430 [INF] 已发送 1 字节：1
+2026-11-12 15:52:40.430 [INF] 已发送 17 字节：0.019980192454382
+2026-11-12 15:52:40.430 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:40.430 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:42.446 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:52:42.458 [INF] 已发送 1 字节：1
+2026-11-12 15:52:42.458 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:52:42.458 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:42.458 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:44.464 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:52:44.468 [INF] 已发送 1 字节：1
+2026-11-12 15:52:44.468 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:52:44.468 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:44.468 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:46.474 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 15:52:46.479 [INF] 已发送 1 字节：1
+2026-11-12 15:52:46.479 [INF] 已发送 17 字节：0.319817297361948
+2026-11-12 15:52:46.479 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:46.479 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:48.484 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 15:52:48.493 [INF] 已发送 1 字节：1
+2026-11-12 15:52:48.493 [INF] 已发送 19 字节：-0.0279998677198828
+2026-11-12 15:52:48.493 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:48.493 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:50.494 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 15:52:50.502 [INF] 已发送 1 字节：1
+2026-11-12 15:52:50.502 [INF] 已发送 19 字节：-0.0214762374861727
+2026-11-12 15:52:50.502 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:50.503 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:52.510 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 15:52:52.516 [INF] 已发送 1 字节：1
+2026-11-12 15:52:52.516 [INF] 已发送 17 字节：0.370392125488087
+2026-11-12 15:52:52.516 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:52.516 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:54.523 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 15:52:54.529 [INF] 已发送 1 字节：1
+2026-11-12 15:52:54.529 [INF] 已发送 17 字节：0.019980192454382
+2026-11-12 15:52:54.529 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:54.529 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:56.545 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:52:56.558 [INF] 已发送 1 字节：1
+2026-11-12 15:52:56.558 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:52:56.558 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:56.558 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:52:58.564 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:52:58.570 [INF] 已发送 1 字节：1
+2026-11-12 15:52:58.570 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:52:58.570 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:52:58.570 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:53:00.577 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 15:53:00.587 [INF] 已发送 1 字节：1
+2026-11-12 15:53:00.587 [INF] 已发送 17 字节：0.319817297361948
+2026-11-12 15:53:00.587 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:53:00.587 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:53:02.592 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 15:53:02.597 [INF] 已发送 1 字节：1
+2026-11-12 15:53:02.597 [INF] 已发送 19 字节：-0.0279998677198828
+2026-11-12 15:53:02.597 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:53:02.597 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:53:04.603 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 15:53:04.613 [INF] 已发送 1 字节：1
+2026-11-12 15:53:04.613 [INF] 已发送 19 字节：-0.0214762374861727
+2026-11-12 15:53:04.614 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:53:04.614 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:53:06.612 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 15:53:06.621 [INF] 已发送 1 字节：1
+2026-11-12 15:53:06.621 [INF] 已发送 17 字节：0.370392125488087
+2026-11-12 15:53:06.621 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:53:06.621 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:53:08.625 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 15:53:08.634 [INF] 已发送 1 字节：1
+2026-11-12 15:53:08.634 [INF] 已发送 17 字节：0.019980192454382
+2026-11-12 15:53:08.634 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:53:08.634 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:53:10.639 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:53:10.643 [INF] 已发送 1 字节：1
+2026-11-12 15:53:10.643 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:53:10.643 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:53:10.643 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:53:12.654 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 15:53:12.657 [INF] 已发送 1 字节：1
+2026-11-12 15:53:12.657 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 15:53:12.657 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:53:12.657 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:53:14.672 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 15:53:14.676 [INF] 已发送 1 字节：1
+2026-11-12 15:53:14.676 [INF] 已发送 17 字节：0.319817297361948
+2026-11-12 15:53:14.676 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 15:53:14.676 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 15:53:15.703 [INF] 连续查找 结束
+2026-11-12 16:39:04.012 [INF] 开机
+2026-11-12 16:39:04.087 [INF] 通信初始化成功
+2026-11-12 16:39:04.107 [INF] 读取模板列表成功，共 3 个
+2026-11-12 16:39:04.112 [INF] Halcon 初始化成功
+2026-11-12 16:39:04.121 [INF] 参数加载成功
+2026-11-12 16:39:04.172 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 16:39:05.626 [INF] PLC 已连接：127.0.0.1:7866
+2026-11-12 16:39:12.579 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 16:39:13.871 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 16:39:13.912 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 16:39:13.922 [INF] 已发送 1 字节：1
+2026-11-12 16:39:13.922 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 16:39:13.922 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:13.922 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:15.931 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 16:39:15.939 [INF] 已发送 1 字节：1
+2026-11-12 16:39:15.939 [INF] 已发送 17 字节：0.319817297361948
+2026-11-12 16:39:15.939 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:15.939 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:17.941 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 16:39:17.947 [INF] 已发送 1 字节：1
+2026-11-12 16:39:17.947 [INF] 已发送 19 字节：-0.0279998677198828
+2026-11-12 16:39:17.948 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:17.948 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:19.954 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 16:39:19.959 [INF] 已发送 1 字节：1
+2026-11-12 16:39:19.959 [INF] 已发送 19 字节：-0.0214762374861727
+2026-11-12 16:39:19.960 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:19.960 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:21.972 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 16:39:21.977 [INF] 已发送 1 字节：1
+2026-11-12 16:39:21.977 [INF] 已发送 17 字节：0.370392125488087
+2026-11-12 16:39:21.977 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:21.977 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:23.993 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 16:39:24.000 [INF] 已发送 1 字节：1
+2026-11-12 16:39:24.000 [INF] 已发送 17 字节：0.019980192454382
+2026-11-12 16:39:24.000 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:24.000 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:26.012 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 16:39:26.014 [INF] 已发送 1 字节：1
+2026-11-12 16:39:26.015 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 16:39:26.016 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:26.016 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:28.035 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 16:39:28.037 [INF] 已发送 1 字节：1
+2026-11-12 16:39:28.037 [INF] 已发送 20 字节：4.22811181358769E-07
+2026-11-12 16:39:28.037 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:28.037 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:30.048 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 16:39:30.059 [INF] 已发送 1 字节：1
+2026-11-12 16:39:30.059 [INF] 已发送 17 字节：0.319817297361948
+2026-11-12 16:39:30.059 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:30.059 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:32.067 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 16:39:32.072 [INF] 已发送 1 字节：1
+2026-11-12 16:39:32.072 [INF] 已发送 19 字节：-0.0279998677198828
+2026-11-12 16:39:32.072 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:32.072 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:34.080 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 16:39:34.085 [INF] 已发送 1 字节：1
+2026-11-12 16:39:34.085 [INF] 已发送 19 字节：-0.0214762374861727
+2026-11-12 16:39:34.085 [INF] 已发送 16 字节：430.030055759554
+2026-11-12 16:39:34.085 [INF] 已发送 16 字节：322.005598621878
+2026-11-12 16:39:35.329 [INF] 连续查找 结束
+2026-11-12 16:39:37.919 [INF] 关机
+2026-11-12 19:05:49.392 [INF] 开机
+2026-11-12 19:05:49.476 [INF] 通信初始化成功
+2026-11-12 19:05:49.492 [INF] 读取模板列表成功，共 3 个
+2026-11-12 19:05:49.502 [INF] Halcon 初始化成功
+2026-11-12 19:05:49.502 [INF] 参数加载成功
+2026-11-12 19:05:49.562 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 19:06:22.670 [INF] PLC 已连接：127.0.0.1:4933
+2026-11-12 19:06:30.392 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 19:06:32.730 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 19:06:32.778 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:06:32.791 [INF] 已发送 ###11,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:06:34.805 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:06:34.813 [INF] 已发送 ###21,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-12 19:06:36.823 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:06:36.833 [INF] 已发送 ###31,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-12 19:06:38.854 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:06:38.862 [INF] 已发送 ###41,-0.0214762374861727,430.030055759554,322.005598621878***
+2026-11-12 19:06:40.877 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 19:06:40.888 [INF] 已发送 ###51,0.370392125488087,430.030055759554,322.005598621878***
+2026-11-12 19:06:42.899 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 19:06:42.907 [INF] 已发送 ###61,0.019980192454382,430.030055759554,322.005598621878***
+2026-11-12 19:06:44.917 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:06:44.924 [INF] 已发送 ###71,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:06:46.928 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:06:46.942 [INF] 已发送 ###81,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:06:48.943 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:06:48.954 [INF] 已发送 ###91,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-12 19:06:50.959 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:06:50.965 [INF] 已发送 ###101,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-12 19:06:52.977 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:06:52.990 [INF] 已发送 ###111,-0.0214762374861727,430.030055759554,322.005598621878***
+2026-11-12 19:06:54.993 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 19:06:54.997 [INF] 已发送 ###121,0.370392125488087,430.030055759554,322.005598621878***
+2026-11-12 19:06:57.006 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 19:06:57.015 [INF] 已发送 ###131,0.019980192454382,430.030055759554,322.005598621878***
+2026-11-12 19:06:59.027 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:06:59.038 [INF] 已发送 ###141,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:07:01.042 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:07:01.053 [INF] 已发送 ###151,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:07:03.051 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:07:03.058 [INF] 已发送 ###161,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-12 19:07:05.063 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:07:05.067 [INF] 已发送 ###171,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-12 19:07:07.085 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:07:07.093 [INF] 连续查找 结束
+2026-11-12 19:07:07.093 [INF] 已发送 ###181,-0.0214762374861727,430.030055759554,322.005598621878***
+2026-11-12 19:07:57.686 [INF] 开机
+2026-11-12 19:07:57.744 [INF] 通信初始化成功
+2026-11-12 19:07:57.762 [INF] 读取模板列表成功，共 3 个
+2026-11-12 19:07:57.768 [INF] Halcon 初始化成功
+2026-11-12 19:07:57.778 [INF] 参数加载成功
+2026-11-12 19:07:57.824 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 19:07:57.862 [INF] PLC 已连接：127.0.0.1:5027
+2026-11-12 19:08:00.310 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 19:08:01.203 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 19:08:01.248 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:08:01.262 [INF] 已发送 ###1:1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:08:03.272 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:08:03.276 [INF] 已发送 ###2:1,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-12 19:08:05.291 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:08:05.295 [INF] 已发送 ###3:1,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-12 19:08:07.311 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:08:07.317 [INF] 已发送 ###4:1,-0.0214762374861727,430.030055759554,322.005598621878***
+2026-11-12 19:08:09.322 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 19:08:09.327 [INF] 已发送 ###5:1,0.370392125488087,430.030055759554,322.005598621878***
+2026-11-12 19:08:11.333 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 19:08:11.338 [INF] 已发送 ###6:1,0.019980192454382,430.030055759554,322.005598621878***
+2026-11-12 19:08:13.355 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:08:13.368 [INF] 已发送 ###7:1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:08:15.371 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:08:15.384 [INF] 已发送 ###8:1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:08:17.381 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:08:17.388 [INF] 已发送 ###9:1,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-12 19:08:19.403 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:08:19.408 [INF] 已发送 ###10:1,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-12 19:08:21.417 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:08:21.423 [INF] 已发送 ###11:1,-0.0214762374861727,430.030055759554,322.005598621878***
+2026-11-12 19:08:23.431 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 19:08:23.444 [INF] 已发送 ###12:1,0.370392125488087,430.030055759554,322.005598621878***
+2026-11-12 19:08:41.902 [INF] 开机
+2026-11-12 19:08:41.959 [INF] 通信初始化成功
+2026-11-12 19:08:41.983 [INF] 读取模板列表成功，共 3 个
+2026-11-12 19:08:41.988 [INF] Halcon 初始化成功
+2026-11-12 19:08:41.992 [INF] 参数加载成功
+2026-11-12 19:08:42.042 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 19:08:42.372 [INF] PLC 已连接：127.0.0.1:5078
+2026-11-12 19:08:45.678 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 19:08:46.936 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 19:08:46.979 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:08:46.993 [INF] 已发送 ###1:1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:08:48.993 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:08:48.996 [INF] 已发送 ###2:1,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-12 19:08:51.013 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:08:51.017 [INF] 已发送 ###3:1,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-12 19:08:53.027 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:08:55.038 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 19:08:57.054 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 19:08:59.072 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:09:01.082 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:09:03.102 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:09:05.123 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:09:07.143 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:09:09.160 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 19:09:10.892 [INF] 连续查找 结束
+2026-11-12 19:09:10.892 [INF] 关机
+2026-11-12 19:36:49.943 [INF] 开机
+2026-11-12 19:36:49.992 [INF] 通信初始化成功
+2026-11-12 19:36:50.063 [INF] 读取模板列表成功，共 3 个
+2026-11-12 19:36:50.068 [INF] Halcon 初始化成功
+2026-11-12 19:36:50.083 [INF] 参数加载成功
+2026-11-12 19:36:50.133 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 19:36:52.902 [INF] 关机
+2026-11-12 19:36:52.923 [INF] 通信线程已停止
+2026-11-12 19:42:26.973 [INF] 开机
+2026-11-12 19:42:27.022 [INF] 通信初始化成功
+2026-11-12 19:42:27.042 [INF] 读取模板列表成功，共 3 个
+2026-11-12 19:42:27.042 [INF] Halcon 初始化成功
+2026-11-12 19:42:27.050 [INF] 参数加载成功
+2026-11-12 19:42:27.093 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-12 19:42:31.342 [INF] PLC 已连接：127.0.0.1:7062
+2026-11-12 19:42:37.360 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-12 19:42:38.910 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-12 19:42:38.958 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:42:38.967 [INF] 已发送 ###1,1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:42:38.967 [INF] 已接收ACK: 1
+2026-11-12 19:42:40.969 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:42:40.973 [INF] 已发送 ###2,1,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-12 19:42:40.973 [INF] 已接收ACK: 2
+2026-11-12 19:42:42.984 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:42:42.997 [INF] 已发送 ###3,1,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-12 19:42:42.997 [INF] 已接收ACK: 3
+2026-11-12 19:42:44.994 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:42:45.007 [INF] 已发送 ###4,1,-0.0214762374861727,430.030055759554,322.005598621878***
+2026-11-12 19:42:45.007 [INF] 已接收ACK: 4
+2026-11-12 19:42:47.005 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 19:42:47.016 [INF] 已发送 ###5,1,0.370392125488087,430.030055759554,322.005598621878***
+2026-11-12 19:42:47.016 [INF] 已接收ACK: 5
+2026-11-12 19:42:49.018 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 19:42:49.023 [INF] 已发送 ###6,1,0.019980192454382,430.030055759554,322.005598621878***
+2026-11-12 19:42:49.023 [INF] 已接收ACK: 6
+2026-11-12 19:42:51.047 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:42:51.056 [INF] 已发送 ###7,1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:42:51.056 [INF] 已接收ACK: 7
+2026-11-12 19:42:53.063 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:42:53.068 [INF] 已发送 ###8,1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:42:53.068 [INF] 已接收ACK: 8
+2026-11-12 19:42:55.083 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:42:55.088 [INF] 已发送 ###9,1,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-12 19:42:55.088 [INF] 已接收ACK: 9
+2026-11-12 19:42:57.095 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:42:57.100 [INF] 已发送 ###10,1,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-12 19:42:57.100 [INF] 已接收ACK: 10
+2026-11-12 19:42:59.110 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:42:59.119 [INF] 已发送 ###11,1,-0.0214762374861727,430.030055759554,322.005598621878***
+2026-11-12 19:42:59.119 [INF] 已接收ACK: 11
+2026-11-12 19:43:01.122 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 19:43:01.129 [INF] 已发送 ###12,1,0.370392125488087,430.030055759554,322.005598621878***
+2026-11-12 19:43:01.129 [INF] 已接收ACK: 12
+2026-11-12 19:43:03.133 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 19:43:03.139 [INF] 已发送 ###13,1,0.019980192454382,430.030055759554,322.005598621878***
+2026-11-12 19:43:03.139 [INF] 已接收ACK: 13
+2026-11-12 19:43:05.156 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:43:05.168 [INF] 已发送 ###14,1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:43:05.168 [INF] 已接收ACK: 14
+2026-11-12 19:43:07.168 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:43:07.173 [INF] 已发送 ###15,1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-12 19:43:07.173 [INF] 已接收ACK: 15
+2026-11-12 19:43:09.179 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:43:09.184 [INF] 已发送 ###16,1,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-12 19:43:09.184 [INF] 已接收ACK: 16
+2026-11-12 19:43:11.192 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:43:11.198 [INF] 已发送 ###17,1,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-12 19:43:11.199 [INF] 已接收ACK: 17
+2026-11-12 19:43:13.209 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:43:13.233 [ERR] PLC 连接断开，等待重连
+System.Net.Sockets.SocketException (0x80004005): 远程主机强迫关闭了一个现有的连接。
+   在 System.Net.Sockets.Socket.Send(Byte[] buffer)
+   在 Measure.Halcon.Demo.Helper.SocketHeler.Pross(CancellationToken token) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\SocketHeler.cs:行号 99
+2026-11-12 19:43:15.221 [INF] 待发送：1,0.370392125488087,430.030055759554,322.005598621878
+2026-11-12 19:43:17.233 [INF] 待发送：1,0.019980192454382,430.030055759554,322.005598621878
+2026-11-12 19:43:19.250 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:43:21.261 [INF] 待发送：1,4.22811181358769E-07,430.030055759554,322.005598621878
+2026-11-12 19:43:23.277 [INF] 待发送：1,0.319817297361948,430.030055759554,322.005598621878
+2026-11-12 19:43:25.303 [INF] 待发送：1,-0.0279998677198828,430.030055759554,322.005598621878
+2026-11-12 19:43:27.324 [INF] 待发送：1,-0.0214762374861727,430.030055759554,322.005598621878
+2026-11-12 19:43:28.093 [INF] 连续查找 结束
+2026-11-12 19:43:32.178 [INF] 关机
+2026-11-12 19:43:32.191 [INF] 通信线程已停止

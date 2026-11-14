@@ -43,6 +43,7 @@ namespace Measure.Halcon.Demo
             InitialParams();
             BindParams();
             log = new LogHelper(list_Info);
+            log.Info("开机");
             engine = new RunEngine(log);
             listener =new  SocketHeler( new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp),log);
             log.Result(listener.StartSockeServer());
@@ -126,7 +127,7 @@ namespace Measure.Halcon.Demo
         private Task grabTask = Task.CompletedTask;
       
         //上一次打开连续查找模板图片文件夹地址
-        string lastFindPath = string.Empty;
+        string lastFindPath = "E:\\code\\Csharp\\Measure\\testdata\\连接件";
         //上一次保存参数文件夹地址
 
         //模板名称
@@ -536,7 +537,7 @@ namespace Measure.Halcon.Demo
             }
         }
         //连续查找过程
-        private OperationResult ProcessFind(HObject image)
+        private OperationResult<FindData> ProcessFind(HObject image)
         {
             return shapeModelHelper.FindShapeMode(ref HwindowHandle, ref image, mathParams, out HTuple homMat2d_T);
         }
@@ -797,8 +798,9 @@ namespace Measure.Halcon.Demo
 
 
             engine.Stop(200);
-
+            listener.Stop();
             imageHelper.CloseCam();
+            log.Info("关机");
         }
 
 
@@ -996,6 +998,12 @@ namespace Measure.Halcon.Demo
         private void UcComm_Click(object sender, EventArgs e)
         {
             panel_Comm.Visible = true;
+        }
+
+        private void SocketColse_Click(object sender, EventArgs e)
+        {
+
+            listener.Stop();
         }
     }
 }

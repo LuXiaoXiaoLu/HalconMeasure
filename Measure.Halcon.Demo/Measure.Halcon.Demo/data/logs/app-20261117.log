@@ -1,0 +1,155 @@
+﻿2026-11-17 08:48:26.566 [INF] 开机
+2026-11-17 08:48:26.633 [INF] 通信初始化成功
+2026-11-17 08:48:26.648 [INF] 读取模板列表成功，共 3 个
+2026-11-17 08:48:26.658 [INF] Halcon 初始化成功
+2026-11-17 08:48:26.669 [INF] 参数加载成功
+2026-11-17 08:48:26.813 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-17 08:48:41.769 [INF] PLC 已连接：127.0.0.1:1628
+2026-11-17 08:48:49.219 [INF] 接收数据:###10***
+2026-11-17 08:49:21.078 [INF] 关机
+2026-11-17 08:50:30.009 [INF] 开机
+2026-11-17 08:50:30.058 [INF] 通信初始化成功
+2026-11-17 08:50:30.073 [INF] 读取模板列表成功，共 3 个
+2026-11-17 08:50:30.078 [INF] Halcon 初始化成功
+2026-11-17 08:50:30.078 [INF] 参数加载成功
+2026-11-17 08:50:30.128 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-17 08:50:49.939 [INF] PLC 已连接：127.0.0.1:1731
+2026-11-17 08:50:52.103 [INF] 接收数据:###10***
+2026-11-17 08:53:11.570 [INF] 关机
+2026-11-17 08:53:24.438 [INF] 开机
+2026-11-17 08:53:32.888 [INF] 通信初始化成功
+2026-11-17 08:53:32.906 [INF] 读取模板列表成功，共 3 个
+2026-11-17 08:53:32.914 [INF] Halcon 初始化成功
+2026-11-17 08:53:32.920 [INF] 参数加载成功
+2026-11-17 08:53:32.967 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-17 08:54:02.045 [INF] PLC 已连接：127.0.0.1:2061
+2026-11-17 08:54:39.153 [INF] 接收数据:###10***
+2026-11-17 09:17:35.091 [INF] 开机
+2026-11-17 09:17:35.140 [INF] 通信初始化成功
+2026-11-17 09:17:35.159 [INF] 读取模板列表成功，共 3 个
+2026-11-17 09:17:35.163 [INF] Halcon 初始化成功
+2026-11-17 09:17:35.171 [INF] 参数加载成功
+2026-11-17 09:17:35.241 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-17 09:17:44.167 [INF] PLC 已连接：127.0.0.1:2224
+2026-11-17 09:17:44.688 [ERR] 通信异常关闭:
+System.Net.Sockets.SocketException (0x80004005): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+   在 System.Net.Sockets.Socket.Receive(Byte[] buffer)
+   在 Measure.Halcon.Demo.Helper.SocketHeler.Pross(CancellationToken token) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\SocketHeler.cs:行号 234
+2026-11-17 09:17:49.700 [INF] PLC 已连接：127.0.0.1:2228
+2026-11-17 09:17:50.222 [ERR] 通信异常关闭:
+System.Net.Sockets.SocketException (0x80004005): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+   在 System.Net.Sockets.Socket.Receive(Byte[] buffer)
+   在 Measure.Halcon.Demo.Helper.SocketHeler.Pross(CancellationToken token) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\SocketHeler.cs:行号 234
+2026-11-17 09:17:55.215 [INF] PLC 已连接：127.0.0.1:2235
+2026-11-17 09:17:55.740 [ERR] 通信异常关闭:
+System.Net.Sockets.SocketException (0x80004005): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+   在 System.Net.Sockets.Socket.Receive(Byte[] buffer)
+   在 Measure.Halcon.Demo.Helper.SocketHeler.Pross(CancellationToken token) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\SocketHeler.cs:行号 234
+2026-11-17 09:26:47.461 [INF] 开机
+2026-11-17 09:26:47.540 [INF] 通信初始化成功
+2026-11-17 09:26:47.556 [INF] 读取模板列表成功，共 3 个
+2026-11-17 09:26:47.561 [INF] Halcon 初始化成功
+2026-11-17 09:26:47.566 [INF] 参数加载成功
+2026-11-17 09:26:47.611 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-17 09:26:56.466 [INF] PLC 已连接：127.0.0.1:2710
+2026-11-17 09:26:59.096 [INF] 接收数据:###10***
+2026-11-17 09:27:01.034 [INF] 接收数据:###10***
+2026-11-17 09:27:04.853 [INF] PLC 已连接：127.0.0.1:2715
+2026-11-17 09:27:05.973 [INF] 接收数据:###10***
+2026-11-17 09:27:06.606 [INF] 接收数据:###10***
+2026-11-17 09:27:07.154 [INF] 接收数据:###10***
+2026-11-17 09:27:12.027 [INF] PLC 已连接：127.0.0.1:2718
+2026-11-17 09:27:13.080 [INF] 接收数据:###10***
+2026-11-17 09:27:13.439 [INF] 接收数据:###10***
+2026-11-17 09:27:13.809 [INF] 接收数据:###10***
+2026-11-17 09:27:24.920 [INF] PLC 已连接：127.0.0.1:2728
+2026-11-17 09:27:26.042 [INF] 接收数据:###12***
+2026-11-17 09:27:26.654 [INF] 接收数据:###12***
+2026-11-17 09:27:36.136 [INF] 关机
+2026-11-17 09:27:36.147 [INF] 通信关闭
+2026-11-17 10:44:01.996 [INF] 开机
+2026-11-17 10:44:02.068 [INF] 通信初始化成功
+2026-11-17 10:44:02.091 [INF] 读取模板列表成功，共 3 个
+2026-11-17 10:44:02.100 [INF] Halcon 初始化成功
+2026-11-17 10:44:02.108 [INF] 参数加载成功
+2026-11-17 10:44:02.170 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-17 10:44:04.831 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-17 10:44:08.126 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-17 10:44:28.338 [INF] PLC 已连接：127.0.0.1:6614
+2026-11-17 10:44:39.481 [INF] 待发送:###0,1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-17 10:44:46.712 [INF] 待发送:###1,1,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-17 10:44:51.207 [INF] 待发送:###2,1,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-17 10:44:58.661 [INF] 待发送:###3,1,-0.0214762374861727,430.030055759554,322.005598621878***
+2026-11-17 10:45:02.519 [INF] 待发送:###4,1,0.370392125488087,430.030055759554,322.005598621878***
+2026-11-17 10:45:55.988 [WRN] 引擎线程未在 2000 ms 内退出
+2026-11-17 10:46:16.268 [WRN] 引擎线程未在 200 ms 内退出
+2026-11-17 10:46:16.268 [INF] 关机
+2026-11-17 10:47:45.011 [INF] 开机
+2026-11-17 10:47:45.060 [INF] 通信初始化成功
+2026-11-17 10:47:45.083 [INF] 读取模板列表成功，共 3 个
+2026-11-17 10:47:45.083 [INF] Halcon 初始化成功
+2026-11-17 10:47:45.091 [INF] 参数加载成功
+2026-11-17 10:47:45.140 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-17 10:47:47.858 [INF] 关机
+2026-11-17 10:47:47.858 [INF] 通信关闭
+2026-11-17 10:48:06.396 [INF] 开机
+2026-11-17 10:48:06.441 [INF] 通信初始化成功
+2026-11-17 10:48:06.458 [INF] 读取模板列表成功，共 3 个
+2026-11-17 10:48:06.466 [INF] Halcon 初始化成功
+2026-11-17 10:48:06.471 [INF] 参数加载成功
+2026-11-17 10:48:06.521 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-17 10:48:27.666 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-17 10:48:29.440 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-17 10:48:34.350 [INF] PLC 已连接：127.0.0.1:6813
+2026-11-17 10:48:49.828 [INF] 待发送:###0,1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-17 10:49:01.930 [INF] 待发送:###1,1,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-17 10:49:06.779 [INF] 待发送:###2,1,-0.0279998677198828,430.030055759554,322.005598621878***
+2026-11-17 10:49:12.003 [INF] 连续查找 结束
+2026-11-17 10:49:22.517 [INF] 匹配模板参数设置成功:起始角=-45°, 范围=90°, 最小分=0.5, 匹配数=1, 重叠=0.1, 贪婪=0.9, 缩放R=[0.8,1.2], 缩放C=[0.8,1.2], 模板=已创建, 模板区域=有
+2026-11-17 10:49:23.390 [INF] 连续查找 启动（来源：文件:连接件）
+2026-11-17 10:49:25.049 [INF] 待发送:###3,1,4.22811181358769E-07,430.030055759554,322.005598621878***
+2026-11-17 10:49:26.804 [INF] 待发送:###4,1,0.319817297361948,430.030055759554,322.005598621878***
+2026-11-17 10:49:33.126 [WRN] 引擎线程未在 2000 ms 内退出
+2026-11-17 10:49:45.471 [WRN] 引擎线程未在 200 ms 内退出
+2026-11-17 10:49:45.471 [INF] 关机
+2026-11-17 10:49:45.480 [INF] 通信关闭

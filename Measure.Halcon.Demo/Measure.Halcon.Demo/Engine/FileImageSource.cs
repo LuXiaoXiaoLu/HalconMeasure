@@ -27,7 +27,7 @@ internal class FileImageSource : IImageSource
             return "文件:" + files[0].Directory.Name;      // 从第一个文件反推目录名
         }
     }
-    public int IntervalMs { get { return 2000; } }
+    public int IntervalMs { get { return 0; } }
     public bool StopOnError { get { return false; } }     // 坏一张继续
 
     public OperationResult GrabImage(out HObject image)

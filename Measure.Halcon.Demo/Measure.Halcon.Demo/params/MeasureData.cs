@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Measure.Halcon.Demo
 {
-    internal class MeasureData
+    internal class MeasureData:IResultInfo
     {
         public bool IsOk { get; set; }
         public double DiameterMm { get; set; }
         public double RowCenter { get; set; }     // 圆心行
         public double ColCenter { get; set; }
+
+        public string WorkpieceId {  get; set; }
     }
 }

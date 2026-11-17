@@ -1,4 +1,5 @@
 ﻿using HalconDotNet;
+using Measure.Halcon.Demo.Trigger;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -24,17 +25,23 @@ namespace Measure.Halcon.Demo.Helper
         /// <summary>
         /// 数据队列
         /// </summary>
-        private readonly BlockingCollection<List<string>> _queue = new BlockingCollection<List<string>>(50);
+        private readonly BlockingCollection<List<string>> _queue = new BlockingCollection<List<string>>(5);
+
+        /// <summary>
+        /// 触发消息队列
+        /// </summary>
+        private readonly BlockingCollection<TriggerInfo> _triggerQueue;
 
         private CancellationTokenSource _cts;
 
         private readonly int  _maxRetryCount=3;
         private int _seq=0;
 
-        public SocketHeler(Socket socket, LogHelper log)
+        public SocketHeler(Socket socket, LogHelper log, BlockingCollection<TriggerInfo> triggerQueue)
         {
             _socket = socket;
             this._log = log;
+            _triggerQueue = triggerQueue;
         }
 
         public OperationResult StartSockeServer()
@@ -71,153 +78,201 @@ namespace Measure.Halcon.Demo.Helper
         }
 
 
+        /// <summary>
+        /// 上位机自动发送
+        /// </summary>
+        //private void Pross(CancellationToken token)
+        //{
+        //    try
+        //    {
+        //        while (!token.IsCancellationRequested)
+        //        {
+        //            Socket conn = null;
+        //            try
+        //            {
+        //                conn = _socket.Accept();
+        //                _log.Info("PLC 已连接：" + conn.RemoteEndPoint);
+        //                while (!token.IsCancellationRequested)
+        //                {
+        //                    List<string> data = _triggerQueue.Take(token);   // 无数据就挂起；取消时抛 OperationCanceledException
+        //                    string sendData = "###"  + string.Join(",", data) + "***";
 
-        private void Pross(CancellationToken token)
-        {
-            try
-            {
-                while (!token.IsCancellationRequested)
-                {
-                    Socket conn = null;
-                    try
-                    {
-                        conn = _socket.Accept();
-                        _log.Info("PLC 已连接：" + conn.RemoteEndPoint);
-                        while (!token.IsCancellationRequested)
-                        {
-                            List<string> data = _queue.Take(token);   // 无数据就挂起；取消时抛 OperationCanceledException
-                            string sendData = "###"  + string.Join(",", data) + "***";
+        //                    int retry = 0;
 
-                            int retry = 0;
+        //                    while (retry < _maxRetryCount)
+        //                    {
+        //                        conn.Send(Encoding.ASCII.GetBytes(sendData));
+        //                        _log.Info("发送数据：" + sendData);
+        //                        try
+        //                        {
+        //                            byte[] receiveData = new byte[1024];
+        //                            conn.ReceiveTimeout = 500;
+        //                            int n= conn.Receive(receiveData);
+        //                            if(n == 0) throw new SocketException((int)SocketError.ConnectionReset); // 对端断开
+        //                            string ack = Encoding.ASCII.GetString(receiveData, 0, n);
+        //                            if (!ack.StartsWith("###") || !ack.EndsWith("***")) {
+        //                                retry++; continue;
+        //                            }   
+        //                            if (ack.Trim('#','*').Equals(data[0]))
+        //                            {
+        //                                _log.Info("发送成功：" + sendData);
+        //                                break;
+        //                            }
+        //                            else
+        //                            {
+        //                                _log.Warn("Ack错误：" + data[0] + "!=" + ack);
+        //                                retry++;
+        //                                continue;
+        //                            }
 
-                            while (retry < _maxRetryCount)
-                            {
-                                conn.Send(Encoding.ASCII.GetBytes(sendData));
-                                _log.Info("发送数据：" + sendData);
-                                try
-                                {
-                                    byte[] receiveData = new byte[1024];
-                                    conn.ReceiveTimeout = 3000;
-                                    int n= conn.Receive(receiveData);
-                                    if(n == 0) throw new SocketException((int)SocketError.ConnectionReset); // 对端断开
-                                    string ack = Encoding.ASCII.GetString(receiveData, 0, n);
-                                    if (!ack.StartsWith("###") || !ack.EndsWith("***")) {
-                                        retry++; continue;
-                                    }   
-                                    if (ack.Trim('#','*').Equals(data[0]))
-                                    {
-                                        _log.Info("发送成功：" + sendData);
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        _log.Warn("Ack错误：" + data[0] + "!=" + ack);
-                                        retry++;
-                                        continue;
-                                    }
-
-                                }
-                                catch (SocketException ex) when (ex.SocketErrorCode == SocketError.TimedOut)
-                                {
+        //                        }
+        //                        catch (SocketException ex) when (ex.SocketErrorCode == SocketError.TimedOut)
+        //                        {
                                   
-                                    retry++;
-                                    _log.Warn("响应超时" + retry + "次");  // 超时，也重发
-                                }
-                                catch (SocketException)
-                                {
-                                    throw;                                          // 真断线，交给外层重连
-                                }
+        //                            retry++;
+        //                            _log.Warn("响应超时" + retry + "次");  // 超时，也重发
+        //                        }
+        //                        catch (SocketException)
+        //                        {
+        //                            throw;                                          // 真断线，交给外层重连
+        //                        }
 
 
-                            }
+        //                    }
 
-                            if (retry >= _maxRetryCount) _log.Warn("重发 3 次仍无应答");
+        //                    if (retry >= _maxRetryCount) _log.Warn("重发 3 次仍无应答");
 
-                            //conn.Send(Encoding.ASCII.GetBytes(sendData));
+        //                    //conn.Send(Encoding.ASCII.GetBytes(sendData));
 
-                            //_log.Info("已发送 " + sendData);
+        //                    //_log.Info("已发送 " + sendData);
 
-                            //string Ack = string.Empty;
-                            //int i = 0;
-                            //while (!Ack.Equals(_seq.ToString()))
-                            //{
+        //                    //string Ack = string.Empty;
+        //                    //int i = 0;
+        //                    //while (!Ack.Equals(_seq.ToString()))
+        //                    //{
 
-                            //    try
-                            //    {
-                            //        //接收ASK
-                            //        byte[] buffer = new byte[1024];
-                            //        try
-                            //        {
-                            //            conn.ReceiveTimeout = 3000;
-                            //        }
-                            //        catch (Exception ex)
-                            //        {
-                            //            i++;
-                            //            _log.Warn("通信超时：尝试重发" + i + "次");
-                            //            _log.Result(OperationResult.CreateFailResult("ACK 超时", ex));
-                            //            return;
-                            //        }
+        //                    //    try
+        //                    //    {
+        //                    //        //接收ASK
+        //                    //        byte[] buffer = new byte[1024];
+        //                    //        try
+        //                    //        {
+        //                    //            conn.ReceiveTimeout = 3000;
+        //                    //        }
+        //                    //        catch (Exception ex)
+        //                    //        {
+        //                    //            i++;
+        //                    //            _log.Warn("通信超时：尝试重发" + i + "次");
+        //                    //            _log.Result(OperationResult.CreateFailResult("ACK 超时", ex));
+        //                    //            return;
+        //                    //        }
 
-                            //        int bufferLength = conn.Receive(buffer);
-                            //        string ReceiveData = Encoding.ASCII.GetString(buffer, 0, bufferLength);
-                            //        if (!ReceiveData.StartsWith("###") || !ReceiveData.EndsWith("***"))
-                            //        {
-                            //            _log.Warn("ACK 格式不完整，忽略：" + ReceiveData);
-                            //            return;
-                            //        }
-                            //        Ack = ReceiveData.Trim('#', '*');
+        //                    //        int bufferLength = conn.Receive(buffer);
+        //                    //        string ReceiveData = Encoding.ASCII.GetString(buffer, 0, bufferLength);
+        //                    //        if (!ReceiveData.StartsWith("###") || !ReceiveData.EndsWith("***"))
+        //                    //        {
+        //                    //            _log.Warn("ACK 格式不完整，忽略：" + ReceiveData);
+        //                    //            return;
+        //                    //        }
+        //                    //        Ack = ReceiveData.Trim('#', '*');
 
-                            //        if (Ack.Equals(_seq.ToString()))
-                            //        {
-                            //            _log.Info("数据发送成功：" + sendData);
-                            //            break;
-                            //        }
-                            //        _log.Warn("通信超时：尝试重发" + i + "次");
-                            //        if (i > _maxRetryCount)
-                            //        {
-                            //            _log.Warn("通信超时：重发失败");
-                            //            break;
-                            //        }
-                            //        i++;
+        //                    //        if (Ack.Equals(_seq.ToString()))
+        //                    //        {
+        //                    //            _log.Info("数据发送成功：" + sendData);
+        //                    //            break;
+        //                    //        }
+        //                    //        _log.Warn("通信超时：尝试重发" + i + "次");
+        //                    //        if (i > _maxRetryCount)
+        //                    //        {
+        //                    //            _log.Warn("通信超时：重发失败");
+        //                    //            break;
+        //                    //        }
+        //                    //        i++;
 
-                            //    }
-                            //    catch (Exception)
-                            //    {
-                            //        _log.Warn("通信超时结束");
-                            //        break;
-                            //    }
-                            //}
-                        }
-                    }
-                    catch (Exception ex)
+        //                    //    }
+        //                    //    catch (Exception)
+        //                    //    {
+        //                    //        _log.Warn("通信超时结束");
+        //                    //        break;
+        //                    //    }
+        //                    //}
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                if (token.IsCancellationRequested)
+        //                {
+        //                    _log.Info("通信线程已停止");
+        //                }
+        //                else
+        //                {
+        //                    _log.Result(OperationResult.CreateFailResult("PLC 连接断开，等待重连", ex));
+        //                }
+        //            }
+        //            finally
+        //            {
+        //                conn?.Close();
+
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _log.Fail(OperationResult.CreateFailResult("通信线程已终止", ex));
+        //    }
+        //}
+
+        
+        private void Pross(CancellationToken token )
+        {
+            
+            while (!token.IsCancellationRequested)
+            {
+                Socket conn=null;
+                try
+                {
+                    conn = _socket.Accept();
+                    _log.Info("PLC 已连接：" + conn.RemoteEndPoint);
+                   
+                    while (!token.IsCancellationRequested)
                     {
-                        if (token.IsCancellationRequested)
+                        byte[] data = new byte[1024];
+                        int n= conn.Receive(data);
+                        if (n == 0) break;
+                        TriggerInfo triggerInfo = TriggerInfo.CreateTriggerInfo(Encoding.ASCII.GetString(data, 0, n));
+                        if (triggerInfo != null)
                         {
-                            _log.Info("通信线程已停止");
+                            _triggerQueue.Add(triggerInfo);
                         }
-                        else
-                        {
-                            _log.Result(OperationResult.CreateFailResult("PLC 连接断开，等待重连", ex));
-                        }
-                    }
-                    finally
-                    {
-                        conn?.Close();
-
+                        
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                _log.Fail(OperationResult.CreateFailResult("通信线程已终止", ex));
+                catch (Exception ex)
+                {
+                    if (token.IsCancellationRequested)
+                    {
+                        _log.Info("通信关闭");
+                    }
+                    else
+                    {
+                        _log.Result(OperationResult.CreateFailResult("通信异常关闭:", ex));
+                    }
+
+                }
+                finally
+                {
+                    conn?.Close();
+                }
             }
         }
-
 
         public void Stop()
         {
             if (_cts != null) _cts.Cancel();
+
             _socket.Close();          // 打断阻塞中的 Accept
         }
+
+       
     }
 }

@@ -1,5 +1,6 @@
 ﻿using HalconDotNet;
 using Measure.Halcon.Demo.Helper;
+using Measure.Halcon.Demo.Trigger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,7 @@ namespace Measure.Halcon.Demo.Engine
         /// </summary>
         /// <returns>true = 已启动；false = 被拒绝（原因已记日志）。</returns>
         public bool Start(string name,
+                           ITriggerSource triggerSource,
                           IImageSource source,
                           Func<HObject, OperationResult> process,
                           Action<OperationResult> report)
@@ -74,9 +76,9 @@ namespace Measure.Halcon.Demo.Engine
 
             state = EngineState.Running;
             currentName = name;
-
+          
             task = Task.Factory.StartNew(
-                () => Loop(name, token, source, process, report),
+                () => Loop(name,triggerSource,token, source, process, report),
                 token,
                 TaskCreationOptions.LongRunning,
                 TaskScheduler.Default);
@@ -85,7 +87,8 @@ namespace Measure.Halcon.Demo.Engine
         }
 
         /// <summary>循环本体，跑在独立线程上。</summary>
-        private void Loop(string name,
+        private void Loop(string name, 
+                          ITriggerSource triggerSource,
                           CancellationToken token,
                           IImageSource source,
                           Func<HObject, OperationResult> process,
@@ -97,6 +100,7 @@ namespace Measure.Halcon.Demo.Engine
             {
                 while (!token.IsCancellationRequested)
                 {
+                    if (!triggerSource.WaitTrigger(token)) break;//触发决策
                     OperationResult garbImageResult = source.GrabImage(out HObject image);
                     if (garbImageResult.IsSuccess)
                     {

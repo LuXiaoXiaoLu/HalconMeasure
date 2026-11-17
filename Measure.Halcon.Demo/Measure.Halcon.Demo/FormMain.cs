@@ -1,8 +1,10 @@
 ﻿using HalconDotNet;
 using Measure.Halcon.Demo.Engine;
 using Measure.Halcon.Demo.Helper;
+using Measure.Halcon.Demo.Trigger;
 using Serilog;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -45,7 +47,9 @@ namespace Measure.Halcon.Demo
             log = new LogHelper(list_Info);
             log.Info("开机");
             engine = new RunEngine(log);
-            listener =new  SocketHeler( new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp),log);
+            //触发信息队列
+            triggerQueue = new BlockingCollection<TriggerInfo>(5);
+            listener =new  SocketHeler( new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp),log,triggerQueue);
             log.Result(listener.StartSockeServer());
             // 程序级状态配置：必须在 log 之后、LoadModelList 之前初始化，
             // 因为 LoadModelList 里要读 appSettings.LastModelName，且 Load 的失败要写日志
@@ -102,6 +106,9 @@ namespace Measure.Halcon.Demo
 
 
         }
+        //触发队列
+        private readonly BlockingCollection<TriggerInfo> triggerQueue;
+
         //事件处理引擎
         private RunEngine engine;
         private ImageHelper imageHelper = new ImageHelper();
@@ -517,8 +524,9 @@ namespace Measure.Halcon.Demo
                         return;
                     }
                     var source = new FileImageSource(files);
-
-                    bool engineStartResult = engine.Start(FlowFind,
+                    ITriggerSource triggerSource= new PlcTriggerSource(triggerQueue);
+                    bool engineStartResult = engine.Start(FlowFind, 
+                          triggerSource,
                           source,
                           ProcessFind,
                           r => { 
@@ -967,7 +975,9 @@ namespace Measure.Halcon.Demo
                         return;
                     }
                     IImageSource imageSource = new FileImageSource(files);
+                    ITriggerSource triggerSource = new PlcTriggerSource(triggerQueue);
                     bool s = engine.Start(FlowMeasure,
+                            triggerSource,
                            imageSource,
                            ProcessMeasure,
                            r => { log.Fail(r); }

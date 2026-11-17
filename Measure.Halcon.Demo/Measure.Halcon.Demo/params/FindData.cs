@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Measure.Halcon.Demo
 {
-    internal class FindData
+    internal class FindData:IResultInfo
     {
-        public FindData(bool isOk, double angle, double rowCenter, double colCenter)
+        public FindData(bool isOk, double angle, double rowCenter, double colCenter, string workpieceId)
         {
             IsOk = isOk;
             Angle = angle;
             RowCenter = rowCenter;
             ColCenter = colCenter;
+            WorkpieceId = workpieceId;
         }
         public FindData()
         {
@@ -35,6 +36,6 @@ namespace Measure.Halcon.Demo
         public double RowCenter { get; set; }     
         public double ColCenter { get; set; }
 
-        
+        public string WorkpieceId {  get; set; }
     }
 }

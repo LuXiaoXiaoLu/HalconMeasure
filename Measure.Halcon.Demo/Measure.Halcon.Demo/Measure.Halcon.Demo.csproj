@@ -112,6 +112,10 @@
     <Compile Include="params\MeasureData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Trigger\FreeRunTriggerSource.cs" />
+    <Compile Include="Trigger\PlcTriggerSource.cs" />
+    <Compile Include="Trigger\ITriggerSource.cs" />
+    <Compile Include="Trigger\TriggerInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

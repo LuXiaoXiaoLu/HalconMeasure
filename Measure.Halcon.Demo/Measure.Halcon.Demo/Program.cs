@@ -1,11 +1,12 @@
+using Measure.Halcon.Demo.Storage;
+using Serilog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using System.Text;
-using Serilog;
 
 namespace Measure.Halcon.Demo
 {
@@ -60,11 +61,12 @@ namespace Measure.Halcon.Demo
             Directory.CreateDirectory(Path.Combine(DataRoot, "model"));
             Directory.CreateDirectory(Path.Combine(DataRoot, "config"));
             Directory.CreateDirectory(Path.Combine(DataRoot, "logs"));
-
+            Directory.CreateDirectory(Path.Combine(DataRoot, "db"));
             try
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+                SqliteStore.InitialSqlite();
                 Application.Run(new FormMain());
             }
             catch (Exception ex)

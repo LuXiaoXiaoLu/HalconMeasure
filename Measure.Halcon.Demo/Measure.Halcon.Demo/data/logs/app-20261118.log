@@ -325,3 +325,21 @@ HalconDotNet.HOperatorException: HALCON error #8603: Interface library not avail
 System.Net.Sockets.SocketException (0x80004005): 一个封锁操作被对 WSACancelBlockingCall 的调用中断。
    在 System.Net.Sockets.Socket.Accept()
    在 Measure.Halcon.Demo.Helper.SocketHeler.SocketPross(CancellationToken token) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\SocketHeler.cs:行号 235
+2026-11-18 16:57:35.575 [INF] 数据库已打开：E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\data\db\measure.db（SQLite 3.46.1）
+2026-11-18 16:57:35.619 [INF] SchemaVersion 表存在：true
+2026-11-18 16:57:36.076 [INF] 开机
+2026-11-18 16:57:36.095 [INF] 通信初始化成功
+2026-11-18 16:57:36.110 [INF] 读取模板列表成功，共 3 个
+2026-11-18 16:57:36.115 [INF] Halcon 初始化成功
+2026-11-18 16:57:36.128 [INF] 参数加载成功
+2026-11-18 16:57:36.181 [ERR] 打开相机失败
+HalconDotNet.HOperatorException: HALCON error #8603: Interface library not available. Check www.mvtec.com/download for additional interfaces in operator open_framegrabber
+   在 HalconDotNet.HOperatorException.throwOperator(Int32 err, Int32 procIndex)
+   在 HalconDotNet.HalconAPI.PostCall(IntPtr proc, Int32 procResult)
+   在 HalconDotNet.HOperatorSet.OpenFramegrabber(HTuple name, HTuple horizontalResolution, HTuple verticalResolution, HTuple imageWidth, HTuple imageHeight, HTuple startRow, HTuple startColumn, HTuple field, HTuple bitsPerChannel, HTuple colorSpace, HTuple generic, HTuple externalTrigger, HTuple cameraType, HTuple device, HTuple port, HTuple lineIn, HTuple& acqHandle)
+   在 Measure.Halcon.Demo.ImageHelper.OpenCam(String Drvname, String CamName) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\ImageHelper.cs:行号 35
+2026-11-18 16:57:43.266 [INF] 关机
+2026-11-18 16:57:43.293 [ERR] 通信异常关闭
+System.Net.Sockets.SocketException (0x80004005): 一个封锁操作被对 WSACancelBlockingCall 的调用中断。
+   在 System.Net.Sockets.Socket.Accept()
+   在 Measure.Halcon.Demo.Helper.SocketHeler.SocketPross(CancellationToken token) 位置 E:\code\Csharp\Measure\Measure.Halcon.Demo\Measure.Halcon.Demo\Helper\SocketHeler.cs:行号 235

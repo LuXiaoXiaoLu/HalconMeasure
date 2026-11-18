@@ -255,11 +255,15 @@ namespace Measure.Halcon.Demo.Helper
                             {
                                 _log.Warn("引擎未运行，丢弃触发：" + triggerInfo.WorkpieceId);
                             }
-                            //添加入触发消息队列
-                            if (triggerInfo != null)
+                            else
                             {
-                                _triggerQueue.Add(triggerInfo);
+                                //添加入触发消息队列
+                                if (triggerInfo != null)
+                                {
+                                    _triggerQueue.Add(triggerInfo);
+                                }
                             }
+                            
                            
                             
                         }

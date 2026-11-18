@@ -673,14 +673,14 @@ namespace Measure.Halcon.Demo
 
         }
 
-        private OperationResult Measure(HObject hImage, HTuple hWindowHandle)
+        private OperationResult<MeasureInfo> Measure(HObject hImage, HTuple hWindowHandle)
         {
             try
             {
                 // 第 1 步：查找模板
                 var findResult = shapeModelHelper.FindShapeMode(ref hWindowHandle, ref hImage, mathParams, out HTuple homMat2d_T);
                 if (!findResult.IsSuccess)
-                    return OperationResult.CreateFailResult("测量失败：模板匹配。" + findResult.Msg, findResult.Error);
+                    return OperationResult<MeasureInfo>.CreateFailResult("测量失败：模板匹配。" + findResult.Msg, findResult.Error);
 
                 // 第 2 步：拟合圆
                 var fitResult = halconHelper.Fit_Circle(hImage, circleParams, homMat2d_T, out HObject hRegion, out HTuple resultRow,
@@ -688,27 +688,36 @@ namespace Measure.Halcon.Demo
                     out HTuple hv_Radius, out HTuple hv_StartPhi, out HTuple hv_EndPhi, out HTuple hv_PointOrder,
                     out HTuple hv_ArcAngle);
                 if (!fitResult.IsSuccess)
-                    return OperationResult.CreateFailResult("测量失败：圆拟合。" + fitResult.Msg, fitResult.Error);
+                    return OperationResult<MeasureInfo>.CreateFailResult("测量失败：圆拟合。" + fitResult.Msg, fitResult.Error);
 
-
-                HOperatorSet.DispObj(hImage, hWindowHandle);
                 // 第 3 步：判断直径
                 double distance = circleParams.scale * hv_Radius * 2;
+                HOperatorSet.DispObj(hImage, hWindowHandle);
+               
+                MeasureInfo measureInfo = new MeasureInfo
+                {
+                    ColCenter = hv_ColCenter,
+                    RowCenter = hv_RowCenter,
+                    DiameterMm = distance
+                };
+               
                 if (distance < circleParams.circle_Dis_Min || distance > circleParams.circle_Dis_Max)
                 {
                   
                     halconHelper.disp_message(hWindowHandle, "测量结果：NG " + distance, "window", 35, 20, "red", "false");
-                    return OperationResult.CreateFailResult("测量结果：NG " + distance);   // 无异常 → Warn
+                    measureInfo.IsOk = false;
+                    return OperationResult<MeasureInfo>.CreateSuccessResult(measureInfo);   // 无异常 → Warn
                 }
 
 
                 HOperatorSet.DispObj(result_Circle, hWindowHandle);
                 halconHelper.disp_message(hWindowHandle, "OK:" + distance, "window", 35, 20, "green", "false");
-                return OperationResult.CreateSuccessResult("OK:" + distance);
+                measureInfo.IsOk = true;
+                return OperationResult<MeasureInfo>.CreateSuccessResult(measureInfo);
             }
             catch (Exception ex)
             {
-                return OperationResult.CreateFailResult("测量失败", ex);   // 带异常 → Error
+                return OperationResult<MeasureInfo>.CreateFailResult("测量失败", ex);   // 带异常 → Error
             }
         }
 
@@ -983,19 +992,26 @@ namespace Measure.Halcon.Demo
                     IImageSource imageSource = new FileImageSource(files);
                     ITriggerSource triggerSource = new PlcTriggerSource(triggerQueue);
                     bool s = engine.Start(FlowMeasure,
-                            triggerSource,
+                           triggerSource,
                            imageSource,
                            ProcessMeasure,
-                           (r,trig) => { 
-                               log.Fail(r); 
-                                
+                           (r,trig) => {
+                               log.Fail(r);
+                               MeasureInfo md = (r as OperationResult<MeasureInfo>)?.Data;
+                               if (md == null)
+                               {
+                                   log.Warn("结果为空，丢弃该帧：" + trig.WorkpieceId);
+                                   return;
+                               }
+                               md.WorkpieceId = trig.WorkpieceId;
+                               listener.SendData(md);
                            }
                            );
                 }
 
             }
         }
-        private OperationResult ProcessMeasure(HObject image)
+        private OperationResult<MeasureInfo> ProcessMeasure(HObject image)
         {
             return Measure(image, HwindowHandle);
         }

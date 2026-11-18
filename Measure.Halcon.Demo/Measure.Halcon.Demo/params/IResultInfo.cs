@@ -14,6 +14,6 @@ namespace Measure.Halcon.Demo
 
         string ToString();
 
-
+       
     }
 }

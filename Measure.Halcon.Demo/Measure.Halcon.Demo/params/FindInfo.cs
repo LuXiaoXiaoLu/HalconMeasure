@@ -25,7 +25,7 @@ namespace Measure.Halcon.Demo
         public override string  ToString()
         {
             return string.Format(CultureInfo.InvariantCulture,
-                "[R,{0},{1},{2},{3},{4}]",
+                "[M,{0},{1},{2},{3},{4}]",
                 WorkpieceId,
                 IsOk ? "1" : "0",
                 Angle, RowCenter, ColCenter);

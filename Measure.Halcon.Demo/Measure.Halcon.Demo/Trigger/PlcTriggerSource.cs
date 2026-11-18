@@ -17,16 +17,16 @@ namespace Measure.Halcon.Demo.Trigger
         public string Name { get { return "PLC触发"; } }
 
 
-        public bool WaitTrigger(CancellationToken token)
+        public bool WaitTrigger(CancellationToken token,out TriggerInfo tri)
         {
             try
             {
-                var Currnet = _triggerQueue.Take(token);
+                tri = _triggerQueue.Take(token);
                 return true;
             }
             catch (OperationCanceledException)
             {
-
+                tri=null;
                 return false;
             }
         }

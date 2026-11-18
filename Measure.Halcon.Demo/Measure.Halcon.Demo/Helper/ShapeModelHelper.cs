@@ -77,7 +77,7 @@ namespace Measure.Halcon.Demo.Helper
 
         }
 
-        public OperationResult<FindData> FindShapeMode(ref HTuple HwindowHandle, ref HObject image, MatchParams mathParams, out HTuple homMat2d_T)
+        public OperationResult<FindInfo> FindShapeMode(ref HTuple HwindowHandle, ref HObject image, MatchParams mathParams, out HTuple homMat2d_T)
         {
             homMat2d_T = new HTuple();
 
@@ -114,18 +114,18 @@ namespace Measure.Halcon.Demo.Helper
                     HOperatorSet.DispObj(cross, HwindowHandle);
 
                     halconHelper.disp_message(HwindowHandle, "定位成功", "window", 20, 20, "green", "false");
-                    FindData findData = new FindData();
+                    FindInfo findData = new FindInfo();
                     findData.ColCenter = column1[0].D;
                     findData.RowCenter= row1[0].D;
                     findData.Angle = angle[0].D;
                     findData.IsOk = true;
-                    return OperationResult<FindData>.CreateSuccessResult(findData);
+                    return OperationResult<FindInfo>.CreateSuccessResult(findData);
                 }
                 else
                 {
                     halconHelper.disp_message(HwindowHandle, "定位失败", "window", 20, 20, "red", "false");
 
-                    return new OperationResult<FindData> { IsSuccess = false, Msg = "未找到模板" };
+                    return new OperationResult<FindInfo> { IsSuccess = false, Msg = "未找到模板" };
                 }
 
 
@@ -134,7 +134,7 @@ namespace Measure.Halcon.Demo.Helper
             catch (Exception ex)
             {
                 halconHelper.disp_message(HwindowHandle, "查找模板失败" + ex.Message, "window", 20, 20, "red", "false");
-                return OperationResult<FindData>.CreateFailResult("查找模板失败", ex);
+                return OperationResult<FindInfo>.CreateFailResult("查找模板失败", ex);
             }
 
 

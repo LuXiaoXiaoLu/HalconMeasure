@@ -57,7 +57,7 @@ namespace Measure.Halcon.Demo.Engine
                            ITriggerSource triggerSource,
                           IImageSource source,
                           Func<HObject, OperationResult> process,
-                          Action<OperationResult> report)
+                          Action<OperationResult,TriggerInfo> report)
         {
             if (state != EngineState.Idle)
             {
@@ -92,7 +92,7 @@ namespace Measure.Halcon.Demo.Engine
                           CancellationToken token,
                           IImageSource source,
                           Func<HObject, OperationResult> process,
-                          Action<OperationResult> report)
+                          Action<OperationResult,TriggerInfo> report)
         {
 
 
@@ -100,14 +100,14 @@ namespace Measure.Halcon.Demo.Engine
             {
                 while (!token.IsCancellationRequested)
                 {
-                    if (!triggerSource.WaitTrigger(token)) break;//触发决策
+                    if (!triggerSource.WaitTrigger(token,out TriggerInfo trig)) break;//触发决策
                     OperationResult garbImageResult = source.GrabImage(out HObject image);
                     if (garbImageResult.IsSuccess)
                     {
                         try
                         {
                             OperationResult processResult = process(image);
-                            if (report != null) report(processResult);
+                            if (report != null) report(processResult, trig);
                         }
                         finally
                         {
@@ -119,7 +119,7 @@ namespace Measure.Halcon.Demo.Engine
                     {
                         if (report!=null)
                         {
-                            report(garbImageResult);
+                            report(garbImageResult, trig);
                         }
                         if (source.StopOnError) break;
                     }

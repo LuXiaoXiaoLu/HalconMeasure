@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.AxHost;
 
 
 namespace Measure.Halcon.Demo.Helper
@@ -23,9 +24,9 @@ namespace Measure.Halcon.Demo.Helper
         private LogHelper _log;
 
         /// <summary>
-        /// 数据队列
+        /// 结果消息队列
         /// </summary>
-        private readonly BlockingCollection<List<string>> _queue = new BlockingCollection<List<string>>(5);
+        private readonly BlockingCollection<IResultInfo> _resultQueue = new BlockingCollection<IResultInfo>(5);
 
         /// <summary>
         /// 触发消息队列
@@ -34,14 +35,16 @@ namespace Measure.Halcon.Demo.Helper
 
         private CancellationTokenSource _cts;
 
-        private readonly int  _maxRetryCount=3;
-        private int _seq=0;
+        private readonly Func<bool> _canAcceptTrigger;
 
-        public SocketHeler(Socket socket, LogHelper log, BlockingCollection<TriggerInfo> triggerQueue)
+        private DateTime _lastSendTime;
+
+        public SocketHeler(Socket socket, LogHelper log, BlockingCollection<TriggerInfo> triggerQueue, Func<bool> func)
         {
             _socket = socket;
             this._log = log;
             _triggerQueue = triggerQueue;
+            _canAcceptTrigger = func;
         }
 
         public OperationResult StartSockeServer()
@@ -53,7 +56,7 @@ namespace Measure.Halcon.Demo.Helper
                 _cts = new CancellationTokenSource();
                 var token = _cts.Token;
                 Task.Factory.StartNew(
-                    () => Pross(token), token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+                    () => SocketPross(token), token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
                 return OperationResult.CreateSuccessResult("通信初始化成功");
             }
             catch (Exception ex)
@@ -65,23 +68,21 @@ namespace Measure.Halcon.Demo.Helper
 
         }
 
-        
 
-        public void SendData(List<string> list)
+
+        public void SendData(IResultInfo resultInfo)
         {
-            if (_seq == 99999) _seq = 0;
-            var frame = new List<string>(list);
-            frame.Insert(0, _seq.ToString());
-            _queue.Add(frame);                                      // 入队，同时唤醒阻塞中的 Take
-            _log.Info("待发送:###" + _seq + "," + string.Join(",", list) + "***");
-            _seq++;
+
+            _resultQueue.Add(resultInfo);
+            _log.Info("待发送:" + resultInfo.ToString());
+
         }
 
 
         /// <summary>
         /// 上位机自动发送
         /// </summary>
-        //private void Pross(CancellationToken token)
+        //private void SocketPross(CancellationToken token)
         //{
         //    try
         //    {
@@ -128,7 +129,7 @@ namespace Measure.Halcon.Demo.Helper
         //                        }
         //                        catch (SocketException ex) when (ex.SocketErrorCode == SocketError.TimedOut)
         //                        {
-                                  
+
         //                            retry++;
         //                            _log.Warn("响应超时" + retry + "次");  // 超时，也重发
         //                        }
@@ -222,42 +223,88 @@ namespace Measure.Halcon.Demo.Helper
         //    }
         //}
 
-        
-        private void Pross(CancellationToken token )
+
+        private void SocketPross(CancellationToken token)
         {
-            
+
             while (!token.IsCancellationRequested)
             {
-                Socket conn=null;
+                Socket conn = null;
                 try
                 {
                     conn = _socket.Accept();
                     _log.Info("PLC 已连接：" + conn.RemoteEndPoint);
-                   
+                    _lastSendTime = DateTime.Now;
+                    DateTime now;
+                    int state = 0;
+
                     while (!token.IsCancellationRequested)
                     {
+
                         byte[] data = new byte[1024];
-                        int n= conn.Receive(data);
-                        if (n == 0) break;
-                        TriggerInfo triggerInfo = TriggerInfo.CreateTriggerInfo(Encoding.ASCII.GetString(data, 0, n));
-                        if (triggerInfo != null)
+
+                        if (conn.Available > 0)
                         {
-                            _triggerQueue.Add(triggerInfo);
+                            int n = conn.Receive(data);
+                            if (n == 0) {
+                                _log.Warn("PLC断开链接");
+                            
+                            }
+                            TriggerInfo triggerInfo = TriggerInfo.CreateTriggerInfo(Encoding.ASCII.GetString(data, 0, n));
+                            if (_canAcceptTrigger != null && !_canAcceptTrigger())
+                            {
+                                _log.Warn("引擎未运行，丢弃触发：" + triggerInfo.WorkpieceId);
+                            }
+                            //添加入触发消息队列
+                            if (triggerInfo != null)
+                            {
+                                _triggerQueue.Add(triggerInfo);
+                            }
+                           
+                            
                         }
-                        
+
+
+                        //发送数据
+                        if (_resultQueue.TryTake(out IResultInfo resul))
+                        {
+                            if (resul != null)
+                            {
+                                conn.Send(Encoding.ASCII.GetBytes(resul.ToString()));
+                            }
+                        }
+                        now = DateTime.Now;
+                        if ((now - _lastSendTime).TotalMilliseconds > 500)
+                        {
+                            
+                            conn.Send(Encoding.ASCII.GetBytes("[H," + state + "]"));
+                            if (state == 0)
+                            {
+                                state=1;
+                            }
+                            else
+                            {
+                                state = 0;
+                            }
+                            _lastSendTime = now;
+                        }
+
+                        Thread.Sleep(1);
+
                     }
+                }
+                catch (SocketException ex) when (
+                    ex.SocketErrorCode == SocketError.ConnectionReset ||      // 10054 对端 RST
+                    ex.SocketErrorCode == SocketError.ConnectionAborted ||    // 10053 本地中止
+                    ex.SocketErrorCode == SocketError.Shutdown ||             // 10058 本端已 shutdown
+                    ex.SocketErrorCode == SocketError.NetworkReset ||         // 10052 网络中断
+                    ex.SocketErrorCode == SocketError.NotConnected)           // 10057 未连接
+                {
+                    _log.Warn("PLC 断开连接（" + ex.SocketErrorCode + "），等待重连");
                 }
                 catch (Exception ex)
                 {
-                    if (token.IsCancellationRequested)
-                    {
-                        _log.Info("通信关闭");
-                    }
-                    else
-                    {
-                        _log.Result(OperationResult.CreateFailResult("通信异常关闭:", ex));
-                    }
-
+                    _log.Result(OperationResult.CreateFailResult("通信异常关闭", ex));
                 }
                 finally
                 {
@@ -273,6 +320,6 @@ namespace Measure.Halcon.Demo.Helper
             _socket.Close();          // 打断阻塞中的 Accept
         }
 
-       
+
     }
 }

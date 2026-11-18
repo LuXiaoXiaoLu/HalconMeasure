@@ -872,7 +872,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1024, 755);
-            this.Controls.Add(this.panel_Comm);
             this.Controls.Add(this.UcComm);
             this.Controls.Add(this.Mian);
             this.Controls.Add(this.but_ContinueMeasure);
@@ -882,6 +881,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.hWindowControl1);
+            this.Controls.Add(this.panel_Comm);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(4);

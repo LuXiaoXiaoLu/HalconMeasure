@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Measure.Halcon.Demo
 {
-    internal class FindData:IResultInfo
+    internal class FindInfo:IResultInfo
     {
-        public FindData(bool isOk, double angle, double rowCenter, double colCenter, string workpieceId)
+        public FindInfo(bool isOk, double angle, double rowCenter, double colCenter, string workpieceId)
         {
             IsOk = isOk;
             Angle = angle;
@@ -16,19 +17,18 @@ namespace Measure.Halcon.Demo
             ColCenter = colCenter;
             WorkpieceId = workpieceId;
         }
-        public FindData()
+        public FindInfo()
         {
                 
         }
 
-        public List<string> ToList()
+        public override string  ToString()
         {
-            List<string> list = new List<string>();
-            list.Add(IsOk? "1" :"0");
-            list.Add(Angle.ToString());
-            list.Add(RowCenter.ToString());
-            list.Add(ColCenter.ToString());
-            return list;
+            return string.Format(CultureInfo.InvariantCulture,
+                "[R,{0},{1},{2},{3},{4}]",
+                WorkpieceId,
+                IsOk ? "1" : "0",
+                Angle, RowCenter, ColCenter);
         }
 
         public bool IsOk { get; set; }

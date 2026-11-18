@@ -49,7 +49,7 @@ namespace Measure.Halcon.Demo
             engine = new RunEngine(log);
             //触发信息队列
             triggerQueue = new BlockingCollection<TriggerInfo>(5);
-            listener =new  SocketHeler( new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp),log,triggerQueue);
+            listener =new  SocketHeler( new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp),log,triggerQueue,()=>engine!=null && engine.State==EngineState.Running);
             log.Result(listener.StartSockeServer());
             // 程序级状态配置：必须在 log 之后、LoadModelList 之前初始化，
             // 因为 LoadModelList 里要读 appSettings.LastModelName，且 Load 的失败要写日志
@@ -529,11 +529,17 @@ namespace Measure.Halcon.Demo
                           triggerSource,
                           source,
                           ProcessFind,
-                          r => { 
+                          (r,trig) => { 
                               log.Fail(r);
-                              FindData md = (r as OperationResult<FindData>)?.Data;
-                              listener.SendData(md.ToList());
-                          
+                              FindInfo md = (r as OperationResult<FindInfo>)?.Data;
+                              if (md == null)
+                              {
+                                  log.Warn("查找结果为空，丢弃该帧：" + trig.WorkpieceId);
+                                  return;
+                              }
+                              md.WorkpieceId= trig.WorkpieceId;
+                              listener.SendData(md);
+                            
                           });
 
                     if (!engineStartResult)
@@ -545,7 +551,7 @@ namespace Measure.Halcon.Demo
             }
         }
         //连续查找过程
-        private OperationResult<FindData> ProcessFind(HObject image)
+        private OperationResult<FindInfo> ProcessFind(HObject image)
         {
             return shapeModelHelper.FindShapeMode(ref HwindowHandle, ref image, mathParams, out HTuple homMat2d_T);
         }
@@ -980,7 +986,10 @@ namespace Measure.Halcon.Demo
                             triggerSource,
                            imageSource,
                            ProcessMeasure,
-                           r => { log.Fail(r); }
+                           (r,trig) => { 
+                               log.Fail(r); 
+                                
+                           }
                            );
                 }
 

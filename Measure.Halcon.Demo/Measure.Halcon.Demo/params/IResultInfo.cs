@@ -12,7 +12,7 @@ namespace Measure.Halcon.Demo
 
         string WorkpieceId {  get; }
 
-
+        string ToString();
 
 
     }

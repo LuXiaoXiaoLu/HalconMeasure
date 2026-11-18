@@ -14,6 +14,6 @@ namespace Measure.Halcon.Demo.Trigger
     {
         string Name { get; }
 
-        bool WaitTrigger(CancellationToken token);
+        bool WaitTrigger(CancellationToken token,out TriggerInfo tri);
     }
 }

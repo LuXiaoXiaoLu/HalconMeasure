@@ -15,5 +15,10 @@ namespace Measure.Halcon.Demo.Trigger
         {
             return !token.IsCancellationRequested;
         }
+
+        public bool WaitTrigger(CancellationToken token, out TriggerInfo tri)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

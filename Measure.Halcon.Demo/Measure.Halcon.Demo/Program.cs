@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text;
 using Serilog;
+using Measure.Halcon.Demo.Storage;
 
 namespace Measure.Halcon.Demo
 {
@@ -66,6 +67,7 @@ namespace Measure.Halcon.Demo
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new FormMain());
+                
             }
             catch (Exception ex)
             {

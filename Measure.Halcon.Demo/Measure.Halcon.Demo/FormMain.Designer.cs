@@ -198,7 +198,7 @@
             this.tb_Gain.Location = new System.Drawing.Point(130, 120);
             this.tb_Gain.Maximum = 20;
             this.tb_Gain.Name = "tb_Gain";
-            this.tb_Gain.Size = new System.Drawing.Size(146, 56);
+            this.tb_Gain.Size = new System.Drawing.Size(146, 45);
             this.tb_Gain.TabIndex = 14;
             this.tb_Gain.TickFrequency = 2;
             this.tb_Gain.Scroll += new System.EventHandler(this.tb_Gain_Scroll);
@@ -218,7 +218,7 @@
             this.txt_ExposureTime.Location = new System.Drawing.Point(282, 77);
             this.txt_ExposureTime.Name = "txt_ExposureTime";
             this.txt_ExposureTime.ReadOnly = true;
-            this.txt_ExposureTime.Size = new System.Drawing.Size(61, 29);
+            this.txt_ExposureTime.Size = new System.Drawing.Size(61, 25);
             this.txt_ExposureTime.TabIndex = 12;
             this.txt_ExposureTime.Text = "0";
             this.txt_ExposureTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -228,7 +228,7 @@
             this.txt_Gain.Location = new System.Drawing.Point(282, 119);
             this.txt_Gain.Name = "txt_Gain";
             this.txt_Gain.ReadOnly = true;
-            this.txt_Gain.Size = new System.Drawing.Size(61, 29);
+            this.txt_Gain.Size = new System.Drawing.Size(61, 25);
             this.txt_Gain.TabIndex = 13;
             this.txt_Gain.Text = "0";
             this.txt_Gain.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -238,7 +238,7 @@
             this.tb_ExposureTime.Location = new System.Drawing.Point(132, 75);
             this.tb_ExposureTime.Maximum = 10000;
             this.tb_ExposureTime.Name = "tb_ExposureTime";
-            this.tb_ExposureTime.Size = new System.Drawing.Size(144, 56);
+            this.tb_ExposureTime.Size = new System.Drawing.Size(144, 45);
             this.tb_ExposureTime.TabIndex = 15;
             this.tb_ExposureTime.TickFrequency = 1000;
             this.tb_ExposureTime.Value = 34;
@@ -259,7 +259,7 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(29, 129);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(104, 23);
+            this.label14.Size = new System.Drawing.Size(86, 20);
             this.label14.TabIndex = 10;
             this.label14.Text = "增益（db）:";
             // 
@@ -278,7 +278,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(25, 182);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 23);
+            this.label2.Size = new System.Drawing.Size(79, 20);
             this.label2.TabIndex = 11;
             this.label2.Text = "图像处理：";
             // 
@@ -287,7 +287,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(29, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 23);
+            this.label1.Size = new System.Drawing.Size(79, 20);
             this.label1.TabIndex = 11;
             this.label1.Text = "实时采集：";
             // 
@@ -306,7 +306,7 @@
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(29, 82);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(100, 23);
+            this.label13.Size = new System.Drawing.Size(83, 20);
             this.label13.TabIndex = 11;
             this.label13.Text = "曝光（us）:";
             // 
@@ -325,7 +325,7 @@
             this.chk_RealTimeProc.AutoSize = true;
             this.chk_RealTimeProc.Location = new System.Drawing.Point(357, 123);
             this.chk_RealTimeProc.Name = "chk_RealTimeProc";
-            this.chk_RealTimeProc.Size = new System.Drawing.Size(66, 27);
+            this.chk_RealTimeProc.Size = new System.Drawing.Size(56, 24);
             this.chk_RealTimeProc.TabIndex = 8;
             this.chk_RealTimeProc.Text = "实时";
             this.chk_RealTimeProc.UseVisualStyleBackColor = true;
@@ -335,7 +335,7 @@
             this.chk_Trigger.AutoSize = true;
             this.chk_Trigger.Location = new System.Drawing.Point(357, 79);
             this.chk_Trigger.Name = "chk_Trigger";
-            this.chk_Trigger.Size = new System.Drawing.Size(66, 27);
+            this.chk_Trigger.Size = new System.Drawing.Size(56, 24);
             this.chk_Trigger.TabIndex = 9;
             this.chk_Trigger.Text = "触发";
             this.chk_Trigger.UseVisualStyleBackColor = true;
@@ -397,7 +397,7 @@
             // 
             this.txt_NumMatchs.Location = new System.Drawing.Point(80, 91);
             this.txt_NumMatchs.Name = "txt_NumMatchs";
-            this.txt_NumMatchs.Size = new System.Drawing.Size(40, 29);
+            this.txt_NumMatchs.Size = new System.Drawing.Size(40, 25);
             this.txt_NumMatchs.TabIndex = 2;
             this.txt_NumMatchs.Text = "1";
             this.txt_NumMatchs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -407,7 +407,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(29, 94);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 23);
+            this.label5.Size = new System.Drawing.Size(37, 20);
             this.label5.TabIndex = 1;
             this.label5.Text = "数量";
             // 
@@ -415,7 +415,7 @@
             // 
             this.txt_Overlap.Location = new System.Drawing.Point(383, 41);
             this.txt_Overlap.Name = "txt_Overlap";
-            this.txt_Overlap.Size = new System.Drawing.Size(40, 29);
+            this.txt_Overlap.Size = new System.Drawing.Size(40, 25);
             this.txt_Overlap.TabIndex = 2;
             this.txt_Overlap.Text = "0.1";
             this.txt_Overlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -426,7 +426,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(326, 44);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 23);
+            this.label4.Size = new System.Drawing.Size(51, 20);
             this.label4.TabIndex = 1;
             this.label4.Text = "重叠度";
             // 
@@ -434,7 +434,7 @@
             // 
             this.txt_Score.Location = new System.Drawing.Point(282, 41);
             this.txt_Score.Name = "txt_Score";
-            this.txt_Score.Size = new System.Drawing.Size(40, 29);
+            this.txt_Score.Size = new System.Drawing.Size(40, 25);
             this.txt_Score.TabIndex = 2;
             this.txt_Score.Text = "0.5";
             this.txt_Score.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -444,7 +444,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(235, 44);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 23);
+            this.label3.Size = new System.Drawing.Size(37, 20);
             this.label3.TabIndex = 1;
             this.label3.Text = "分数";
             // 
@@ -452,7 +452,7 @@
             // 
             this.txt_Range.Location = new System.Drawing.Point(191, 41);
             this.txt_Range.Name = "txt_Range";
-            this.txt_Range.Size = new System.Drawing.Size(40, 29);
+            this.txt_Range.Size = new System.Drawing.Size(40, 25);
             this.txt_Range.TabIndex = 2;
             this.txt_Range.Text = "90";
             this.txt_Range.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -462,7 +462,7 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(128, 44);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(63, 23);
+            this.label12.Size = new System.Drawing.Size(53, 20);
             this.label12.TabIndex = 1;
             this.label12.Text = "范围(°)";
             // 
@@ -470,7 +470,7 @@
             // 
             this.txt_Angle.Location = new System.Drawing.Point(80, 41);
             this.txt_Angle.Name = "txt_Angle";
-            this.txt_Angle.Size = new System.Drawing.Size(40, 29);
+            this.txt_Angle.Size = new System.Drawing.Size(40, 25);
             this.txt_Angle.TabIndex = 2;
             this.txt_Angle.Text = "-45";
             this.txt_Angle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -480,7 +480,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(21, 44);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 23);
+            this.label6.Size = new System.Drawing.Size(53, 20);
             this.label6.TabIndex = 1;
             this.label6.Text = "角度(°)";
             // 
@@ -559,7 +559,7 @@
             this.cmb_CirclePointSelect.FormattingEnabled = true;
             this.cmb_CirclePointSelect.Location = new System.Drawing.Point(310, 34);
             this.cmb_CirclePointSelect.Name = "cmb_CirclePointSelect";
-            this.cmb_CirclePointSelect.Size = new System.Drawing.Size(109, 31);
+            this.cmb_CirclePointSelect.Size = new System.Drawing.Size(109, 27);
             this.cmb_CirclePointSelect.TabIndex = 12;
             // 
             // label11
@@ -567,7 +567,7 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(238, 38);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(61, 23);
+            this.label11.Size = new System.Drawing.Size(51, 20);
             this.label11.TabIndex = 11;
             this.label11.Text = "点选择";
             // 
@@ -576,7 +576,7 @@
             this.cmb_CircleTransition.FormattingEnabled = true;
             this.cmb_CircleTransition.Location = new System.Drawing.Point(110, 150);
             this.cmb_CircleTransition.Name = "cmb_CircleTransition";
-            this.cmb_CircleTransition.Size = new System.Drawing.Size(109, 31);
+            this.cmb_CircleTransition.Size = new System.Drawing.Size(109, 27);
             this.cmb_CircleTransition.TabIndex = 10;
             // 
             // label17
@@ -584,7 +584,7 @@
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(24, 193);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(78, 23);
+            this.label17.Size = new System.Drawing.Size(65, 20);
             this.label17.TabIndex = 9;
             this.label17.Text = "实际距离";
             // 
@@ -593,7 +593,7 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(38, 154);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(44, 23);
+            this.label10.Size = new System.Drawing.Size(37, 20);
             this.label10.TabIndex = 9;
             this.label10.Text = "极性";
             // 
@@ -601,7 +601,7 @@
             // 
             this.txt_Distance.Location = new System.Drawing.Point(110, 191);
             this.txt_Distance.Name = "txt_Distance";
-            this.txt_Distance.Size = new System.Drawing.Size(109, 29);
+            this.txt_Distance.Size = new System.Drawing.Size(109, 25);
             this.txt_Distance.TabIndex = 6;
             this.txt_Distance.Text = "100";
             this.txt_Distance.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -610,7 +610,7 @@
             // 
             this.txt_CircleSigma.Location = new System.Drawing.Point(110, 111);
             this.txt_CircleSigma.Name = "txt_CircleSigma";
-            this.txt_CircleSigma.Size = new System.Drawing.Size(109, 29);
+            this.txt_CircleSigma.Size = new System.Drawing.Size(109, 25);
             this.txt_CircleSigma.TabIndex = 6;
             this.txt_CircleSigma.Text = "0";
             this.txt_CircleSigma.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -620,7 +620,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(30, 115);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(78, 23);
+            this.label8.Size = new System.Drawing.Size(65, 20);
             this.label8.TabIndex = 3;
             this.label8.Text = "平滑系数";
             // 
@@ -628,7 +628,7 @@
             // 
             this.txt_DisMax.Location = new System.Drawing.Point(309, 108);
             this.txt_DisMax.Name = "txt_DisMax";
-            this.txt_DisMax.Size = new System.Drawing.Size(109, 29);
+            this.txt_DisMax.Size = new System.Drawing.Size(109, 25);
             this.txt_DisMax.TabIndex = 7;
             this.txt_DisMax.Text = "0";
             this.txt_DisMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -637,7 +637,7 @@
             // 
             this.txt_DisMin.Location = new System.Drawing.Point(309, 72);
             this.txt_DisMin.Name = "txt_DisMin";
-            this.txt_DisMin.Size = new System.Drawing.Size(109, 29);
+            this.txt_DisMin.Size = new System.Drawing.Size(109, 25);
             this.txt_DisMin.TabIndex = 7;
             this.txt_DisMin.Text = "0";
             this.txt_DisMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -646,7 +646,7 @@
             // 
             this.txt_CircleThreshold.Location = new System.Drawing.Point(110, 72);
             this.txt_CircleThreshold.Name = "txt_CircleThreshold";
-            this.txt_CircleThreshold.Size = new System.Drawing.Size(109, 29);
+            this.txt_CircleThreshold.Size = new System.Drawing.Size(109, 25);
             this.txt_CircleThreshold.TabIndex = 7;
             this.txt_CircleThreshold.Text = "0";
             this.txt_CircleThreshold.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -656,7 +656,7 @@
             this.label19.AutoSize = true;
             this.label19.Location = new System.Drawing.Point(230, 111);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(78, 23);
+            this.label19.Size = new System.Drawing.Size(65, 20);
             this.label19.TabIndex = 4;
             this.label19.Text = "直径高限";
             // 
@@ -665,7 +665,7 @@
             this.label18.AutoSize = true;
             this.label18.Location = new System.Drawing.Point(229, 75);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(78, 23);
+            this.label18.Size = new System.Drawing.Size(65, 20);
             this.label18.TabIndex = 4;
             this.label18.Text = "直径低限";
             // 
@@ -674,7 +674,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(33, 76);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(78, 23);
+            this.label7.Size = new System.Drawing.Size(65, 20);
             this.label7.TabIndex = 4;
             this.label7.Text = "边缘阈值";
             // 
@@ -682,7 +682,7 @@
             // 
             this.txt_CircleElements.Location = new System.Drawing.Point(110, 33);
             this.txt_CircleElements.Name = "txt_CircleElements";
-            this.txt_CircleElements.Size = new System.Drawing.Size(109, 29);
+            this.txt_CircleElements.Size = new System.Drawing.Size(109, 25);
             this.txt_CircleElements.TabIndex = 8;
             this.txt_CircleElements.Text = "0";
             this.txt_CircleElements.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -692,7 +692,7 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(26, 37);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(78, 23);
+            this.label9.Size = new System.Drawing.Size(65, 20);
             this.label9.TabIndex = 5;
             this.label9.Text = "搜索点数";
             // 
@@ -747,7 +747,7 @@
             this.listModel.FormattingEnabled = true;
             this.listModel.Location = new System.Drawing.Point(472, 31);
             this.listModel.Name = "listModel";
-            this.listModel.Size = new System.Drawing.Size(125, 31);
+            this.listModel.Size = new System.Drawing.Size(125, 27);
             this.listModel.TabIndex = 3;
             // 
             // label16
@@ -755,7 +755,7 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(385, 35);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(78, 23);
+            this.label16.Size = new System.Drawing.Size(65, 20);
             this.label16.TabIndex = 2;
             this.label16.Text = "选择模板";
             // 
@@ -764,7 +764,7 @@
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(22, 34);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(78, 23);
+            this.label15.Size = new System.Drawing.Size(65, 20);
             this.label15.TabIndex = 1;
             this.label15.Text = "模板名称";
             // 
@@ -772,7 +772,7 @@
             // 
             this.modelName.Location = new System.Drawing.Point(107, 32);
             this.modelName.Name = "modelName";
-            this.modelName.Size = new System.Drawing.Size(110, 29);
+            this.modelName.Size = new System.Drawing.Size(110, 25);
             this.modelName.TabIndex = 0;
             // 
             // but_ContinueMeasure
@@ -832,7 +832,7 @@
             this.label21.AutoSize = true;
             this.label21.Location = new System.Drawing.Point(278, 43);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(78, 23);
+            this.label21.Size = new System.Drawing.Size(65, 20);
             this.label21.TabIndex = 1;
             this.label21.Text = "端口号：";
             // 
@@ -841,7 +841,7 @@
             this.label20.AutoSize = true;
             this.label20.Location = new System.Drawing.Point(26, 41);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(76, 23);
+            this.label20.Size = new System.Drawing.Size(64, 20);
             this.label20.TabIndex = 0;
             this.label20.Text = "IP地址：";
             // 
@@ -851,7 +851,7 @@
             this.Mian.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.Mian.Location = new System.Drawing.Point(30, 3);
             this.Mian.Name = "Mian";
-            this.Mian.Size = new System.Drawing.Size(44, 23);
+            this.Mian.Size = new System.Drawing.Size(37, 20);
             this.Mian.TabIndex = 13;
             this.Mian.Text = "检测";
             this.Mian.Click += new System.EventHandler(this.Mian_Click);
@@ -862,14 +862,14 @@
             this.UcComm.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.UcComm.Location = new System.Drawing.Point(104, 3);
             this.UcComm.Name = "UcComm";
-            this.UcComm.Size = new System.Drawing.Size(44, 23);
+            this.UcComm.Size = new System.Drawing.Size(37, 20);
             this.UcComm.TabIndex = 14;
             this.UcComm.Text = "通信";
             this.UcComm.Click += new System.EventHandler(this.UcComm_Click);
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1024, 755);
             this.Controls.Add(this.UcComm);
@@ -888,6 +888,7 @@
             this.Name = "FormMain";
             this.Text = "零件测量";
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

@@ -1,7 +1,9 @@
 ﻿using HalconDotNet;
 using Measure.Halcon.Demo.Engine;
 using Measure.Halcon.Demo.Helper;
+using Measure.Halcon.Demo.Storage;
 using Measure.Halcon.Demo.Trigger;
+using Microsoft.IdentityModel.Logging;
 using Serilog;
 using System;
 using System.Collections.Concurrent;
@@ -39,12 +41,13 @@ namespace Measure.Halcon.Demo
         }
 
 
+
         public FormMain()
         {
             InitializeComponent();
             InitialParams();
             BindParams();
-            log = new LogHelper(list_Info);
+            log = new Helper.LogHelper(list_Info);
             log.Info("开机");
             engine = new RunEngine(log);
             //触发信息队列
@@ -106,6 +109,9 @@ namespace Measure.Halcon.Demo
 
 
         }
+
+   
+
         //触发队列
         private readonly BlockingCollection<TriggerInfo> triggerQueue;
 
@@ -145,7 +151,7 @@ namespace Measure.Halcon.Demo
         private ShapeModelHelper shapeModelHelper = new ShapeModelHelper();
         //匹配模板数据
         private MatchParams mathParams = new MatchParams();
-        private LogHelper log;
+        private Helper.LogHelper log;
 
         //程序级状态配置（data\config\app.ini）：上次用的模板等界面痕迹
         private AppSettings appSettings;
@@ -170,6 +176,8 @@ namespace Measure.Halcon.Demo
             this.cmb_CirclePointSelect.SelectedItem = circleParams.circle_Point_Select;
 
         }
+
+       
 
         /// <summary>
         /// 把界面上的数值参数与参数对象双向绑定：
@@ -1039,6 +1047,12 @@ namespace Measure.Halcon.Demo
         {
 
             listener.Stop();
+        }
+
+        private async void FormMain_Shown(object sender, EventArgs e)
+        {
+          OperationResult result= await SqlServerConnector.ConnectWithRetry(onProgress:log.Info);
+            log.Result(result);
         }
     }
 }

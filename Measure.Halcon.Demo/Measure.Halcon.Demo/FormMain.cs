@@ -1051,8 +1051,14 @@ namespace Measure.Halcon.Demo
 
         private async void FormMain_Shown(object sender, EventArgs e)
         {
-          OperationResult result= await SqlServerConnector.ConnectWithRetry(onProgress:log.Info);
-            log.Result(result);
+            DatabaseInitializer databaseInitializer = new DatabaseInitializer();
+            OperationResult connResult = await databaseInitializer.EnsureConnectedAsync(onProgress: log.Info);
+            log.Result(connResult);
+            if (connResult.IsSuccess) {
+                OperationResult<int> re = await databaseInitializer.GetCurrentVersionAsync();
+                OperationResult checkResult = await databaseInitializer.EnsureUpToDateAsync(re.Data);
+                log.Result(checkResult);
+            }
         }
     }
 }

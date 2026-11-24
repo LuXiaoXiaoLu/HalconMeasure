@@ -213,7 +213,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\DbConfig.cs" />
-    <Compile Include="Storage\SqlServerConnector.cs" />
+    <Compile Include="Storage\SqlScriptRepository.cs" />
+    <Compile Include="Storage\DatabaseInitializer.cs" />
     <Compile Include="Trigger\FreeRunTriggerSource.cs" />
     <Compile Include="Trigger\PlcTriggerSource.cs" />
     <Compile Include="Trigger\ITriggerSource.cs" />
@@ -256,6 +257,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="image\warning.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Storage\sql\000_InitialSchemaVersion.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

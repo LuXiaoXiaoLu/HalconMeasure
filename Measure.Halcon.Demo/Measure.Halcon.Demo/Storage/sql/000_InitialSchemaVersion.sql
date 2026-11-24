@@ -1,3 +1,6 @@
+
+IF OBJECT_ID('dbo.SchemaVersion', 'U') is null
+BEGIN
 CREATE TABLE dbo.SchemaVersion
 (
     [Version]   INT           NOT NULL PRIMARY KEY,
@@ -8,3 +11,10 @@ CREATE TABLE dbo.SchemaVersion
     AppliedBy   NVARCHAR(100) NULL,
     Note        NVARCHAR(500) NULL
 );
+END
+
+IF NOT EXISTS (SELECT 1 FROM dbo.SchemaVersion where  [Version]=0)
+BEGIN
+	insert into dbo.SchemaVersion( [Version] ,ScriptName,AppliedAt,AppVersion ,AppliedBy,Note )
+	values(0,'000_InitialSchemaVersion.sql',SYSUTCDATETIME(),NULL, SUSER_SNAME(), N'引导表自身，尚无业务表')
+END

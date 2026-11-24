@@ -112,7 +112,7 @@ namespace Measure.Halcon.Demo.Storage
                 using (SqlConnection connection = new SqlConnection(DbConfig.ConnStr))
                 {
                     await connection.OpenAsync();
-                    using (SqlCommand cmd = new SqlCommand("Select MAX(currentVersion) FROM dbo.SchemaVersion", connection))
+                    using (SqlCommand cmd = new SqlCommand("Select MAX([Version]) FROM dbo.SchemaVersion", connection))
                     {
                         var values = await cmd.ExecuteScalarAsync();
                         if (values == null || values == DBNull.Value)
@@ -160,7 +160,7 @@ namespace Measure.Halcon.Demo.Storage
         public async Task<OperationResult> UpgradeSchemaAsync(int dbVersion)
         {
 
-            for (int i = dbVersion; i <= _targetVersion; i++)
+            for (int i = dbVersion+1; i <= _targetVersion; i++)
             {
                 string fileName;
                 if (!SqlScriptRepository.ScriptMap.TryGetValue(i, out fileName))

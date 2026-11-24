@@ -59,7 +59,7 @@ namespace Measure.Halcon.Demo.Storage
             string fullPath = Path.Combine(
                AppDomain.CurrentDomain.BaseDirectory,
                "Storage", "sql", scriptFileName);
-            if (File.Exists(fullPath)) {
+            if (!File.Exists(fullPath)) {
                 return OperationResult.CreateFailResult("找不到脚本：" + fullPath);
                
             }
